@@ -107,7 +107,7 @@ interface GameState {
 }
 
 // ─── Constants ───────────────────────────────────────────────────────
-const STORAGE_KEY = "capybara-pixel-rpg-v2";
+const STORAGE_KEY = "capybara-pixel-rpg-v3";
 const EXP_PER_LEVEL = 100;
 const BOSS_INTERVAL = 10;
 const REBIRTH_LEVEL = 30;
@@ -159,10 +159,8 @@ const ALL_ITEMS: Omit<Item, "id">[] = [
 ];
 
 const DEFAULT_SKILLS: Skill[] = [
-  { id: "slash", name: "강타", emoji: "⚔️", damage: 20, cooldown: 5000, lastUsed: 0, unlockLevel: 1, description: "강력한 일격" },
-  { id: "fire", name: "화염구", emoji: "🔥", damage: 50, cooldown: 10000, lastUsed: 0, unlockLevel: 5, description: "불꽃 마법" },
-  { id: "ice", name: "얼음 폭풍", emoji: "❄️", damage: 80, cooldown: 15000, lastUsed: 0, unlockLevel: 12, description: "빙결 마법" },
-  { id: "thunder", name: "천둥 벼락", emoji: "⚡", damage: 150, cooldown: 25000, lastUsed: 0, unlockLevel: 20, description: "최강 마법" },
+  { id: "double_attack", name: "공격력 2배", emoji: "💥", damage: 0, cooldown: 60000, lastUsed: 0, unlockLevel: 1, description: "다음 공격의 공격력이 2배가 된다" },
+  { id: "auto_fever", name: "번개 광풍", emoji: "⚡", damage: 0, cooldown: 60000, lastUsed: 0, unlockLevel: 1, description: "0.05초마다 자동으로 공격 (3초간)" },
 ];
 
 const BOSS_EMOJIS = ["👹", "🐉", "💀", "👿", "🦇", "🕷️", "🐍", "👾"];
@@ -1412,7 +1410,7 @@ export default function Home() {
                   transition: "opacity 0.1s ease",
                 }}
               >
-                ⚔️ 공격 <span style={{ fontSize: 8, color: state.isBossFight ? "#fca5a5" : "#93c5fd" }}>({getTotalAtk(state)} DMG)</span>
+                ⚔️ 공격 <span style={{ fontSize: 8, color: state.isBossFight ? "#fca5a5" : "#93c5fd" }}>({state.baseAtk} × {state.rebirthBonus.toFixed(2)} = {getTotalAtk(state)} DMG)</span>
               </button>
             )}
 
