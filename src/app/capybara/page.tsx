@@ -1425,10 +1425,11 @@ export default function Home() {
             )}
 
             {/* Attack Button */}
-            {(state.isBossFight || state.isMonsterFight) && !bossEntering && (
+            {(state.isBossFight || state.isMonsterFight) && (
               <button
-                onPointerDown={(e) => handleClick(e as any)}
-                className="pixel-border w-full cursor-pointer mb-2"
+                onPointerDown={!bossEntering ? (e) => handleClick(e as any) : undefined}
+                disabled={bossEntering}
+                className="pixel-border w-full mb-2"
                 style={{
                   background: state.isBossFight
                     ? "linear-gradient(180deg, #dc2626, #991b1b)"
@@ -1439,6 +1440,9 @@ export default function Home() {
                   color: "#fff",
                   textShadow: "1px 1px 0 #000",
                   letterSpacing: 2,
+                  cursor: bossEntering ? "not-allowed" : "pointer",
+                  opacity: bossEntering ? 0.6 : 1,
+                  transition: "opacity 0.1s ease",
                 }}
               >
                 ⚔️ 공격 <span style={{ fontSize: 8, color: state.isBossFight ? "#fca5a5" : "#93c5fd" }}>({getTotalAtk(state)} DMG)</span>
