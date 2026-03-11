@@ -53,6 +53,7 @@ interface Monster {
   name: string;
   emoji: string;
   baseHp: number;
+  baseAtk: number;
   expReward: number;
   goldReward: number;
   type: "slime" | "goblin" | "orc" | "wolf" | "bat";
@@ -164,11 +165,11 @@ const BOSS_EMOJIS = ["👹", "🐉", "💀", "👿", "🦇", "🕷️", "🐍", 
 const BOSS_NAMES = ["고블린 킹", "드래곤", "해골 기사", "데몬 로드", "뱀파이어", "거대 거미", "나가", "외계 침략자"];
 
 const MONSTERS: Monster[] = [
-  { name: "슬라임", emoji: "💧", baseHp: 20, expReward: 8, goldReward: 2, type: "slime" },
-  { name: "박쥐", emoji: "🦇", baseHp: 30, expReward: 12, goldReward: 3, type: "bat" },
-  { name: "늑대", emoji: "🐺", baseHp: 45, expReward: 18, goldReward: 5, type: "wolf" },
-  { name: "고블린", emoji: "👹", baseHp: 60, expReward: 25, goldReward: 8, type: "goblin" },
-  { name: "오크", emoji: "🗡️", baseHp: 80, expReward: 35, goldReward: 12, type: "orc" },
+  { name: "슬라임", emoji: "💧", baseHp: 20, baseAtk: 2, expReward: 8, goldReward: 2, type: "slime" },
+  { name: "박쥐", emoji: "🦇", baseHp: 30, baseAtk: 4, expReward: 12, goldReward: 3, type: "bat" },
+  { name: "늑대", emoji: "🐺", baseHp: 45, baseAtk: 6, expReward: 18, goldReward: 5, type: "wolf" },
+  { name: "고블린", emoji: "👹", baseHp: 60, baseAtk: 8, expReward: 25, goldReward: 8, type: "goblin" },
+  { name: "오크", emoji: "🗡️", baseHp: 80, baseAtk: 10, expReward: 35, goldReward: 12, type: "orc" },
 ];
 
 function getMonsterForLevel(level: number): Monster {
@@ -609,7 +610,27 @@ export default function Home() {
               monsterType: next.monster, monstersDefeated: prev.monstersDefeated + 1,
             };
           }
-          return { ...prev, monsterHp: newMonsterHp };
+          
+          // Monster counter attack
+          const def = getTotalDef(prev);
+          const monsterAtk = Math.floor(prev.monsterType.baseAtk * (1 + (prev.level - 1) * 0.1));
+          const playerDmg = Math.max(1, monsterAtk - def);
+          const newPlayerHp = prev.currentHp - playerDmg;
+
+          // Player dies → respawn
+          if (newPlayerHp <= 0) {
+            const next = spawnMonster(prev.level);
+            return {
+              ...prev,
+              currentHp: prev.maxHp,
+              isMonsterFight: true,
+              monsterHp: next.hp,
+              monsterMaxHp: next.hp,
+              monsterType: next.monster,
+            };
+          }
+
+          return { ...prev, monsterHp: newMonsterHp, currentHp: newPlayerHp };
         }
 
         // Normal auto exp (no monster)
@@ -1353,7 +1374,8 @@ export default function Home() {
                   }}
                 >
                   {state.monsterType.emoji} {state.monsterType.name}
-                  <span style={{ color: "#6b7280", marginLeft: 4 }}>처치: {state.monstersDefeated}</span>
+                  <span style={{ color: "#ef4444", marginLeft: 8 }}>⚔{Math.floor(state.monsterType.baseAtk * (1 + (state.level - 1) * 0.1))}</span>
+                  <span style={{ color: "#6b7280", marginLeft: 8 }}>처치: {state.monstersDefeated}</span>
                 </div>
               )}
             </div>
