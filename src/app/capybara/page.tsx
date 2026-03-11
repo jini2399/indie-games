@@ -1149,10 +1149,10 @@ export default function Home() {
       {/* Header */}
       <div className="w-full max-w-md">
         <div className="flex items-center justify-between mb-2 px-1">
-          <span style={{ fontSize: 10, color: "#fbbf24" }}>
+          <span style={{ fontSize: 12, color: "#fbbf24" }}>
             ⚔️ 카피바라 RPG
           </span>
-          <span style={{ fontSize: 8, color: "#fbbf24" }}>
+          <span style={{ fontSize: 11, color: "#fbbf24" }}>
             🪙 {state.gold}
           </span>
         </div>
@@ -1160,7 +1160,7 @@ export default function Home() {
         {/* Stats Bar */}
         <div
           className="pixel-border mb-2 p-2 grid grid-cols-5 gap-1 text-center"
-          style={{ background: "#0f172a", borderColor: "#334155", fontSize: 7 }}
+          style={{ background: "#0f172a", borderColor: "#334155", fontSize: 9 }}
         >
           <div>
             <div style={{ color: "#4ade80" }}>Lv.{state.level}</div>
@@ -1213,7 +1213,7 @@ export default function Home() {
                 background: activeTab === tab ? "#334155" : "#0f172a",
                 borderColor: activeTab === tab ? "#60a5fa" : "#1e293b",
                 color: activeTab === tab ? "#fff" : "#6b7280",
-                fontSize: 8,
+                fontSize: 10,
               }}
             >
               {tab === "battle" ? "⚔전투" : tab === "inventory" ? "🎒인벤" : "ℹ️정보"}
@@ -1508,7 +1508,7 @@ export default function Home() {
                   transition: "opacity 0.1s ease",
                 }}
               >
-                ⚔️ 공격 <span style={{ fontSize: 8, color: state.isBossFight ? "#fca5a5" : "#93c5fd" }}>({state.baseAtk} × {state.rebirthBonus.toFixed(2)} = {getTotalAtk(state)} DMG)</span>
+                ⚔️ 공격 <span style={{ fontSize: 10, color: state.isBossFight ? "#fca5a5" : "#93c5fd" }}>({state.baseAtk} × {state.rebirthBonus.toFixed(2)} = {getTotalAtk(state)} DMG)</span>
               </button>
             )}
 
@@ -1633,7 +1633,7 @@ export default function Home() {
           <div>
             {/* Equipment Slots */}
             <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 6 }}>⚔ 장비</div>
+              <div style={{ fontSize: 10, color: "#fbbf24", marginBottom: 6 }}>⚔ 장비</div>
               <div className="grid grid-cols-3 gap-2">
                 {(["weapon", "armor", "accessory"] as const).map((slot) => {
                   const slotKey = slot === "weapon" ? "equippedWeapon" : slot === "armor" ? "equippedArmor" : "equippedAccessory";
@@ -1686,10 +1686,10 @@ export default function Home() {
                       }}
                     >
                       <div style={{ fontSize: 16 }}>{item.emoji || "?"}</div>
-                      <div style={{ fontSize: 5, color: RARITY_COLORS[item.rarity] || "#fff", wordBreak: "break-all" }}>
+                      <div style={{ fontSize: 7, color: RARITY_COLORS[item.rarity] || "#fff", wordBreak: "break-all" }}>
                         {item.name || "Unknown"}
                       </div>
-                      <div style={{ fontSize: 5, color: "#9ca3af" }}>
+                      <div style={{ fontSize: 7, color: "#9ca3af" }}>
                         [{RARITY_NAMES[item.rarity] || "?"}]
                       </div>
                       <div className="flex gap-1 mt-1 justify-center">
@@ -1722,8 +1722,8 @@ export default function Home() {
           <div>
             {/* Stat info */}
             <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 6 }}>📊 게임 정보</div>
-              <div className="grid grid-cols-2 gap-1" style={{ fontSize: 7 }}>
+              <div style={{ fontSize: 10, color: "#fbbf24", marginBottom: 6 }}>📊 게임 정보</div>
+              <div className="grid grid-cols-2 gap-1" style={{ fontSize: 9 }}>
                 <div style={{ color: "#f87171" }}>기본 공격력: {state.baseAtk}</div>
                 <div style={{ color: "#60a5fa" }}>기본 방어력: {state.baseDef}</div>
                 <div style={{ color: "#f472b6" }}>기본 체력: {state.baseHp}</div>
@@ -1741,7 +1741,7 @@ export default function Home() {
                 onClick={resetGame}
                 className="pixel-border w-full cursor-pointer"
                 style={{ 
-                  fontSize: 8, 
+                  fontSize: 10, 
                   color: "#ef4444", 
                   background: "#1e293b",
                   borderColor: "#7f1d1d",
