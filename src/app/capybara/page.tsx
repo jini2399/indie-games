@@ -864,9 +864,10 @@ export default function Home() {
               isBossFight: false,
               gold: prev.gold + reward,
               pendingChest: item,
+              doubleAttackActive: false,
             };
           }
-          return { ...prev, bossHp: newBossHp };
+          return { ...prev, bossHp: newBossHp, doubleAttackActive: false };
         });
       } else if (state.isMonsterFight && state.monsterType) {
         // Attack monster
@@ -910,6 +911,7 @@ export default function Home() {
                 ...prev, exp: newExp, level: newLevel, gold,
                 isBossFight: true, bossHp: bossMaxHp, bossMaxHp, bossLevel: bossLv,
                 isMonsterFight: false, monsterType: null, monstersDefeated: prev.monstersDefeated + 1,
+                doubleAttackActive: false,
               };
             }
 
@@ -917,10 +919,11 @@ export default function Home() {
               ...prev, exp: newExp, level: newLevel, gold,
               isMonsterFight: true, monsterHp: next.hp, monsterMaxHp: next.hp,
               monsterType: next.monster, monstersDefeated: prev.monstersDefeated + 1,
+              doubleAttackActive: false,
             };
           }
 
-          return { ...prev, monsterHp: newMonsterHp };
+          return { ...prev, monsterHp: newMonsterHp, doubleAttackActive: false };
         });
       } else {
         const clickValue = Math.floor(state.clickExp * state.rebirthBonus);
