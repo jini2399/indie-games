@@ -1145,10 +1145,10 @@ export default function Home() {
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
   return (
-    <div className="flex min-h-screen flex-col items-center p-1 select-none pixel-grid" style={{ background: "#1a1a2e" }}>
-      {/* Header */}
-      <div className="w-full max-w-md">
-        <div className="flex items-center justify-between mb-1 px-1">
+    <div className="flex h-screen flex-col items-center p-2 select-none pixel-grid" style={{ background: "#1a1a2e", overflow: "hidden" }}>
+      {/* Header & Ad */}
+      <div className="w-full max-w-md flex-shrink-0">
+        <div className="flex items-center justify-between mb-2 px-1">
           <span style={{ fontSize: 11, color: "#fbbf24" }}>
             ⚔️ 카피바라 RPG
           </span>
@@ -1157,9 +1157,15 @@ export default function Home() {
           </span>
         </div>
 
+        {/* Ad Banner */}
+        <div className="pixel-border p-2 mb-2 text-center" style={{ background: "linear-gradient(180deg, #4f46e5, #2563eb)", borderColor: "#60a5fa" }}>
+          <div style={{ fontSize: 9, color: "#fef3c7", fontWeight: "bold" }}>🎮 다음 게임 준비중...</div>
+          <div style={{ fontSize: 7, color: "#e0e7ff", marginTop: 1 }}>슬라임 클리커 | 타워 디펜스 | 자동 거래소</div>
+        </div>
+
         {/* Stats Bar */}
         <div
-          className="pixel-border mb-1 p-1 grid grid-cols-5 gap-0 text-center"
+          className="pixel-border mb-2 p-2 grid grid-cols-5 gap-0 text-center"
           style={{ background: "#0f172a", borderColor: "#334155", fontSize: 8 }}
         >
           <div>
@@ -1185,12 +1191,12 @@ export default function Home() {
         </div>
 
         {/* EXP Bar */}
-        <div className="mb-1">
-          <div className="flex justify-between" style={{ fontSize: 6, color: "#9ca3af", marginBottom: 1 }}>
+        <div className="mb-2">
+          <div className="flex justify-between" style={{ fontSize: 6, color: "#9ca3af", marginBottom: 2 }}>
             <span>EXP</span>
             <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
           </div>
-          <div className="pixel-bar" style={{ height: 8, background: "#1e293b" }}>
+          <div className="pixel-bar" style={{ height: 10, background: "#1e293b" }}>
             <div
               style={{
                 height: "100%",
@@ -1203,17 +1209,17 @@ export default function Home() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-0 mb-1">
+        <div className="flex gap-1 mb-2 w-full">
           {(["battle", "inventory", "info"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className="pixel-border-sm flex-1 py-0 cursor-pointer"
+              className="pixel-border-sm flex-1 py-1 cursor-pointer"
               style={{
                 background: activeTab === tab ? "#334155" : "#0f172a",
                 borderColor: activeTab === tab ? "#60a5fa" : "#1e293b",
                 color: activeTab === tab ? "#fff" : "#6b7280",
-                fontSize: 8,
+                fontSize: 9,
               }}
             >
               {tab === "battle" ? "⚔전투" : tab === "inventory" ? "🎒인벤" : "ℹ️정보"}
@@ -1221,6 +1227,8 @@ export default function Home() {
           ))}
         </div>
 
+        {/* Tab Content */}
+        <div className="flex-1 overflow-y-auto w-full max-w-md">
         {/* ─── Battle Tab ───────────────────────────────────── */}
         {activeTab === "battle" && (
           <div>
@@ -1228,11 +1236,11 @@ export default function Home() {
             <div
               ref={battleAreaRef}
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
-              className="pixel-border relative overflow-hidden cursor-pointer mb-1"
+              className="pixel-border relative overflow-hidden cursor-pointer mb-2"
               style={{
                 background: "linear-gradient(180deg, #0c1222 0%, #1a1a3e 50%, #1a2e1a 100%)",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
-                height: 140,
+                height: 160,
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
               }}
             >
@@ -1445,8 +1453,8 @@ export default function Home() {
 
             {/* Boss HP Bar */}
             {state.isBossFight && (
-              <div className="mb-1">
-                <div className="flex justify-between" style={{ fontSize: 6, color: "#f87171", marginBottom: 1 }}>
+              <div className="mb-2">
+                <div className="flex justify-between" style={{ fontSize: 6, color: "#f87171", marginBottom: 2 }}>
                   <span>{BOSS_EMOJIS[bossIdx]} {BOSS_NAMES[bossIdx]}</span>
                   <span>{Math.max(0, state.bossHp)}/{state.bossMaxHp}</span>
                 </div>
@@ -1465,8 +1473,8 @@ export default function Home() {
 
             {/* Monster HP Bar */}
             {!state.isBossFight && state.isMonsterFight && state.monsterType && (
-              <div className="mb-1">
-                <div className="flex justify-between" style={{ fontSize: 6, color: "#4ade80", marginBottom: 1 }}>
+              <div className="mb-2">
+                <div className="flex justify-between" style={{ fontSize: 6, color: "#4ade80", marginBottom: 2 }}>
                   <span>{state.monsterType.emoji} {state.monsterType.name}</span>
                   <span>{Math.max(0, state.monsterHp)}/{state.monsterMaxHp}</span>
                 </div>
@@ -1492,7 +1500,7 @@ export default function Home() {
               <button
                 onPointerDown={!bossEntering ? (e) => handleClick(e as any) : undefined}
                 disabled={bossEntering}
-                className="pixel-border w-full mb-1"
+                className="pixel-border w-full mb-2"
                 style={{
                   background: state.isBossFight
                     ? "linear-gradient(180deg, #dc2626, #991b1b)"
@@ -1514,7 +1522,7 @@ export default function Home() {
 
             {/* Skills (in battle) */}
             {(state.isBossFight || state.isMonsterFight) && (
-              <div className="grid grid-cols-2 gap-0 mb-1">
+              <div className="grid grid-cols-2 gap-1 mb-2">
                 {state.skills.map((skill) => {
                   const unlocked = state.level >= skill.unlockLevel;
                   const cd = skillCooldowns[skill.id] || 0;
@@ -1563,7 +1571,7 @@ export default function Home() {
             )}
 
             {/* Upgrades */}
-            <div className="grid grid-cols-3 gap-0 mb-1">
+            <div className="grid grid-cols-3 gap-1 mb-2">
               {(() => {
                 const atkCost = getUpgradeCost(state.atkUpgradeCount);
                 return (
@@ -1604,7 +1612,7 @@ export default function Home() {
             </div>
 
             {/* Auto info */}
-            <div className="text-center mb-1" style={{ fontSize: 6, color: "#6b7280" }}>
+            <div className="text-center mb-2" style={{ fontSize: 6, color: "#6b7280" }}>
               자동 EXP: +{(state.autoExp * state.rebirthBonus).toFixed(1)}/초
             </div>
 
@@ -1616,9 +1624,9 @@ export default function Home() {
         {activeTab === "inventory" && (
           <div>
             {/* Equipment Slots */}
-            <div className="pixel-border p-1 mb-1" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 2 }}>⚔ 장비</div>
-              <div className="grid grid-cols-3 gap-1">
+            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 4 }}>⚔ 장비</div>
+              <div className="grid grid-cols-3 gap-2">
                 {(["weapon", "armor", "accessory"] as const).map((slot) => {
                   const slotKey = slot === "weapon" ? "equippedWeapon" : slot === "armor" ? "equippedArmor" : "equippedAccessory";
                   const item = state[slotKey];
@@ -1649,9 +1657,9 @@ export default function Home() {
             </div>
 
             {/* Inventory */}
-            <div className="pixel-border p-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div className="flex justify-between mb-2">
-                <span style={{ fontSize: 8, color: "#fbbf24" }}>🎒 인벤토리 ({state.inventory.length})</span>
+                <span style={{ fontSize: 9, color: "#fbbf24" }}>🎒 인벤토리 ({state.inventory.length})</span>
               </div>
               {state.inventory.length === 0 ? (
                 <div className="text-center py-4" style={{ fontSize: 7, color: "#4b5563" }}>
@@ -1704,19 +1712,13 @@ export default function Home() {
         {/* ─── Info Tab ───────────────────────────────────── */}
         {activeTab === "info" && (
           <div>
-            {/* Ad Banner */}
-            <div className="pixel-border p-1 mb-1 text-center" style={{ background: "linear-gradient(180deg, #4f46e5, #2563eb)", borderColor: "#60a5fa" }}>
-              <div style={{ fontSize: 9, color: "#fef3c7", fontWeight: "bold" }}>🎮 다음 게임 준비중...</div>
-              <div style={{ fontSize: 7, color: "#e0e7ff", marginTop: 1 }}>슬라임 클리커 | 타워 디펜스 | 자동 거래소</div>
-            </div>
-
             {/* Level & Rebirth Info */}
-            <div className="pixel-border p-1 mb-1" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 9, color: "#4ade80", marginBottom: 2 }}>📈 레벨 정보</div>
-              <div style={{ fontSize: 9, color: "#fff", marginBottom: 2 }}>
+            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+              <div style={{ fontSize: 10, color: "#4ade80", marginBottom: 4 }}>📈 레벨 정보</div>
+              <div style={{ fontSize: 10, color: "#fff", marginBottom: 2 }}>
                 현재: <span style={{ color: "#4ade80" }}>{state.level}</span> 
               </div>
-              <div style={{ fontSize: 8, color: "#9ca3af" }}>
+              <div style={{ fontSize: 9, color: "#9ca3af" }}>
                 배율 x{state.rebirthBonus.toFixed(2)} | 환생 {state.rebirths}회
               </div>
             </div>
@@ -1725,12 +1727,12 @@ export default function Home() {
             {state.level >= REBIRTH_LEVEL && (
               <button
                 onClick={rebirth}
-                className="pixel-border w-full cursor-pointer mb-1"
+                className="pixel-border w-full cursor-pointer mb-2"
                 style={{
                   background: "linear-gradient(180deg, #f59e0b, #dc2626)",
                   borderColor: "#fbbf24",
-                  padding: "6px",
-                  fontSize: 9,
+                  padding: "8px",
+                  fontSize: 10,
                   color: "#fff",
                   animation: "pixel-blink 2s infinite",
                 }}
@@ -1740,9 +1742,9 @@ export default function Home() {
             )}
 
             {/* Stat info */}
-            <div className="pixel-border p-1 mb-1" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 2 }}>📊 정보</div>
-              <div className="grid grid-cols-2 gap-0" style={{ fontSize: 7 }}>
+            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+              <div style={{ fontSize: 10, color: "#fbbf24", marginBottom: 2 }}>📊 정보</div>
+              <div className="grid grid-cols-2 gap-2" style={{ fontSize: 8 }}>
                 <div style={{ color: "#f87171" }}>기본 공격력: {state.baseAtk}</div>
                 <div style={{ color: "#60a5fa" }}>기본 방어력: {state.baseDef}</div>
                 <div style={{ color: "#f472b6" }}>기본 체력: {state.baseHp}</div>
@@ -1760,12 +1762,12 @@ export default function Home() {
                 onClick={resetGame}
                 className="pixel-border w-full cursor-pointer"
                 style={{ 
-                  fontSize: 8, 
+                  fontSize: 9, 
                   color: "#ef4444", 
                   background: "#1e293b",
                   borderColor: "#7f1d1d",
-                  padding: "4px",
-                  marginTop: "2px"
+                  padding: "8px",
+                  marginTop: "4px"
                 }}
               >
                 🔄 게임 리셋
@@ -1773,6 +1775,7 @@ export default function Home() {
             </div>
           </div>
         )}
+        </div>
       </div>
 
       {/* ─── Chest Modal ──────────────────────────────────── */}
