@@ -1608,23 +1608,7 @@ export default function Home() {
               자동 EXP: +{(state.autoExp * state.rebirthBonus).toFixed(1)}/초 | 환생 보너스: {(state.rebirthBonus * 100).toFixed(0)}%
             </div>
 
-            {/* Rebirth */}
-            {state.level >= REBIRTH_LEVEL && (
-              <button
-                onClick={rebirth}
-                className="pixel-border w-full cursor-pointer mb-2"
-                style={{
-                  background: "linear-gradient(180deg, #f59e0b, #dc2626)",
-                  borderColor: "#fbbf24",
-                  padding: "10px",
-                  fontSize: 10,
-                  color: "#fff",
-                  animation: "pixel-blink 2s infinite",
-                }}
-              >
-                ★ 환생 (영구 +{(REBIRTH_BONUS * 100).toFixed(0)}%) ★
-              </button>
-            )}
+
           </div>
         )}
 
@@ -1720,6 +1704,43 @@ export default function Home() {
         {/* ─── Info Tab ───────────────────────────────────── */}
         {activeTab === "info" && (
           <div>
+            {/* Ad Banner */}
+            <div className="pixel-border p-2 mb-2 text-center" style={{ background: "linear-gradient(180deg, #4f46e5, #2563eb)", borderColor: "#60a5fa" }}>
+              <div style={{ fontSize: 10, color: "#fef3c7", fontWeight: "bold" }}>🎮 다음 게임 준비중...</div>
+              <div style={{ fontSize: 8, color: "#e0e7ff", marginTop: 2 }}>슬라임 클리커 | 타워 디펜스 | 자동 거래소</div>
+            </div>
+
+            {/* Level & Rebirth Info */}
+            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+              <div style={{ fontSize: 10, color: "#4ade80", marginBottom: 6 }}>📈 레벨 정보</div>
+              <div style={{ fontSize: 11, color: "#fff", marginBottom: 8 }}>
+                현재 레벨: <span style={{ color: "#4ade80", fontSize: 12 }}>{state.level}</span>
+              </div>
+              <div style={{ fontSize: 9, color: "#9ca3af", marginBottom: 6 }}>
+                환생 배율: <span style={{ color: "#fbbf24" }}>x{state.rebirthBonus.toFixed(2)}</span> 
+                <br/>
+                누적 환생: <span style={{ color: "#f87171" }}>{state.rebirths}</span>회
+              </div>
+            </div>
+
+            {/* Rebirth Button */}
+            {state.level >= REBIRTH_LEVEL && (
+              <button
+                onClick={rebirth}
+                className="pixel-border w-full cursor-pointer mb-2"
+                style={{
+                  background: "linear-gradient(180deg, #f59e0b, #dc2626)",
+                  borderColor: "#fbbf24",
+                  padding: "10px",
+                  fontSize: 11,
+                  color: "#fff",
+                  animation: "pixel-blink 2s infinite",
+                }}
+              >
+                ★ 환생 (영구 +{(REBIRTH_BONUS * 100).toFixed(0)}%) ★
+              </button>
+            )}
+
             {/* Stat info */}
             <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div style={{ fontSize: 10, color: "#fbbf24", marginBottom: 6 }}>📊 게임 정보</div>
