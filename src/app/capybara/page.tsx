@@ -1506,11 +1506,11 @@ export default function Home() {
                     ? "linear-gradient(180deg, #dc2626, #991b1b)"
                     : "linear-gradient(180deg, #2563eb, #1d4ed8)",
                   borderColor: state.isBossFight ? "#f87171" : "#3b82f6",
-                  padding: "4px",
-                  fontSize: 9,
+                  padding: "12px 8px",
+                  fontSize: 12,
                   color: "#fff",
                   textShadow: "1px 1px 0 #000",
-                  letterSpacing: 1,
+                  letterSpacing: 2,
                   cursor: bossEntering ? "not-allowed" : "pointer",
                   opacity: bossEntering ? 0.6 : 1,
                   transition: "opacity 0.1s ease",
@@ -1538,8 +1538,8 @@ export default function Home() {
                       style={{
                         background: ready ? "#1e3a5f" : "#0f172a",
                         borderColor: ready ? "#3b82f6" : "#1e293b",
-                        padding: "6px 2px",
-                        fontSize: 7,
+                        padding: "10px 4px",
+                        fontSize: 9,
                         color: ready ? "#fff" : "#4b5563",
                         opacity: unlocked ? 1 : 0.4,
                       }}
@@ -1577,7 +1577,7 @@ export default function Home() {
                 return (
                   <button onClick={upgradeClick} disabled={state.gold < atkCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                    style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "6px 4px", fontSize: 7, color: "#93c5fd" }}>
+                    style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "8px 4px", fontSize: 8, color: "#93c5fd" }}>
                     ⚔클릭+3<br /><span style={{ color: "#fbbf24" }}>🪙{atkCost}</span>
                   </button>
                 );
@@ -1587,26 +1587,26 @@ export default function Home() {
                 return (
                   <button onClick={upgradeAuto} disabled={state.gold < autoCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                    style={{ background: "#1e293b", borderColor: "#8b5cf6", padding: "6px 4px", fontSize: 7, color: "#c4b5fd" }}>
+                    style={{ background: "#1e293b", borderColor: "#8b5cf6", padding: "8px 4px", fontSize: 8, color: "#c4b5fd" }}>
                     ⏱자동+0.3<br /><span style={{ color: "#fbbf24" }}>🪙{autoCost}</span>
                   </button>
                 );
               })()}
               <button onClick={upgradeAtk} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#ef4444", padding: "6px 4px", fontSize: 7, color: "#fca5a5" }}>
+                style={{ background: "#1e293b", borderColor: "#ef4444", padding: "8px 4px", fontSize: 8, color: "#fca5a5" }}>
                 ⚔공격+2<br /><span style={{ color: "#fbbf24" }}>🪙30</span>
               </button>
             </div>
             <div className="grid grid-cols-2 gap-1 mb-2">
               <button onClick={upgradeDef} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "6px 4px", fontSize: 7, color: "#93c5fd" }}>
+                style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "8px 4px", fontSize: 8, color: "#93c5fd" }}>
                 🛡방어+2 <span style={{ color: "#fbbf24" }}>🪙30</span>
               </button>
               <button onClick={upgradeHpStat} disabled={state.gold < 40}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#ec4899", padding: "6px 4px", fontSize: 7, color: "#f9a8d4" }}>
+                style={{ background: "#1e293b", borderColor: "#ec4899", padding: "8px 4px", fontSize: 8, color: "#f9a8d4" }}>
                 ♥체력+10 <span style={{ color: "#fbbf24" }}>🪙40</span>
               </button>
             </div>
