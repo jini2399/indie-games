@@ -1694,36 +1694,36 @@ export default function Home() {
                   아이템이 없습니다
                 </div>
               ) : (
-                <div className="grid grid-cols-4 gap-1">
+                <div className="grid grid-cols-2 gap-2">
                   {state.inventory.map((item) => {
                     if (!item || !item.rarity) return null;
                     return (
                     <div
                       key={item.id}
-                      className={`pixel-border-sm p-1 text-center ${RARITY_BG[item.rarity] || "bg-gray-800"}`}
+                      className={`pixel-border-sm p-2 text-center ${RARITY_BG[item.rarity] || "bg-gray-800"}`}
                       style={{
                         animation: item.rarity === "legendary" ? "rarity-glow-legendary 2s infinite" : item.rarity === "epic" ? "rarity-glow-epic 2s infinite" : "none",
                       }}
                     >
-                      <div style={{ fontSize: 16 }}>{item.emoji || "?"}</div>
-                      <div style={{ fontSize: 7, color: RARITY_COLORS[item.rarity] || "#fff", wordBreak: "break-all" }}>
+                      <div style={{ fontSize: 20 }}>{item.emoji || "?"}</div>
+                      <div style={{ fontSize: 8, color: RARITY_COLORS[item.rarity] || "#fff", wordBreak: "break-all", marginTop: 2 }}>
                         {item.name || "Unknown"}
                       </div>
-                      <div style={{ fontSize: 7, color: "#9ca3af" }}>
+                      <div style={{ fontSize: 8, color: "#9ca3af", marginTop: 1 }}>
                         [{RARITY_NAMES[item.rarity] || "?"}]
                       </div>
-                      <div className="flex gap-0 mt-0 justify-center">
+                      <div className="flex gap-1 mt-2 justify-center">
                         <button
                           onClick={() => equipItem(item)}
-                          className="cursor-pointer"
-                          style={{ fontSize: 5, color: "#4ade80", background: "rgba(34,197,94,0.2)", padding: "1px 3px", border: "1px solid #166534" }}
+                          className="cursor-pointer flex-1"
+                          style={{ fontSize: 7, color: "#4ade80", background: "rgba(34,197,94,0.2)", padding: "3px 2px", border: "1px solid #166534" }}
                         >
                           장착
                         </button>
                         <button
                           onClick={() => sellItem(item)}
-                          className="cursor-pointer"
-                          style={{ fontSize: 5, color: "#fbbf24", background: "rgba(251,191,36,0.2)", padding: "1px 3px", border: "1px solid #92400e" }}
+                          className="cursor-pointer flex-1"
+                          style={{ fontSize: 7, color: "#fbbf24", background: "rgba(251,191,36,0.2)", padding: "3px 2px", border: "1px solid #92400e" }}
                         >
                           판매
                         </button>
