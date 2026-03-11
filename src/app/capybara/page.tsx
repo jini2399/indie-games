@@ -99,6 +99,7 @@ interface GameState {
   autoAttackEnabled: boolean;
   // Fever effects
   doubleAttackActive: boolean;
+  doubleAttackEndTime: number;
   autoFeverActive: boolean;
   autoFeverEndTime: number;
   // Upgrade counts
@@ -237,6 +238,7 @@ function getDefaultState(): GameState {
     pendingChest: null,
     autoAttackEnabled: true,
     doubleAttackActive: false,
+    doubleAttackEndTime: 0,
     autoFeverActive: false,
     autoFeverEndTime: 0,
     atkUpgradeCount: 0,
@@ -283,6 +285,10 @@ function getTotalHp(state: GameState): number {
   if (state.equippedArmor) hp += state.equippedArmor.hp;
   if (state.equippedAccessory) hp += state.equippedAccessory.hp;
   return Math.floor(hp * state.rebirthBonus);
+}
+
+function isDoubleAttackActive(state: GameState): boolean {
+  return state.doubleAttackActive && Date.now() < state.doubleAttackEndTime;
 }
 
 // 업그레이드 비용 계산 (지수 증가: 10 * 1.5^count)
@@ -532,12 +538,23 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  // Double attack effect cleanup
+  // Double attack effect timer
   useEffect(() => {
-    if (state.doubleAttackActive) {
+    if (!state.doubleAttackActive) return;
+    
+    const now = Date.now();
+    if (now >= state.doubleAttackEndTime) {
       setState(prev => ({ ...prev, doubleAttackActive: false }));
+      return;
     }
-  }, [state.doubleAttackActive]);
+
+    const remainingTime = state.doubleAttackEndTime - now;
+    const timer = setTimeout(() => {
+      setState(prev => ({ ...prev, doubleAttackActive: false }));
+    }, remainingTime);
+
+    return () => clearTimeout(timer);
+  }, [state.doubleAttackActive, state.doubleAttackEndTime]);
 
   // Save
   useEffect(() => {
@@ -577,9 +594,12 @@ export default function Home() {
           return { ...prev, autoFeverActive: false };
         }
 
-        // 번개 광풍 공격
+        // 번개 광풍 공격 (공격력 2배 스킬 적용)
         const atk = getTotalAtk(prev);
-        const dmg = Math.max(1, Math.floor(atk * 1.5));
+        let dmg = Math.max(1, Math.floor(atk * 1.5));
+        if (isDoubleAttackActive(prev)) {
+          dmg *= 2;
+        }
 
         if (prev.isBossFight) {
           const newBossHp = prev.bossHp - dmg;
@@ -663,7 +683,10 @@ export default function Home() {
         if (prev.isBossFight) {
           if (!prev.autoAttackEnabled) return prev;
           const atk = getTotalAtk(prev);
-          const dmg = Math.max(1, atk);
+          let dmg = Math.max(1, atk);
+          if (isDoubleAttackActive(prev)) {
+            dmg *= 2;
+          }
           const newBossHp = prev.bossHp - dmg;
 
           if (newBossHp <= 0) {
@@ -682,7 +705,10 @@ export default function Home() {
         // Auto attack monster
         if (prev.isMonsterFight && prev.monsterType && prev.autoAttackEnabled) {
           const atk = getTotalAtk(prev);
-          const dmg = Math.max(1, Math.floor(atk * 0.5));
+          let dmg = Math.max(1, Math.floor(atk * 0.5));
+          if (isDoubleAttackActive(prev)) {
+            dmg *= 2;
+          }
           const newMonsterHp = prev.monsterHp - dmg;
 
           if (newMonsterHp <= 0) {
@@ -833,8 +859,8 @@ export default function Home() {
       const isCrit = Math.random() < 0.15;
       let dmg = isCrit ? atk * 2 : atk;
       
-      // 공격력 2배 스킬 적용
-      if (state.doubleAttackActive) {
+      // 공격력 2배 스킬 적용 (10초 동안 모든 공격이 2배)
+      if (isDoubleAttackActive(state)) {
         dmg *= 2;
       }
 
@@ -864,10 +890,9 @@ export default function Home() {
               isBossFight: false,
               gold: prev.gold + reward,
               pendingChest: item,
-              doubleAttackActive: false,
             };
           }
-          return { ...prev, bossHp: newBossHp, doubleAttackActive: false };
+          return { ...prev, bossHp: newBossHp };
         });
       } else if (state.isMonsterFight && state.monsterType) {
         // Attack monster
@@ -911,7 +936,6 @@ export default function Home() {
                 ...prev, exp: newExp, level: newLevel, gold,
                 isBossFight: true, bossHp: bossMaxHp, bossMaxHp, bossLevel: bossLv,
                 isMonsterFight: false, monsterType: null, monstersDefeated: prev.monstersDefeated + 1,
-                doubleAttackActive: false,
               };
             }
 
@@ -919,11 +943,10 @@ export default function Home() {
               ...prev, exp: newExp, level: newLevel, gold,
               isMonsterFight: true, monsterHp: next.hp, monsterMaxHp: next.hp,
               monsterType: next.monster, monstersDefeated: prev.monstersDefeated + 1,
-              doubleAttackActive: false,
             };
           }
 
-          return { ...prev, monsterHp: newMonsterHp, doubleAttackActive: false };
+          return { ...prev, monsterHp: newMonsterHp };
         });
       } else {
         const clickValue = Math.floor(state.clickExp * state.rebirthBonus);
@@ -978,10 +1001,15 @@ export default function Home() {
         );
 
         if (skillId === "double_attack") {
-          // 공격력 2배: 다음 클릭 공격이 2배
-          return { ...prev, skills: newSkills, doubleAttackActive: true };
+          // 공격력 2배: 10초 동안 모든 공격이 2배
+          return {
+            ...prev,
+            skills: newSkills,
+            doubleAttackActive: true,
+            doubleAttackEndTime: now + 10000,
+          };
         } else if (skillId === "auto_fever") {
-          // 번개 광풍: 3초 동안 자동 공격 (별도 로직)
+          // 번개 광풍: 3초 동안 자동 공격
           return {
             ...prev,
             skills: newSkills,
