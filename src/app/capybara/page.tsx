@@ -1639,12 +1639,6 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Auto info */}
-            <div className="text-center" style={{ fontSize: 6, color: "#6b7280" }}>
-              자동 EXP: +{(state.autoExp * state.rebirthBonus).toFixed(1)}/초
-            </div>
-
-
           </div>
         )}
 
@@ -1779,7 +1773,7 @@ export default function Home() {
                 <div style={{ color: "#f472b6" }}>기본 체력: {state.baseHp}</div>
                 <div style={{ color: "#fbbf24" }}>환생 배율: x{state.rebirthBonus.toFixed(2)}</div>
                 <div style={{ color: "#4ade80" }}>클릭 EXP: {state.clickExp}</div>
-                <div style={{ color: "#c4b5fd" }}>자동 EXP: {state.autoExp.toFixed(1)}/초</div>
+                <div style={{ color: "#c4b5fd" }}>자동 EXP: +{(state.autoExp * state.rebirthBonus).toFixed(1)}/초</div>
                 <div style={{ color: "#f87171" }}>총 공격력: {totalAtk}</div>
                 <div style={{ color: "#60a5fa" }}>총 방어력: {totalDef}</div>
               </div>
