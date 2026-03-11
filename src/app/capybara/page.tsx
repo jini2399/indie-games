@@ -97,6 +97,10 @@ interface GameState {
   pendingChest: Item | null;
   // Auto attack
   autoAttackEnabled: boolean;
+  // Fever effects
+  doubleAttackActive: boolean;
+  autoFeverActive: boolean;
+  autoFeverEndTime: number;
   // Upgrade counts
   atkUpgradeCount: number;
   autoUpgradeCount: number;
@@ -234,6 +238,9 @@ function getDefaultState(): GameState {
     skills: DEFAULT_SKILLS.map((s) => ({ ...s })),
     pendingChest: null,
     autoAttackEnabled: true,
+    doubleAttackActive: false,
+    autoFeverActive: false,
+    autoFeverEndTime: 0,
     atkUpgradeCount: 0,
     autoUpgradeCount: 0,
   };
@@ -527,6 +534,13 @@ export default function Home() {
     setMounted(true);
   }, []);
 
+  // Double attack effect cleanup
+  useEffect(() => {
+    if (state.doubleAttackActive) {
+      setState(prev => ({ ...prev, doubleAttackActive: false }));
+    }
+  }, [state.doubleAttackActive]);
+
   // Save
   useEffect(() => {
     if (mounted && state.started) saveState(state);
@@ -724,7 +738,12 @@ export default function Home() {
 
       const atk = getTotalAtk(state);
       const isCrit = Math.random() < 0.15;
-      const dmg = isCrit ? atk * 2 : atk;
+      let dmg = isCrit ? atk * 2 : atk;
+      
+      // 공격력 2배 스킬 적용
+      if (state.doubleAttackActive) {
+        dmg *= 2;
+      }
 
       setIsAttacking(true);
       setTimeout(() => setIsAttacking(false), 100);
@@ -857,74 +876,22 @@ export default function Home() {
       if (now - skill.lastUsed < skill.cooldown) return;
       if (!state.isBossFight && !state.isMonsterFight) return;
 
-      const atk = getTotalAtk(state);
-      const dmg = Math.floor(skill.damage * state.rebirthBonus + atk * 0.5);
-
-      setIsAttacking(true);
-      if (state.isBossFight) {
-        setBossHurt(true);
-        setTimeout(() => { setIsAttacking(false); setBossHurt(false); }, 400);
-      } else {
-        setMonsterHurt(true);
-        setTimeout(() => { setIsAttacking(false); setMonsterHurt(false); }, 400);
-      }
-
-      spawnDamageText(dmg, true);
-      spawnExplosion(150, 80);
-
       setState((prev) => {
         const newSkills = prev.skills.map((s) =>
           s.id === skillId ? { ...s, lastUsed: now } : s
         );
 
-        if (prev.isBossFight) {
-          const newBossHp = prev.bossHp - dmg;
-          if (newBossHp <= 0) {
-            const reward = Math.floor(50 * prev.bossLevel * prev.rebirthBonus);
-            const item = generateItem(prev.level);
-            return {
-              ...prev, skills: newSkills, isBossFight: false,
-              gold: prev.gold + reward, pendingChest: item,
-            };
-          }
-          return { ...prev, skills: newSkills, bossHp: newBossHp };
-        }
-
-        if (prev.isMonsterFight && prev.monsterType) {
-          const newMonsterHp = prev.monsterHp - dmg;
-          if (newMonsterHp <= 0) {
-            const monster = prev.monsterType;
-            const expGain = Math.floor(monster.expReward * prev.rebirthBonus * (1 + (prev.level - 1) * 0.1));
-            const goldGain = Math.floor(monster.goldReward * prev.rebirthBonus * (1 + (prev.level - 1) * 0.05));
-            const next = spawnMonster(prev.level);
-
-            let newExp = prev.exp + expGain;
-            let newLevel = prev.level;
-            let gold = prev.gold + goldGain;
-
-            while (newExp >= EXP_PER_LEVEL) {
-              newExp -= EXP_PER_LEVEL;
-              newLevel += 1;
-              gold += Math.floor(5 + newLevel * 2);
-            }
-
-            if (newLevel !== prev.level && newLevel % BOSS_INTERVAL === 0) {
-              const bossLv = Math.floor(newLevel / BOSS_INTERVAL);
-              const bossMaxHp = Math.floor(100 * Math.pow(1.8, bossLv));
-              return {
-                ...prev, skills: newSkills, exp: newExp, level: newLevel, gold,
-                isBossFight: true, bossHp: bossMaxHp, bossMaxHp, bossLevel: bossLv,
-                isMonsterFight: false, monsterType: null, monstersDefeated: prev.monstersDefeated + 1,
-              };
-            }
-
-            return {
-              ...prev, skills: newSkills, exp: newExp, level: newLevel, gold,
-              isMonsterFight: true, monsterHp: next.hp, monsterMaxHp: next.hp,
-              monsterType: next.monster, monstersDefeated: prev.monstersDefeated + 1,
-            };
-          }
-          return { ...prev, skills: newSkills, monsterHp: newMonsterHp };
+        if (skillId === "double_attack") {
+          // 공격력 2배: 다음 클릭 공격이 2배
+          return { ...prev, skills: newSkills, doubleAttackActive: true };
+        } else if (skillId === "auto_fever") {
+          // 번개 광풍: 3초 동안 자동 공격 (별도 로직)
+          return {
+            ...prev,
+            skills: newSkills,
+            autoFeverActive: true,
+            autoFeverEndTime: now + 3000,
+          };
         }
 
         return { ...prev, skills: newSkills };
