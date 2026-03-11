@@ -560,14 +560,103 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [state.started, state.skills]);
 
+  // Auto-fever (번개 광풍) - 50ms마다 자동 공격
+  useEffect(() => {
+    if (!state.autoFeverActive || !state.started) return;
+    
+    const now = Date.now();
+    if (now >= state.autoFeverEndTime) {
+      setState(prev => ({ ...prev, autoFeverActive: false }));
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setState((prev) => {
+        const now = Date.now();
+        if (now >= prev.autoFeverEndTime) {
+          return { ...prev, autoFeverActive: false };
+        }
+
+        // 번개 광풍 공격
+        const atk = getTotalAtk(prev);
+        const dmg = Math.max(1, Math.floor(atk * 1.5));
+
+        if (prev.isBossFight) {
+          const newBossHp = prev.bossHp - dmg;
+          spawnDamageText(dmg, false);
+          if (newBossHp <= 0) {
+            const reward = Math.floor(50 * prev.bossLevel * prev.rebirthBonus);
+            const item = generateItem(prev.level);
+            return {
+              ...prev,
+              isBossFight: false,
+              gold: prev.gold + reward,
+              pendingChest: item,
+              autoFeverActive: false,
+            };
+          }
+          return { ...prev, bossHp: newBossHp };
+        }
+
+        if (prev.isMonsterFight && prev.monsterType) {
+          const newMonsterHp = prev.monsterHp - dmg;
+          spawnDamageText(dmg, false);
+          if (newMonsterHp <= 0) {
+            const monster = prev.monsterType;
+            const expGain = Math.floor(monster.expReward * prev.rebirthBonus * (1 + (prev.level - 1) * 0.1));
+            const goldGain = Math.floor(monster.goldReward * prev.rebirthBonus * (1 + (prev.level - 1) * 0.05));
+            const next = spawnMonster(prev.level);
+            let newExp = prev.exp + expGain;
+            let newLevel = prev.level;
+            let gold = prev.gold + goldGain;
+            while (newExp >= EXP_PER_LEVEL) {
+              newExp -= EXP_PER_LEVEL;
+              newLevel += 1;
+              gold += Math.floor(5 + newLevel * 2);
+            }
+            if (newLevel !== prev.level && newLevel % BOSS_INTERVAL === 0) {
+              const bossLv = Math.floor(newLevel / BOSS_INTERVAL);
+              const bossMaxHp = Math.floor(100 * Math.pow(1.8, bossLv));
+              return {
+                ...prev,
+                exp: newExp,
+                level: newLevel,
+                gold,
+                isBossFight: true,
+                bossHp: bossMaxHp,
+                bossMaxHp,
+                bossLevel: bossLv,
+                isMonsterFight: false,
+                monsterType: null,
+                monstersDefeated: prev.monstersDefeated + 1,
+                autoFeverActive: false,
+              };
+            }
+            return {
+              ...prev,
+              exp: newExp,
+              level: newLevel,
+              gold,
+              isMonsterFight: true,
+              monsterHp: next.hp,
+              monsterMaxHp: next.hp,
+              monsterType: next.monster,
+              monstersDefeated: prev.monstersDefeated + 1,
+            };
+          }
+          return { ...prev, monsterHp: newMonsterHp };
+        }
+
+        return prev;
+      });
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [state.autoFeverActive, state.autoFeverEndTime, state.started]);
+
   // Auto EXP & auto attack
   useEffect(() => {
     if (!state.started) return;
-    
-    // Auto-fever 타이머 체크
-    if (state.autoFeverActive && Date.now() >= state.autoFeverEndTime) {
-      setState(prev => ({ ...prev, autoFeverActive: false }));
-    }
     
     const interval = setInterval(() => {
       setState((prev) => {
