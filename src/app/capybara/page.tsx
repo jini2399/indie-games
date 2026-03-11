@@ -563,6 +563,12 @@ export default function Home() {
   // Auto EXP & auto attack
   useEffect(() => {
     if (!state.started) return;
+    
+    // Auto-fever 타이머 체크
+    if (state.autoFeverActive && Date.now() >= state.autoFeverEndTime) {
+      setState(prev => ({ ...prev, autoFeverActive: false }));
+    }
+    
     const interval = setInterval(() => {
       setState((prev) => {
         if (prev.isBossFight) {
@@ -1416,7 +1422,7 @@ export default function Home() {
 
             {/* Skills (in battle) */}
             {(state.isBossFight || state.isMonsterFight) && (
-              <div className="grid grid-cols-4 gap-1 mb-2">
+              <div className="grid grid-cols-2 gap-1 mb-2">
                 {state.skills.map((skill) => {
                   const unlocked = state.level >= skill.unlockLevel;
                   const cd = skillCooldowns[skill.id] || 0;
