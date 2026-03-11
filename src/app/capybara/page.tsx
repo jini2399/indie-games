@@ -518,7 +518,7 @@ export default function Home() {
   const [showChest, setShowChest] = useState(false);
   const [chestOpening, setChestOpening] = useState(false);
   const [chestItem, setChestItem] = useState<Item | null>(null);
-  const [activeTab, setActiveTab] = useState<"battle" | "inventory" | "skills">("battle");
+  const [activeTab, setActiveTab] = useState<"battle" | "inventory" | "info">("battle");
   const [skillCooldowns, setSkillCooldowns] = useState<Record<string, number>>({});
   const popIdRef = useRef(0);
   const battleAreaRef = useRef<HTMLDivElement>(null);
@@ -1204,7 +1204,7 @@ export default function Home() {
 
         {/* Tabs */}
         <div className="flex gap-1 mb-2">
-          {(["battle", "inventory", "skills"] as const).map((tab) => (
+          {(["battle", "inventory", "info"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -1216,7 +1216,7 @@ export default function Home() {
                 fontSize: 8,
               }}
             >
-              {tab === "battle" ? "⚔전투" : tab === "inventory" ? "🎒인벤" : "✨스킬"}
+              {tab === "battle" ? "⚔전투" : tab === "inventory" ? "🎒인벤" : "ℹ️정보"}
             </button>
           ))}
         </div>
@@ -1717,61 +1717,12 @@ export default function Home() {
           </div>
         )}
 
-        {/* ─── Skills Tab ───────────────────────────────────── */}
-        {activeTab === "skills" && (
+        {/* ─── Info Tab ───────────────────────────────────── */}
+        {activeTab === "info" && (
           <div>
-            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 8 }}>✨ 스킬 목록</div>
-              <div className="flex flex-col gap-2">
-                {state.skills.map((skill) => {
-                  const unlocked = state.level >= skill.unlockLevel;
-                  const cd = skillCooldowns[skill.id] || 0;
-                  return (
-                    <div
-                      key={skill.id}
-                      className="pixel-border-sm p-2 flex items-center gap-3"
-                      style={{
-                        background: unlocked ? "#1e293b" : "#0f172a",
-                        borderColor: unlocked ? "#3b82f6" : "#1e293b",
-                        opacity: unlocked ? 1 : 0.5,
-                      }}
-                    >
-                      <div style={{ fontSize: 28 }}>{skill.emoji}</div>
-                      <div className="flex-1">
-                        <div style={{ fontSize: 9, color: unlocked ? "#fff" : "#6b7280" }}>
-                          {skill.name}
-                        </div>
-                        <div style={{ fontSize: 6, color: "#9ca3af" }}>
-                          {skill.description}
-                        </div>
-                        <div style={{ fontSize: 6, color: "#6b7280", marginTop: 2 }}>
-                          데미지: <span style={{ color: "#f87171" }}>{Math.floor(skill.damage * state.rebirthBonus + getTotalAtk(state) * 0.5)}</span>
-                          {" | "}쿨타임: {(skill.cooldown / 1000).toFixed(0)}초
-                          {!unlocked && <span style={{ color: "#fbbf24" }}> | Lv.{skill.unlockLevel} 해금</span>}
-                        </div>
-                        {/* Cooldown bar */}
-                        {unlocked && cd > 0 && (
-                          <div className="pixel-bar mt-1" style={{ height: 4, background: "#0f172a" }}>
-                            <div
-                              style={{
-                                height: "100%",
-                                width: `${(1 - cd / skill.cooldown) * 100}%`,
-                                background: "#3b82f6",
-                                transition: "width 0.1s",
-                              }}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* Stat info */}
-            <div className="pixel-border p-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 6 }}>📊 상세 스탯</div>
+            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 6 }}>📊 게임 정보</div>
               <div className="grid grid-cols-2 gap-1" style={{ fontSize: 7 }}>
                 <div style={{ color: "#f87171" }}>기본 공격력: {state.baseAtk}</div>
                 <div style={{ color: "#60a5fa" }}>기본 방어력: {state.baseDef}</div>
@@ -1783,19 +1734,26 @@ export default function Home() {
                 <div style={{ color: "#60a5fa" }}>총 방어력: {totalDef}</div>
               </div>
             </div>
+
+            {/* Reset button */}
+            <div className="text-center">
+              <button
+                onClick={resetGame}
+                className="pixel-border w-full cursor-pointer"
+                style={{ 
+                  fontSize: 8, 
+                  color: "#ef4444", 
+                  background: "#1e293b",
+                  borderColor: "#7f1d1d",
+                  padding: "8px",
+                  marginTop: "4px"
+                }}
+              >
+                🔄 게임 리셋
+              </button>
+            </div>
           </div>
         )}
-
-        {/* Reset button */}
-        <div className="text-center mt-3">
-          <button
-            onClick={resetGame}
-            className="cursor-pointer"
-            style={{ fontSize: 7, color: "#4b5563", background: "none", border: "none" }}
-          >
-            게임 리셋
-          </button>
-        </div>
       </div>
 
       {/* ─── Chest Modal ──────────────────────────────────── */}
