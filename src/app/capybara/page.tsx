@@ -1025,7 +1025,7 @@ export default function Home() {
       started: true,
       rebirths: prev.rebirths + 1,
       rebirthBonus: prev.rebirthBonus + REBIRTH_BONUS,
-      gold: Math.floor(prev.gold * 0.5),
+      gold: Math.floor(prev.gold * 0.5) + prev.level * 50,
       skills: DEFAULT_SKILLS.map((s) => ({ ...s })),
       isMonsterFight: true,
       monsterHp: next.hp,
