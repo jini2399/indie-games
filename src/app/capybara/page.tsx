@@ -1612,7 +1612,7 @@ export default function Home() {
             </div>
 
             {/* Auto info */}
-            <div className="text-center mb-2" style={{ fontSize: 6, color: "#6b7280" }}>
+            <div className="text-center" style={{ fontSize: 6, color: "#6b7280" }}>
               자동 EXP: +{(state.autoExp * state.rebirthBonus).toFixed(1)}/초
             </div>
 
@@ -1657,7 +1657,7 @@ export default function Home() {
             </div>
 
             {/* Inventory */}
-            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+            <div className="pixel-border p-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div className="flex justify-between mb-2">
                 <span style={{ fontSize: 9, color: "#fbbf24" }}>🎒 인벤토리 ({state.inventory.length})</span>
               </div>
@@ -1767,7 +1767,7 @@ export default function Home() {
                   background: "#1e293b",
                   borderColor: "#7f1d1d",
                   padding: "8px",
-                  marginTop: "4px"
+                  marginTop: "0"
                 }}
               >
                 🔄 게임 리셋
