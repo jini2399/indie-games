@@ -1072,6 +1072,33 @@ export default function Home() {
     }));
   };
 
+  const generateHoldHandler = (fn: () => void) => {
+    return {
+      onPointerDown: () => {
+        fn();
+        setIsHoldingAttack(true);
+        if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
+        holdIntervalRef.current = setInterval(() => {
+          fn();
+        }, 100);
+      },
+      onPointerUp: () => {
+        setIsHoldingAttack(false);
+        if (holdIntervalRef.current) {
+          clearInterval(holdIntervalRef.current);
+          holdIntervalRef.current = null;
+        }
+      },
+      onPointerLeave: () => {
+        setIsHoldingAttack(false);
+        if (holdIntervalRef.current) {
+          clearInterval(holdIntervalRef.current);
+          holdIntervalRef.current = null;
+        }
+      },
+    };
+  };
+
   const upgradeClick = () => {
     const cost = getUpgradeCost(state.atkUpgradeCount);
     if (state.gold < cost) return;
@@ -1543,28 +1570,7 @@ export default function Home() {
             {/* Attack Button */}
             {(state.isBossFight || state.isMonsterFight) && (
               <button
-                onPointerDown={!bossEntering ? (e) => {
-                  handleClick(e as any);
-                  setIsHoldingAttack(true);
-                  if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
-                  holdIntervalRef.current = setInterval(() => {
-                    handleClick(e as any);
-                  }, 100);
-                } : undefined}
-                onPointerUp={() => {
-                  setIsHoldingAttack(false);
-                  if (holdIntervalRef.current) {
-                    clearInterval(holdIntervalRef.current);
-                    holdIntervalRef.current = null;
-                  }
-                }}
-                onPointerLeave={() => {
-                  setIsHoldingAttack(false);
-                  if (holdIntervalRef.current) {
-                    clearInterval(holdIntervalRef.current);
-                    holdIntervalRef.current = null;
-                  }
-                }}
+                onPointerDown={!bossEntering ? (e) => handleClick(e as any) : undefined}
                 disabled={bossEntering}
                 className="pixel-border w-full mb-2 flex-shrink-0"
                 style={{
@@ -1641,7 +1647,7 @@ export default function Home() {
               {(() => {
                 const atkCost = getUpgradeCost(state.atkUpgradeCount);
                 return (
-                  <button onClick={upgradeClick} disabled={state.gold < atkCost}
+                  <button {...generateHoldHandler(upgradeClick)} disabled={state.gold < atkCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
                     style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
                     ▲클릭+3<br /><span style={{ color: "#fbbf24" }}>◯{atkCost}</span>
@@ -1651,26 +1657,26 @@ export default function Home() {
               {(() => {
                 const autoCost = getUpgradeCost(state.autoUpgradeCount);
                 return (
-                  <button onClick={upgradeAuto} disabled={state.gold < autoCost}
+                  <button {...generateHoldHandler(upgradeAuto)} disabled={state.gold < autoCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
                     style={{ background: "#1e293b", borderColor: "#8b5cf6", padding: "9px 5px", fontSize: 9, color: "#c4b5fd" }}>
                     ⏱자동+0.3<br /><span style={{ color: "#fbbf24" }}>◯{autoCost}</span>
                   </button>
                 );
               })()}
-              <button onClick={upgradeAtk} disabled={state.gold < 30}
+              <button {...generateHoldHandler(upgradeAtk)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#ef4444", padding: "9px 5px", fontSize: 9, color: "#fca5a5" }}>
                 ▲공격+2<br /><span style={{ color: "#fbbf24" }}>◯30</span>
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
-              <button onClick={upgradeDef} disabled={state.gold < 30}
+              <button {...generateHoldHandler(upgradeDef)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
                 ■방어+2 <span style={{ color: "#fbbf24" }}>◯30</span>
               </button>
-              <button onClick={upgradeHpStat} disabled={state.gold < 40}
+              <button {...generateHoldHandler(upgradeHpStat)} disabled={state.gold < 40}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#ec4899", padding: "9px 5px", fontSize: 9, color: "#f9a8d4" }}>
                 ●체력+10 <span style={{ color: "#fbbf24" }}>◯40</span>
