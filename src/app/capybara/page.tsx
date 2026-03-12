@@ -413,40 +413,35 @@ interface CapybaraAnimState {
 }
 
 function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "idle", frameIndex: 0 } }: { size?: number; isAttacking?: boolean; animState?: CapybaraAnimState }) {
-  // 임시: SVG 복구 (스프라이트는 나중에 정확하게 처리)
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Idle 프레임 이미지 경로
+  const idleFrames = [
+    "/indie-games/capybara-idle-1.png",
+    "/indie-games/capybara-idle-2.png",
+    "/indie-games/capybara-idle-3.png",
+    "/indie-games/capybara-idle-4.png",
+  ];
+
+  // 현재 상태에 따른 이미지 경로 결정
+  let imagePath = idleFrames[0]; // 기본값
+  
+  if (animState.state === "idle") {
+    imagePath = idleFrames[animState.frameIndex % idleFrames.length];
+  }
+
   return (
-    <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-      {/* Body */}
-      <rect x="3" y="7" width="10" height="6" fill="#8B6914" />
-      <rect x="4" y="6" width="8" height="1" fill="#8B6914" />
-      {/* Head */}
-      <rect x="9" y="3" width="6" height="5" fill="#A0782C" />
-      <rect x="10" y="2" width="4" height="1" fill="#A0782C" />
-      {/* Ears */}
-      <rect x="10" y="1" width="2" height="2" fill="#C4956A" />
-      <rect x="13" y="1" width="2" height="2" fill="#C4956A" />
-      {/* Eyes */}
-      <rect x="11" y="4" width="1" height="1" fill="#000" />
-      <rect x="13" y="4" width="1" height="1" fill="#000" />
-      {/* Nose */}
-      <rect x="14" y="5" width="2" height="2" fill="#5C3D1E" />
-      {/* Mouth */}
-      <rect x="12" y="6" width="2" height="1" fill="#C4956A" />
-      {/* Legs */}
-      <rect x="4" y="13" width="2" height="2" fill="#6B4F12" />
-      <rect x="10" y="13" width="2" height="2" fill="#6B4F12" />
-      {/* Belly */}
-      <rect x="5" y="9" width="6" height="3" fill="#C4956A" />
-      {/* Tail */}
-      <rect x="2" y="8" width="2" height="2" fill="#6B4F12" />
-      {/* Weapon indicator when attacking */}
-      {isAttacking && (
-        <>
-          <rect x="0" y="4" width="1" height="5" fill="#ccc" />
-          <rect x="1" y="3" width="1" height="1" fill="#ff0" />
-        </>
-      )}
-    </svg>
+    <img
+      ref={imgRef}
+      src={imagePath}
+      style={{
+        width: size,
+        height: size,
+        imageRendering: "pixelated",
+        display: "block",
+      }}
+      alt="capybara"
+    />
   );
 }
 
