@@ -594,9 +594,9 @@ export default function Home() {
           return { ...prev, autoFeverActive: false };
         }
 
-        // 번개 광풍 공격 (기본 자동 공격 데미지, 공격력 2배 스킬 적용)
+        // 번개 광풍 공격 (최종 데미지, 공격력 2배 스킬 적용)
         const atk = getTotalAtk(prev);
-        let dmg = Math.max(1, Math.floor(atk * 0.5));
+        let dmg = Math.max(1, Math.floor(atk));
         if (isDoubleAttackActive(prev)) {
           dmg *= 2;
         }
