@@ -1289,7 +1289,7 @@ export default function Home() {
 
         {/* Stats Bar */}
         <div
-          className="pixel-border mb-3 p-3 flex flex-col gap-2"
+          className="pixel-border mb-3 p-3 flex flex-col gap-2 flex-shrink-0 w-full max-w-md"
           style={{ background: "#0f172a", borderColor: "#334155" }}
         >
           {/* Row 1: Level, Attack, Defense */}
@@ -1321,7 +1321,7 @@ export default function Home() {
         </div>
 
         {/* EXP Bar */}
-        <div className="mb-3">
+        <div className="mb-3 flex-shrink-0 w-full max-w-md">
           <div className="flex justify-between" style={{ fontSize: 8, color: "#9ca3af", marginBottom: 3 }}>
             <span>EXP</span>
             <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
@@ -1339,7 +1339,7 @@ export default function Home() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-3 w-full">
+        <div className="flex gap-2 w-full max-w-md flex-shrink-0 mt-2" style={{ order: 1000 }}>
           {(["battle", "inventory", "info"] as const).map((tab) => (
             <button
               key={tab}
@@ -1358,7 +1358,7 @@ export default function Home() {
         </div>
 
         {/* Tab Content */}
-        <div className="flex-1 overflow-hidden w-full max-w-md flex flex-col">
+        <div className="flex-1 overflow-hidden w-full max-w-md flex flex-col" style={{ order: 2 }}>
         {/* ─── Battle Tab ───────────────────────────────────── */}
         {activeTab === "battle" && (
           <div className="h-full overflow-hidden flex flex-col">
