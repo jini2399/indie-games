@@ -672,6 +672,9 @@ export default function Home() {
     }
 
     const interval = setInterval(() => {
+      setIsAttacking(true);
+      setTimeout(() => setIsAttacking(false), 80);
+
       setState((prev) => {
         const now = Date.now();
         if (now >= prev.autoFeverEndTime) {
@@ -763,6 +766,10 @@ export default function Home() {
     if (!state.started) return;
     
     const interval = setInterval(() => {
+      // Trigger attack animation
+      setIsAttacking(true);
+      setTimeout(() => setIsAttacking(false), 100);
+
       setState((prev) => {
         if (prev.isBossFight) {
           if (!prev.autoAttackEnabled) return prev;
