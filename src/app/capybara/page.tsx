@@ -1371,7 +1371,7 @@ export default function Home() {
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
               className="pixel-border relative overflow-hidden cursor-pointer mb-2 flex-1"
               style={{
-                backgroundImage: bgIndex === 0 ? "url('/indie-games/bg-castle-1.png')" : "url('/indie-games/bg-castle-2.jpg')",
+                backgroundImage: bgIndex === 0 ? "url('/indie-games/bg-castle-1.jpg')" : "url('/indie-games/bg-castle-2.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
