@@ -407,40 +407,37 @@ function generateItem(level: number): Item {
 
 // ─── SVG Pixel Art Components ────────────────────────────────────────
 
-function PixelCapybara({ size = 80, isAttacking = false }: { size?: number; isAttacking?: boolean }) {
+interface CapybaraAnimState {
+  state: "idle" | "attack" | "jump" | "hit" | "victory" | "breathing";
+  frameIndex: number;
+}
+
+function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "idle", frameIndex: 0 } }: { size?: number; isAttacking?: boolean; animState?: CapybaraAnimState }) {
+  // 스프라이트시트 프레임 좌표 (x, y)
+  const frameCoords: Record<string, number[][]> = {
+    idle: [[0, 0], [60, 0], [120, 0], [180, 0]],
+    attack: [[0, 60], [60, 60], [120, 60]],
+    breathing: [[180, 60], [240, 60]],
+    jump: [[0, 120], [60, 120]],
+    hit: [[120, 120]],
+    victory: [[180, 120], [240, 120]],
+  };
+
+  const coords = frameCoords[animState.state] || frameCoords.idle;
+  const [x, y] = coords[animState.frameIndex % coords.length];
+
   return (
-    <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-      {/* Body */}
-      <rect x="3" y="7" width="10" height="6" fill="#8B6914" />
-      <rect x="4" y="6" width="8" height="1" fill="#8B6914" />
-      {/* Head */}
-      <rect x="9" y="3" width="6" height="5" fill="#A0782C" />
-      <rect x="10" y="2" width="4" height="1" fill="#A0782C" />
-      {/* Ears */}
-      <rect x="10" y="1" width="2" height="2" fill="#C4956A" />
-      <rect x="13" y="1" width="2" height="2" fill="#C4956A" />
-      {/* Eyes */}
-      <rect x="11" y="4" width="1" height="1" fill="#000" />
-      <rect x="13" y="4" width="1" height="1" fill="#000" />
-      {/* Nose */}
-      <rect x="14" y="5" width="2" height="2" fill="#5C3D1E" />
-      {/* Mouth */}
-      <rect x="12" y="6" width="2" height="1" fill="#C4956A" />
-      {/* Legs */}
-      <rect x="4" y="13" width="2" height="2" fill="#6B4F12" />
-      <rect x="10" y="13" width="2" height="2" fill="#6B4F12" />
-      {/* Belly */}
-      <rect x="5" y="9" width="6" height="3" fill="#C4956A" />
-      {/* Tail */}
-      <rect x="2" y="8" width="2" height="2" fill="#6B4F12" />
-      {/* Weapon indicator when attacking */}
-      {isAttacking && (
-        <>
-          <rect x="0" y="4" width="1" height="5" fill="#ccc" />
-          <rect x="1" y="3" width="1" height="1" fill="#ff0" />
-        </>
-      )}
-    </svg>
+    <div
+      style={{
+        width: size,
+        height: size,
+        backgroundImage: "url('/capybara-sprites.png')",
+        backgroundPosition: `-${x}px -${y}px`,
+        backgroundSize: "300px 180px",
+        imageRendering: "pixelated",
+        backgroundColor: "transparent",
+      }}
+    />
   );
 }
 
@@ -610,6 +607,8 @@ export default function Home() {
   const [chestItem, setChestItem] = useState<Item | null>(null);
   const [activeTab, setActiveTab] = useState<"battle" | "inventory" | "info">("battle");
   const [skillCooldowns, setSkillCooldowns] = useState<Record<string, number>>({});
+  const [animFrameIndex, setAnimFrameIndex] = useState(0);
+  const [capybaraAnimState, setCapybaraAnimState] = useState<CapybaraAnimState>({ state: "idle", frameIndex: 0 });
   const popIdRef = useRef(0);
   const battleAreaRef = useRef<HTMLDivElement>(null);
 
@@ -660,6 +659,27 @@ export default function Home() {
     }, 100);
     return () => clearInterval(interval);
   }, [state.started, state.skills]);
+
+  // Animation frame update
+  useEffect(() => {
+    if (!state.started) return;
+    const interval = setInterval(() => {
+      setAnimFrameIndex(prev => prev + 1);
+      
+      // 상태에 따라 애니메이션 결정
+      let newState: CapybaraAnimState = { state: "idle", frameIndex: 0 };
+      
+      if (isAttacking && (state.isBossFight || state.isMonsterFight)) {
+        newState = { state: "attack", frameIndex: (animFrameIndex % 3) };
+      } else if (state.isBossFight || state.isMonsterFight) {
+        // Idle 호흡 애니메이션
+        newState = { state: "idle", frameIndex: (animFrameIndex % 4) };
+      }
+      
+      setCapybaraAnimState(newState);
+    }, 100); // 100ms마다 프레임 변경
+    return () => clearInterval(interval);
+  }, [state.started, isAttacking, state.isBossFight, state.isMonsterFight, animFrameIndex]);
 
   // Auto-fever (번개 광풍) - 50ms마다 자동 공격
   useEffect(() => {
@@ -1397,7 +1417,7 @@ export default function Home() {
                     : "pixel-breathe 2s ease-in-out infinite",
                 }}
               >
-                <PixelCapybara size={64} isAttacking={isAttacking} />
+                <PixelCapybara size={64} isAttacking={isAttacking} animState={capybaraAnimState} />
               </div>
 
               {/* Boss or Monster */}
