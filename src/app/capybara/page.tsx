@@ -431,13 +431,23 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
       style={{
         width: size,
         height: size,
-        backgroundImage: "url('/capybara-sprites.png')",
-        backgroundPosition: `-${x}px -${y}px`,
-        backgroundSize: "300px 180px",
-        imageRendering: "pixelated",
+        overflow: "hidden",
         backgroundColor: "transparent",
       }}
-    />
+    >
+      <img
+        src="/capybara-sprites.png"
+        style={{
+          width: "300px",
+          height: "180px",
+          marginLeft: `-${x}px`,
+          marginTop: `-${y}px`,
+          imageRendering: "pixelated",
+          display: "block",
+        }}
+        alt="capybara"
+      />
+    </div>
   );
 }
 
