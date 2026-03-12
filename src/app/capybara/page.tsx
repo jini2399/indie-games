@@ -425,7 +425,10 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
   // 현재 상태에 따른 이미지 경로 결정
   let imagePath = "/indie-games/capybara-idle-1.png";  // 기본값
   
-  if (animState.state === "attack") {
+  // isAttacking이 true면 펀치 모션 (자동 공격 포함)
+  if (isAttacking) {
+    imagePath = "/indie-games/capybara-attack-2.png";
+  } else if (animState.state === "attack") {
     // 공격: 펀치만
     imagePath = "/indie-games/capybara-attack-2.png";
   } else if (animState.state === "idle") {
@@ -1095,13 +1098,15 @@ export default function Home() {
         pressStartTime = Date.now();
         hasTriggeredAutoMode = false;
         
+        // 즉시 1회 실행
+        fn();
+        
         if (holdTimeoutRef.current) clearTimeout(holdTimeoutRef.current);
         if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
         
         // 1.5초 후 자동 업그레이드 시작
         holdTimeoutRef.current = setTimeout(() => {
           hasTriggeredAutoMode = true;
-          fn();
           holdIntervalRef.current = setInterval(() => {
             fn();
           }, 20);
@@ -1109,7 +1114,6 @@ export default function Home() {
       },
       onPointerUp: () => {
         setIsHoldingAttack(false);
-        const pressDuration = Date.now() - pressStartTime;
         
         if (holdTimeoutRef.current) {
           clearTimeout(holdTimeoutRef.current);
@@ -1118,16 +1122,10 @@ export default function Home() {
         if (holdIntervalRef.current) {
           clearInterval(holdIntervalRef.current);
           holdIntervalRef.current = null;
-        }
-        
-        // 1.5초 미만이면 한 번만 실행
-        if (pressDuration < 1500 && !hasTriggeredAutoMode) {
-          fn();
         }
       },
       onPointerLeave: () => {
         setIsHoldingAttack(false);
-        const pressDuration = Date.now() - pressStartTime;
         
         if (holdTimeoutRef.current) {
           clearTimeout(holdTimeoutRef.current);
@@ -1136,11 +1134,6 @@ export default function Home() {
         if (holdIntervalRef.current) {
           clearInterval(holdIntervalRef.current);
           holdIntervalRef.current = null;
-        }
-        
-        // 1.5초 미만이면 한 번만 실행
-        if (pressDuration < 1500 && !hasTriggeredAutoMode) {
-          fn();
         }
       },
     };
