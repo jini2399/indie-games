@@ -1264,7 +1264,7 @@ export default function Home() {
   if (!state.started) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-8 select-none pixel-grid" style={{ background: "#1a1a2e" }}>
-        <div style={{ animation: "pixel-breathe 2s ease-in-out infinite" }}>
+        <div>
           <PixelCapybara size={128} />
         </div>
         <h1 className="text-center" style={{ fontSize: 16, color: "#fbbf24", textShadow: "2px 2px 0 #92400e" }}>
@@ -1412,11 +1412,11 @@ export default function Home() {
               <div
                 style={{
                   position: "absolute",
-                  bottom: 30,
+                  bottom: 10,
                   left: 40,
                   animation: isAttacking
                     ? ((state.isBossFight || state.isMonsterFight) ? "capy-slash 0.4s ease-out" : "pixel-attack 0.3s ease-out")
-                    : "pixel-breathe 2s ease-in-out infinite",
+                    : undefined,
                 }}
               >
                 <PixelCapybara size={64} isAttacking={isAttacking} animState={capybaraAnimState} />
@@ -1433,13 +1433,13 @@ export default function Home() {
                   }}
                   style={{
                     position: "absolute",
-                    bottom: 30,
+                    bottom: 10,
                     right: 30,
                     animation: bossEntering
                       ? "boss-entrance 1s cubic-bezier(0.22, 1, 0.36, 1) forwards"
                       : bossHurt
                         ? "boss-hit-shake 0.35s ease-out"
-                        : "pixel-breathe 2.5s ease-in-out infinite",
+                        : undefined,
                     transformOrigin: "bottom center",
                     zIndex: 10,
                   }}
@@ -1469,13 +1469,13 @@ export default function Home() {
                   }}
                   style={{
                     position: "absolute",
-                    bottom: 30,
+                    bottom: 10,
                     right: 40,
                     animation: monsterDying
                       ? "monster-death 0.6s ease-out forwards"
                       : monsterHurt
                         ? "boss-hit-shake 0.35s ease-out"
-                        : "pixel-breathe 2s ease-in-out infinite",
+                        : undefined,
                     transformOrigin: "bottom center",
                     zIndex: 10,
                   }}
@@ -1486,10 +1486,9 @@ export default function Home() {
                 <div
                   style={{
                     position: "absolute",
-                    bottom: 34,
+                    bottom: 14,
                     right: 50,
                     fontSize: 40,
-                    animation: "pixel-breathe 3s ease-in-out infinite",
                   }}
                 >
                   🌿
