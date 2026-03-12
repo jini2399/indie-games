@@ -497,6 +497,7 @@ export default function Home() {
   const [explosions, setExplosions] = useState<Explosion[]>([]);
   const [isAttacking, setIsAttacking] = useState(false);
   const [isHoldingAttack, setIsHoldingAttack] = useState(false);
+  const holdTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const holdIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [bossHurt, setBossHurt] = useState(false);
   const [bossEntering, setBossEntering] = useState(false);
@@ -522,9 +523,12 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  // Cleanup hold attack interval on unmount
+  // Cleanup hold attack interval/timeout on unmount
   useEffect(() => {
     return () => {
+      if (holdTimeoutRef.current) {
+        clearTimeout(holdTimeoutRef.current);
+      }
       if (holdIntervalRef.current) {
         clearInterval(holdIntervalRef.current);
       }
@@ -1075,15 +1079,24 @@ export default function Home() {
   const generateHoldHandler = (fn: () => void) => {
     return {
       onPointerDown: () => {
-        fn();
         setIsHoldingAttack(true);
+        if (holdTimeoutRef.current) clearTimeout(holdTimeoutRef.current);
         if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
-        holdIntervalRef.current = setInterval(() => {
+        
+        // 2초 후 동작 시작
+        holdTimeoutRef.current = setTimeout(() => {
           fn();
-        }, 20);
+          holdIntervalRef.current = setInterval(() => {
+            fn();
+          }, 20);
+        }, 2000);
       },
       onPointerUp: () => {
         setIsHoldingAttack(false);
+        if (holdTimeoutRef.current) {
+          clearTimeout(holdTimeoutRef.current);
+          holdTimeoutRef.current = null;
+        }
         if (holdIntervalRef.current) {
           clearInterval(holdIntervalRef.current);
           holdIntervalRef.current = null;
@@ -1091,6 +1104,10 @@ export default function Home() {
       },
       onPointerLeave: () => {
         setIsHoldingAttack(false);
+        if (holdTimeoutRef.current) {
+          clearTimeout(holdTimeoutRef.current);
+          holdTimeoutRef.current = null;
+        }
         if (holdIntervalRef.current) {
           clearInterval(holdIntervalRef.current);
           holdIntervalRef.current = null;
