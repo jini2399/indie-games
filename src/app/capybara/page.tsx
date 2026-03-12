@@ -140,7 +140,7 @@ interface Monster {
   baseAtk: number;
   expReward: number;
   goldReward: number;
-  type: "slime" | "goblin" | "orc" | "wolf" | "bat";
+  type: "slime" | "bat" | "goblin" | "ogre";
 }
 
 interface GameState {
@@ -254,9 +254,8 @@ const BOSS_NAMES = ["고블린 킹", "드래곤", "해골 기사", "데몬 로�
 const MONSTERS: Monster[] = [
   { name: "슬라임", emoji: "💧", baseHp: 20, baseAtk: 2, expReward: 8, goldReward: 2, type: "slime" },
   { name: "박쥐", emoji: "🦇", baseHp: 30, baseAtk: 4, expReward: 12, goldReward: 3, type: "bat" },
-  { name: "늑대", emoji: "🐺", baseHp: 45, baseAtk: 6, expReward: 18, goldReward: 5, type: "wolf" },
   { name: "고블린", emoji: "👹", baseHp: 60, baseAtk: 8, expReward: 25, goldReward: 8, type: "goblin" },
-  { name: "오크", emoji: "🗡️", baseHp: 80, baseAtk: 10, expReward: 35, goldReward: 12, type: "orc" },
+  { name: "오우거", emoji: "💪", baseHp: 80, baseAtk: 10, expReward: 35, goldReward: 12, type: "ogre" },
 ];
 
 function getMonsterForLevel(level: number): Monster {
@@ -465,106 +464,27 @@ function PixelBoss({ bossIndex, size = 80 }: { bossIndex: number; size?: number 
 }
 
 function PixelMonster({ type, size = 64 }: { type: string; size?: number }) {
-  switch (type) {
-    case "slime":
-      return (
-        <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-          <rect x="4" y="8" width="8" height="6" fill="#44cc88" />
-          <rect x="3" y="10" width="10" height="4" fill="#44cc88" />
-          <rect x="5" y="7" width="6" height="1" fill="#44cc88" />
-          <rect x="6" y="6" width="4" height="1" fill="#55ddaa" />
-          <rect x="5" y="9" width="2" height="2" fill="#fff" />
-          <rect x="9" y="9" width="2" height="2" fill="#fff" />
-          <rect x="6" y="10" width="1" height="1" fill="#000" />
-          <rect x="10" y="10" width="1" height="1" fill="#000" />
-          <rect x="7" y="12" width="2" height="1" fill="#338866" />
-          <rect x="6" y="7" width="2" height="1" fill="#88ffcc" />
-        </svg>
-      );
-    case "bat":
-      return (
-        <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-          <rect x="6" y="5" width="4" height="5" fill="#554466" />
-          <rect x="7" y="4" width="2" height="1" fill="#554466" />
-          <rect x="1" y="5" width="5" height="3" fill="#443355" />
-          <rect x="10" y="5" width="5" height="3" fill="#443355" />
-          <rect x="0" y="6" width="2" height="2" fill="#443355" />
-          <rect x="14" y="6" width="2" height="2" fill="#443355" />
-          <rect x="7" y="6" width="1" height="1" fill="#ff4444" />
-          <rect x="9" y="6" width="1" height="1" fill="#ff4444" />
-          <rect x="7" y="9" width="1" height="1" fill="#fff" />
-          <rect x="9" y="9" width="1" height="1" fill="#fff" />
-          <rect x="6" y="4" width="1" height="2" fill="#554466" />
-          <rect x="9" y="4" width="1" height="2" fill="#554466" />
-        </svg>
-      );
-    case "wolf":
-      return (
-        <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-          <rect x="3" y="7" width="8" height="5" fill="#888899" />
-          <rect x="9" y="4" width="5" height="4" fill="#999aaa" />
-          <rect x="10" y="3" width="2" height="2" fill="#aabbcc" />
-          <rect x="13" y="3" width="1" height="2" fill="#aabbcc" />
-          <rect x="11" y="5" width="1" height="1" fill="#ff4444" />
-          <rect x="13" y="5" width="1" height="1" fill="#ff4444" />
-          <rect x="14" y="6" width="2" height="2" fill="#666677" />
-          <rect x="15" y="7" width="1" height="1" fill="#fff" />
-          <rect x="4" y="12" width="2" height="2" fill="#666677" />
-          <rect x="8" y="12" width="2" height="2" fill="#666677" />
-          <rect x="1" y="8" width="3" height="2" fill="#777788" />
-          <rect x="0" y="9" width="2" height="1" fill="#666677" />
-          <rect x="5" y="8" width="4" height="2" fill="#aabbcc" />
-        </svg>
-      );
-    case "goblin":
-      return (
-        <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-          <rect x="5" y="3" width="6" height="6" fill="#44aa44" />
-          <rect x="4" y="4" width="1" height="3" fill="#44aa44" />
-          <rect x="11" y="4" width="1" height="3" fill="#44aa44" />
-          <rect x="3" y="5" width="2" height="2" fill="#55bb55" />
-          <rect x="11" y="5" width="2" height="2" fill="#55bb55" />
-          <rect x="6" y="5" width="2" height="2" fill="#fff" />
-          <rect x="9" y="5" width="2" height="2" fill="#fff" />
-          <rect x="7" y="6" width="1" height="1" fill="#ff0000" />
-          <rect x="10" y="6" width="1" height="1" fill="#ff0000" />
-          <rect x="7" y="8" width="3" height="1" fill="#338833" />
-          <rect x="5" y="9" width="6" height="4" fill="#886633" />
-          <rect x="5" y="13" width="2" height="2" fill="#44aa44" />
-          <rect x="9" y="13" width="2" height="2" fill="#44aa44" />
-          <rect x="6" y="2" width="1" height="2" fill="#55bb55" />
-          <rect x="9" y="2" width="1" height="2" fill="#55bb55" />
-        </svg>
-      );
-    case "orc":
-      return (
-        <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-          <rect x="4" y="2" width="8" height="7" fill="#668844" />
-          <rect x="3" y="4" width="1" height="3" fill="#668844" />
-          <rect x="12" y="4" width="1" height="3" fill="#668844" />
-          <rect x="5" y="4" width="2" height="2" fill="#fff" />
-          <rect x="9" y="4" width="2" height="2" fill="#fff" />
-          <rect x="6" y="5" width="1" height="1" fill="#ff0000" />
-          <rect x="10" y="5" width="1" height="1" fill="#ff0000" />
-          <rect x="6" y="7" width="1" height="2" fill="#fff" />
-          <rect x="9" y="7" width="1" height="2" fill="#fff" />
-          <rect x="7" y="8" width="2" height="1" fill="#445522" />
-          <rect x="4" y="9" width="8" height="5" fill="#774422" />
-          <rect x="3" y="10" width="2" height="3" fill="#668844" />
-          <rect x="11" y="10" width="2" height="3" fill="#668844" />
-          <rect x="4" y="14" width="3" height="2" fill="#668844" />
-          <rect x="9" y="14" width="3" height="2" fill="#668844" />
-          <rect x="1" y="6" width="3" height="1" fill="#999" />
-          <rect x="0" y="5" width="2" height="1" fill="#aaa" />
-        </svg>
-      );
-    default:
-      return (
-        <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-          <rect x="4" y="4" width="8" height="8" fill="#888" />
-        </svg>
-      );
-  }
+  const monsterImages: Record<string, string> = {
+    slime: "/indie-games/monster-slime.png",
+    bat: "/indie-games/monster-bat.png",
+    goblin: "/indie-games/monster-goblin.png",
+    ogre: "/indie-games/monster-ogre.png",
+  };
+
+  const imagePath = monsterImages[type] || monsterImages.slime;
+
+  return (
+    <img
+      src={imagePath}
+      style={{
+        width: size,
+        height: size,
+        imageRendering: "pixelated",
+        display: "block",
+      }}
+      alt={type}
+    />
+  );
 }
 
 // ─── Main Component ──────────────────────────────────────────────────
