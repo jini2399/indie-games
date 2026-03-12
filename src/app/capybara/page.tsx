@@ -709,6 +709,10 @@ export default function Home() {
     if (!state.started) return;
     
     const interval = setInterval(() => {
+      // Trigger attack animation
+      setIsAttacking(true);
+      setTimeout(() => setIsAttacking(false), 100);
+
       setState((prev) => {
         if (prev.isBossFight) {
           if (!prev.autoAttackEnabled) return prev;
