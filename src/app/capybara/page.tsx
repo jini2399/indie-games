@@ -1289,34 +1289,40 @@ export default function Home() {
 
         {/* Stats Bar */}
         <div
-          className="pixel-border mb-3 p-3 grid grid-cols-5 gap-1 text-center"
-          style={{ background: "#0f172a", borderColor: "#334155", fontSize: 8 }}
+          className="pixel-border mb-3 p-3 flex flex-col gap-2"
+          style={{ background: "#0f172a", borderColor: "#334155" }}
         >
-          <div>
-            <div style={{ color: "#4ade80" }}>Lv.{state.level}</div>
-            <div style={{ color: "#6b7280" }}>레벨</div>
+          {/* Row 1: Level, Attack, Defense */}
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div>
+              <div style={{ fontSize: 10, color: "#4ade80", fontWeight: "bold" }}>Lv.{state.level}</div>
+              <div style={{ fontSize: 7, color: "#6b7280" }}>레벨</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 10, color: "#f87171", fontWeight: "bold" }}>▲{totalAtk}</div>
+              <div style={{ fontSize: 7, color: "#6b7280" }}>공격</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 10, color: "#60a5fa", fontWeight: "bold" }}>■{totalDef}</div>
+              <div style={{ fontSize: 7, color: "#6b7280" }}>방어</div>
+            </div>
           </div>
-          <div>
-            <div style={{ color: "#f87171" }}>▲{totalAtk}</div>
-            <div style={{ color: "#6b7280" }}>공격</div>
-          </div>
-          <div>
-            <div style={{ color: "#60a5fa" }}>■{totalDef}</div>
-            <div style={{ color: "#6b7280" }}>방어</div>
-          </div>
-          <div>
-            <div style={{ color: "#f472b6" }}>●{totalHp}</div>
-            <div style={{ color: "#6b7280" }}>체력</div>
-          </div>
-          <div>
-            <div style={{ color: "#fbbf24" }}>★{state.rebirths}</div>
-            <div style={{ color: "#6b7280" }}>환생</div>
+          {/* Row 2: HP, Rebirth */}
+          <div className="grid grid-cols-2 gap-2 text-center">
+            <div>
+              <div style={{ fontSize: 10, color: "#f472b6", fontWeight: "bold" }}>●{totalHp}</div>
+              <div style={{ fontSize: 7, color: "#6b7280" }}>체력</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 10, color: "#fbbf24", fontWeight: "bold" }}>★{state.rebirths}</div>
+              <div style={{ fontSize: 7, color: "#6b7280" }}>환생</div>
+            </div>
           </div>
         </div>
 
         {/* EXP Bar */}
         <div className="mb-3">
-          <div className="flex justify-between" style={{ fontSize: 6, color: "#9ca3af", marginBottom: 3 }}>
+          <div className="flex justify-between" style={{ fontSize: 8, color: "#9ca3af", marginBottom: 3 }}>
             <span>EXP</span>
             <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
           </div>
