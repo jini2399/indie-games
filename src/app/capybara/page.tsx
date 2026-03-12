@@ -1268,7 +1268,7 @@ export default function Home() {
               style={{
                 background: "linear-gradient(180deg, #0c1222 0%, #1a1a3e 50%, #1a2e1a 100%)",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
-                height: 120,
+                height: 90,
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
               }}
             >
@@ -1286,7 +1286,7 @@ export default function Home() {
               {/* Grid floor */}
               <div
                 style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0, height: 40,
+                  position: "absolute", bottom: 0, left: 0, right: 0, height: 30,
                   background: "repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(255,255,255,0.05) 15px, rgba(255,255,255,0.05) 16px), repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(255,255,255,0.05) 15px, rgba(255,255,255,0.05) 16px)",
                   backgroundColor: "rgba(34,197,94,0.1)",
                 }}
@@ -1296,7 +1296,7 @@ export default function Home() {
               <div
                 style={{
                   position: "absolute",
-                  bottom: 40,
+                  bottom: 30,
                   left: 40,
                   animation: isAttacking
                     ? ((state.isBossFight || state.isMonsterFight) ? "capy-slash 0.4s ease-out" : "pixel-attack 0.3s ease-out")
@@ -1317,7 +1317,7 @@ export default function Home() {
                   }}
                   style={{
                     position: "absolute",
-                    bottom: 40,
+                    bottom: 30,
                     right: 30,
                     animation: bossEntering
                       ? "boss-entrance 1s cubic-bezier(0.22, 1, 0.36, 1) forwards"
@@ -1353,7 +1353,7 @@ export default function Home() {
                   }}
                   style={{
                     position: "absolute",
-                    bottom: 40,
+                    bottom: 30,
                     right: 40,
                     animation: monsterDying
                       ? "monster-death 0.6s ease-out forwards"
@@ -1370,7 +1370,7 @@ export default function Home() {
                 <div
                   style={{
                     position: "absolute",
-                    bottom: 44,
+                    bottom: 34,
                     right: 50,
                     fontSize: 40,
                     animation: "pixel-breathe 3s ease-in-out infinite",
@@ -1528,7 +1528,7 @@ export default function Home() {
               <button
                 onPointerDown={!bossEntering ? (e) => handleClick(e as any) : undefined}
                 disabled={bossEntering}
-                className="pixel-border w-full mb-2"
+                className="pixel-border w-full mb-0"
                 style={{
                   background: state.isBossFight
                     ? "linear-gradient(180deg, #dc2626, #991b1b)"
@@ -1550,7 +1550,7 @@ export default function Home() {
 
             {/* Skills (in battle) */}
             {(state.isBossFight || state.isMonsterFight) && (
-              <div className="grid grid-cols-2 gap-1 mb-2">
+              <div className="grid grid-cols-2 gap-1 mb-0">
                 {state.skills.map((skill) => {
                   const unlocked = state.level >= skill.unlockLevel;
                   const cd = skillCooldowns[skill.id] || 0;
@@ -1626,7 +1626,7 @@ export default function Home() {
                 ⚔공격+2<br /><span style={{ color: "#fbbf24" }}>🪙30</span>
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-1 mb-2">
+            <div className="grid grid-cols-2 gap-1 mb-0">
               <button onClick={upgradeDef} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "8px 4px", fontSize: 8, color: "#93c5fd" }}>
