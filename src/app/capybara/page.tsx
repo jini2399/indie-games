@@ -2,6 +2,90 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 
+// ─── SVG Icons (Pixel Art Style) ───────────────────────────────────────
+
+const IconAttack = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <rect x="5" y="0" width="4" height="8" fill="#ef4444"/>
+    <rect x="2" y="7" width="10" height="2" fill="#ef4444"/>
+    <rect x="6" y="9" width="2" height="5" fill="#ef4444"/>
+  </svg>
+);
+
+const IconDefense = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <rect x="3" y="2" width="8" height="10" fill="#3b82f6"/>
+    <rect x="4" y="3" width="6" height="8" fill="none" stroke="#60a5fa" strokeWidth="1"/>
+    <line x1="7" y1="5" x2="7" y2="10" stroke="#60a5fa" strokeWidth="1"/>
+  </svg>
+);
+
+const IconHP = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M7 2 L10 5 L10 10 Q10 12 8 12 L6 12 Q4 12 4 10 L4 5 L7 2" fill="#ec4899" stroke="#f472b6" strokeWidth="1"/>
+  </svg>
+);
+
+const IconLightning = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <polygon points="6,1 8,5 5,5 8,13 3,7 6,7" fill="#fbbf24"/>
+  </svg>
+);
+
+const IconExplosion = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <rect x="4" y="4" width="6" height="6" fill="#dc2626"/>
+    <rect x="3" y="3" width="2" height="2" fill="#f87171"/>
+    <rect x="9" y="3" width="2" height="2" fill="#f87171"/>
+    <rect x="3" y="9" width="2" height="2" fill="#f87171"/>
+    <rect x="9" y="9" width="2" height="2" fill="#f87171"/>
+  </svg>
+);
+
+const IconGold = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <circle cx="7" cy="7" r="5" fill="#fbbf24"/>
+    <circle cx="7" cy="7" r="3" fill="#fcd34d"/>
+    <rect x="6" y="4" width="2" height="6" fill="#fbbf24"/>
+  </svg>
+);
+
+const IconInventory = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <rect x="2" y="4" width="10" height="8" fill="#6366f1" stroke="#818cf8" strokeWidth="1"/>
+    <rect x="3" y="2" width="8" height="3" fill="#818cf8"/>
+    <rect x="4" y="6" width="3" height="3" fill="#34d399"/>
+    <rect x="8" y="6" width="3" height="3" fill="#34d399"/>
+  </svg>
+);
+
+const IconInfo = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <circle cx="7" cy="7" r="6" fill="none" stroke="#3b82f6" strokeWidth="1"/>
+    <rect x="6" y="3" width="2" height="2" fill="#3b82f6"/>
+    <rect x="6" y="6" width="2" height="4" fill="#3b82f6"/>
+  </svg>
+);
+
+const IconReset = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M2 7 Q2 3 6 3 Q10 3 11 6" fill="none" stroke="#f87171" strokeWidth="1.5"/>
+    <polygon points="11,5 13,6 11,8" fill="#f87171"/>
+  </svg>
+);
+
+const IconLevel = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <polygon points="7,2 3,10 11,10" fill="#4ade80"/>
+  </svg>
+);
+
+const IconRebirth = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <polygon points="7,2 10,6 8,6 8,10 6,10 6,6 4,6" fill="#fbbf24"/>
+  </svg>
+);
+
 // ─── Types ───────────────────────────────────────────────────────────
 type Rarity = "common" | "rare" | "epic" | "legendary";
 
@@ -135,23 +219,23 @@ const RARITY_NAMES: Record<Rarity, string> = {
   legendary: "전설",
 };
 
-const DROP_EMOJIS = ["🪙", "💎", "🧪", "⭐", "🔮", "📦"];
+const DROP_EMOJIS = ["◯", "💎", "🧪", "⭐", "🔮", "📦"];
 
 const ALL_ITEMS: Omit<Item, "id">[] = [
   // Weapons
-  { name: "나무 검", emoji: "⚔️", rarity: "common", slot: "weapon", atk: 3, def: 0, hp: 0 },
+  { name: "나무 검", emoji: "▲", rarity: "common", slot: "weapon", atk: 3, def: 0, hp: 0 },
   { name: "돌 도끼", emoji: "🪓", rarity: "common", slot: "weapon", atk: 5, def: 0, hp: 0 },
   { name: "강철 검", emoji: "🗡️", rarity: "rare", slot: "weapon", atk: 12, def: 0, hp: 0 },
   { name: "마법 지팡이", emoji: "🪄", rarity: "rare", slot: "weapon", atk: 15, def: 0, hp: 5 },
-  { name: "용의 검", emoji: "⚔️", rarity: "epic", slot: "weapon", atk: 30, def: 5, hp: 0 },
+  { name: "용의 검", emoji: "▲", rarity: "epic", slot: "weapon", atk: 30, def: 5, hp: 0 },
   { name: "천둥 망치", emoji: "🔨", rarity: "epic", slot: "weapon", atk: 35, def: 0, hp: 10 },
-  { name: "전설의 엑스칼리버", emoji: "⚔️", rarity: "legendary", slot: "weapon", atk: 60, def: 10, hp: 20 },
+  { name: "전설의 엑스칼리버", emoji: "▲", rarity: "legendary", slot: "weapon", atk: 60, def: 10, hp: 20 },
   { name: "신의 창", emoji: "🔱", rarity: "legendary", slot: "weapon", atk: 75, def: 5, hp: 15 },
   // Armor
-  { name: "가죽 갑옷", emoji: "🛡️", rarity: "common", slot: "armor", atk: 0, def: 3, hp: 5 },
-  { name: "사슬 갑옷", emoji: "🛡️", rarity: "rare", slot: "armor", atk: 0, def: 10, hp: 15 },
-  { name: "미스릴 갑옷", emoji: "🛡️", rarity: "epic", slot: "armor", atk: 5, def: 25, hp: 30 },
-  { name: "드래곤 아머", emoji: "🛡️", rarity: "legendary", slot: "armor", atk: 10, def: 50, hp: 50 },
+  { name: "가죽 갑옷", emoji: "■", rarity: "common", slot: "armor", atk: 0, def: 3, hp: 5 },
+  { name: "사슬 갑옷", emoji: "■", rarity: "rare", slot: "armor", atk: 0, def: 10, hp: 15 },
+  { name: "미스릴 갑옷", emoji: "■", rarity: "epic", slot: "armor", atk: 5, def: 25, hp: 30 },
+  { name: "드래곤 아머", emoji: "■", rarity: "legendary", slot: "armor", atk: 10, def: 50, hp: 50 },
   // Accessories
   { name: "구리 반지", emoji: "💍", rarity: "common", slot: "accessory", atk: 1, def: 1, hp: 3 },
   { name: "마력 목걸이", emoji: "📿", rarity: "rare", slot: "accessory", atk: 5, def: 3, hp: 10 },
@@ -160,8 +244,8 @@ const ALL_ITEMS: Omit<Item, "id">[] = [
 ];
 
 const DEFAULT_SKILLS: Skill[] = [
-  { id: "double_attack", name: "공격력 2배", emoji: "💥", damage: 0, cooldown: 60000, lastUsed: 0, unlockLevel: 1, description: "다음 공격의 공격력이 2배가 된다" },
-  { id: "auto_fever", name: "번개 광풍", emoji: "⚡", damage: 0, cooldown: 60000, lastUsed: 0, unlockLevel: 1, description: "0.05초마다 자동으로 공격 (3초간)" },
+  { id: "double_attack", name: "공격력 2배", emoji: "✦", damage: 0, cooldown: 60000, lastUsed: 0, unlockLevel: 1, description: "다음 공격의 공격력이 2배가 된다" },
+  { id: "auto_fever", name: "번개 광풍", emoji: "★", damage: 0, cooldown: 60000, lastUsed: 0, unlockLevel: 1, description: "0.05초마다 자동으로 공격 (3초간)" },
 ];
 
 const BOSS_EMOJIS = ["👹", "🐉", "💀", "👿", "🦇", "🕷️", "🐍", "👾"];
@@ -1183,10 +1267,10 @@ export default function Home() {
       <div className="w-full max-w-md flex-shrink-0">
         <div className="flex items-center justify-between mb-3 px-2">
           <span style={{ fontSize: 11, color: "#fbbf24" }}>
-            ⚔️ 카피바라 RPG
+            ▲ 카피바라 RPG
           </span>
           <span style={{ fontSize: 10, color: "#fbbf24" }}>
-            🪙 {state.gold}
+            ◯ {state.gold}
           </span>
         </div>
 
@@ -1206,15 +1290,15 @@ export default function Home() {
             <div style={{ color: "#6b7280" }}>레벨</div>
           </div>
           <div>
-            <div style={{ color: "#f87171" }}>⚔{totalAtk}</div>
+            <div style={{ color: "#f87171" }}>▲{totalAtk}</div>
             <div style={{ color: "#6b7280" }}>공격</div>
           </div>
           <div>
-            <div style={{ color: "#60a5fa" }}>🛡{totalDef}</div>
+            <div style={{ color: "#60a5fa" }}>■{totalDef}</div>
             <div style={{ color: "#6b7280" }}>방어</div>
           </div>
           <div>
-            <div style={{ color: "#f472b6" }}>♥{totalHp}</div>
+            <div style={{ color: "#f472b6" }}>●{totalHp}</div>
             <div style={{ color: "#6b7280" }}>체력</div>
           </div>
           <div>
@@ -1255,7 +1339,7 @@ export default function Home() {
                 fontSize: 9,
               }}
             >
-              {tab === "battle" ? "⚔전투" : tab === "inventory" ? "🎒인벤" : "ℹ️정보"}
+              {tab === "battle" ? "▲전투" : tab === "inventory" ? "◻인벤" : "◈정보"}
             </button>
           ))}
         </div>
@@ -1402,7 +1486,7 @@ export default function Home() {
                     zIndex: 20,
                   }}
                 >
-                  {d.isCrit ? "💥" : ""}{d.value}
+                  {d.isCrit ? "✦" : ""}{d.value}
                 </div>
               ))}
 
@@ -1478,7 +1562,7 @@ export default function Home() {
                   }}
                 >
                   {state.monsterType.emoji} {state.monsterType.name}
-                  <span style={{ color: "#ef4444", marginLeft: 8 }}>⚔{Math.floor(state.monsterType.baseAtk * (1 + (state.level - 1) * 0.1))}</span>
+                  <span style={{ color: "#ef4444", marginLeft: 8 }}>▲{Math.floor(state.monsterType.baseAtk * (1 + (state.level - 1) * 0.1))}</span>
                   <span style={{ color: "#6b7280", marginLeft: 8 }}>처치: {state.monstersDefeated}</span>
                 </div>
               )}
@@ -1549,7 +1633,7 @@ export default function Home() {
                   transition: "opacity 0.1s ease",
                 }}
               >
-                ⚔️ 공격 <span style={{ fontSize: 10, color: state.isBossFight ? "#fca5a5" : "#93c5fd" }}>({state.baseAtk} × {state.rebirthBonus.toFixed(2)} = {getTotalAtk(state)} DMG)</span>
+                ▲ 공격 <span style={{ fontSize: 10, color: state.isBossFight ? "#fca5a5" : "#93c5fd" }}>({state.baseAtk} × {state.rebirthBonus.toFixed(2)} = {getTotalAtk(state)} DMG)</span>
               </button>
             )}
 
@@ -1611,7 +1695,7 @@ export default function Home() {
                   <button onClick={upgradeClick} disabled={state.gold < atkCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
                     style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
-                    ⚔클릭+3<br /><span style={{ color: "#fbbf24" }}>🪙{atkCost}</span>
+                    ▲클릭+3<br /><span style={{ color: "#fbbf24" }}>◯{atkCost}</span>
                   </button>
                 );
               })()}
@@ -1621,26 +1705,26 @@ export default function Home() {
                   <button onClick={upgradeAuto} disabled={state.gold < autoCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
                     style={{ background: "#1e293b", borderColor: "#8b5cf6", padding: "9px 5px", fontSize: 9, color: "#c4b5fd" }}>
-                    ⏱자동+0.3<br /><span style={{ color: "#fbbf24" }}>🪙{autoCost}</span>
+                    ⏱자동+0.3<br /><span style={{ color: "#fbbf24" }}>◯{autoCost}</span>
                   </button>
                 );
               })()}
               <button onClick={upgradeAtk} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#ef4444", padding: "9px 5px", fontSize: 9, color: "#fca5a5" }}>
-                ⚔공격+2<br /><span style={{ color: "#fbbf24" }}>🪙30</span>
+                ▲공격+2<br /><span style={{ color: "#fbbf24" }}>◯30</span>
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
               <button onClick={upgradeDef} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
-                🛡방어+2 <span style={{ color: "#fbbf24" }}>🪙30</span>
+                ■방어+2 <span style={{ color: "#fbbf24" }}>◯30</span>
               </button>
               <button onClick={upgradeHpStat} disabled={state.gold < 40}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#ec4899", padding: "9px 5px", fontSize: 9, color: "#f9a8d4" }}>
-                ♥체력+10 <span style={{ color: "#fbbf24" }}>🪙40</span>
+                ●체력+10 <span style={{ color: "#fbbf24" }}>◯40</span>
               </button>
             </div>
 
@@ -1652,7 +1736,7 @@ export default function Home() {
           <div className="h-full flex flex-col">
             {/* Equipment Slots */}
             <div className="pixel-border p-2 mb-2 flex-shrink-0" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 4 }}>⚔ 장비</div>
+              <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 4 }}>▲ 장비</div>
               <div className="grid grid-cols-3 gap-2">
                 {(["weapon", "armor", "accessory"] as const).map((slot) => {
                   const slotKey = slot === "weapon" ? "equippedWeapon" : slot === "armor" ? "equippedArmor" : "equippedAccessory";
@@ -1672,9 +1756,9 @@ export default function Home() {
                       </div>
                       {item && (
                         <div style={{ fontSize: 6, color: "#9ca3af", marginTop: 2 }}>
-                          {item.atk > 0 && <span style={{ color: "#f87171" }}>⚔{item.atk} </span>}
-                          {item.def > 0 && <span style={{ color: "#60a5fa" }}>🛡{item.def} </span>}
-                          {item.hp > 0 && <span style={{ color: "#f472b6" }}>♥{item.hp}</span>}
+                          {item.atk > 0 && <span style={{ color: "#f87171" }}>▲{item.atk} </span>}
+                          {item.def > 0 && <span style={{ color: "#60a5fa" }}>■{item.def} </span>}
+                          {item.hp > 0 && <span style={{ color: "#f472b6" }}>●{item.hp}</span>}
                         </div>
                       )}
                     </div>
@@ -1686,7 +1770,7 @@ export default function Home() {
             {/* Inventory */}
             <div className="pixel-border p-2 flex-1 overflow-y-auto flex flex-col" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div className="flex justify-between mb-2 flex-shrink-0">
-                <span style={{ fontSize: 9, color: "#fbbf24" }}>🎒 인벤토리 ({state.inventory.length})</span>
+                <span style={{ fontSize: 9, color: "#fbbf24" }}>◻ 인벤토리 ({state.inventory.length})</span>
               </div>
               <div className="w-full">
               {state.inventory.length === 0 ? (
@@ -1744,7 +1828,7 @@ export default function Home() {
           <div className="h-full overflow-hidden flex flex-col">
             {/* Level & Rebirth Info */}
             <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div style={{ fontSize: 10, color: "#4ade80", marginBottom: 4 }}>📈 레벨 정보</div>
+              <div style={{ fontSize: 10, color: "#4ade80", marginBottom: 4 }}>⬆ 레벨 정보</div>
               <div style={{ fontSize: 10, color: "#fff", marginBottom: 2 }}>
                 현재: <span style={{ color: "#4ade80" }}>{state.level}</span> 
               </div>
@@ -1800,7 +1884,7 @@ export default function Home() {
                   marginTop: "0"
                 }}
               >
-                🔄 게임 리셋
+                ◉ 게임 리셋
               </button>
             </div>
           </div>
@@ -1867,9 +1951,9 @@ export default function Home() {
                   {chestItem.name}
                 </div>
                 <div style={{ fontSize: 7, color: "#9ca3af", marginBottom: 12 }}>
-                  {chestItem.atk > 0 && <span style={{ color: "#f87171" }}>⚔공격+{chestItem.atk} </span>}
-                  {chestItem.def > 0 && <span style={{ color: "#60a5fa" }}>🛡방어+{chestItem.def} </span>}
-                  {chestItem.hp > 0 && <span style={{ color: "#f472b6" }}>♥체력+{chestItem.hp} </span>}
+                  {chestItem.atk > 0 && <span style={{ color: "#f87171" }}>▲공격+{chestItem.atk} </span>}
+                  {chestItem.def > 0 && <span style={{ color: "#60a5fa" }}>■방어+{chestItem.def} </span>}
+                  {chestItem.hp > 0 && <span style={{ color: "#f472b6" }}>●체력+{chestItem.hp} </span>}
                 </div>
                 <div style={{ fontSize: 7, color: "#6b7280" }}>
                   탭하여 닫기
