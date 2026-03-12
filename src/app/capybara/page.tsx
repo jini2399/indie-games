@@ -423,24 +423,17 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
     "/indie-games/capybara-idle-4.png",
   ];
 
-  // Attack 프레임 이미지 경로 (1프레임: 펀치만)
-  const attackFrames = [
-    "/indie-games/capybara-attack-2.png",  // 펀치
-  ];
-
-  // Critical 프레임 이미지 경로 (1프레임: 발차기만)
-  const criticalFrames = [
-    "/indie-games/capybara-critical-3.png",  // 발차기
-  ];
-
-  // 현재 상태에 따른 이미지 경로 결정
-  let imagePath = idleFrames[0]; // 기본값
+  // 현재 상태에 따른 이미지 경로 결정 (단순화)
+  let imagePath = "/indie-games/capybara-idle-1.png";  // 기본값
   
   if (animState.state === "critical") {
-    imagePath = criticalFrames[animState.frameIndex % criticalFrames.length];
+    // 크리티컬: 발차기만
+    imagePath = "/indie-games/capybara-critical-3.png";
   } else if (animState.state === "attack") {
-    imagePath = attackFrames[animState.frameIndex % attackFrames.length];
+    // 공격: 펀치만
+    imagePath = "/indie-games/capybara-attack-2.png";
   } else if (animState.state === "idle") {
+    // 대기: 호흡 4프레임
     imagePath = idleFrames[animState.frameIndex % idleFrames.length];
   }
 
