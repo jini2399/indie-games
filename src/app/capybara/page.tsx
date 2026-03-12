@@ -450,46 +450,17 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
 }
 
 function PixelBoss({ bossIndex, size = 80 }: { bossIndex: number; size?: number }) {
-  const colors = [
-    { body: "#ff4444", eye: "#ffff00" },
-    { body: "#44aa44", eye: "#ff6600" },
-    { body: "#aaaaaa", eye: "#ff0000" },
-    { body: "#8844cc", eye: "#00ffff" },
-    { body: "#444466", eye: "#ff0044" },
-    { body: "#334433", eye: "#ff4444" },
-    { body: "#226644", eye: "#ffcc00" },
-    { body: "#555577", eye: "#00ff88" },
-  ];
-  const c = colors[bossIndex % colors.length];
-
   return (
-    <svg width={size} height={size} viewBox="0 0 16 16" style={{ imageRendering: "pixelated" }}>
-      {/* Body */}
-      <rect x="3" y="5" width="10" height="8" fill={c.body} />
-      <rect x="4" y="4" width="8" height="1" fill={c.body} />
-      <rect x="5" y="3" width="6" height="1" fill={c.body} />
-      {/* Horns */}
-      <rect x="4" y="1" width="2" height="3" fill="#666" />
-      <rect x="10" y="1" width="2" height="3" fill="#666" />
-      <rect x="3" y="0" width="2" height="2" fill="#888" />
-      <rect x="11" y="0" width="2" height="2" fill="#888" />
-      {/* Eyes */}
-      <rect x="5" y="6" width="2" height="2" fill={c.eye} />
-      <rect x="9" y="6" width="2" height="2" fill={c.eye} />
-      <rect x="6" y="7" width="1" height="1" fill="#000" />
-      <rect x="10" y="7" width="1" height="1" fill="#000" />
-      {/* Mouth */}
-      <rect x="5" y="9" width="6" height="2" fill="#220000" />
-      <rect x="6" y="9" width="1" height="1" fill="#fff" />
-      <rect x="8" y="9" width="1" height="1" fill="#fff" />
-      <rect x="10" y="9" width="1" height="1" fill="#fff" />
-      {/* Arms */}
-      <rect x="1" y="7" width="2" height="4" fill={c.body} />
-      <rect x="13" y="7" width="2" height="4" fill={c.body} />
-      {/* Legs */}
-      <rect x="4" y="13" width="3" height="2" fill={c.body} />
-      <rect x="9" y="13" width="3" height="2" fill={c.body} />
-    </svg>
+    <img
+      src="/indie-games/boss-demon.png"
+      style={{
+        width: size,
+        height: size,
+        imageRendering: "pixelated",
+        display: "block",
+      }}
+      alt="boss"
+    />
   );
 }
 
