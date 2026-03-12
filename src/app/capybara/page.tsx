@@ -423,10 +423,19 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
     "/indie-games/capybara-idle-4.png",
   ];
 
+  // Attack 프레임 이미지 경로
+  const attackFrames = [
+    "/indie-games/capybara-attack-1.png",
+    "/indie-games/capybara-attack-2.png",
+    "/indie-games/capybara-attack-3.png",
+  ];
+
   // 현재 상태에 따른 이미지 경로 결정
   let imagePath = idleFrames[0]; // 기본값
   
-  if (animState.state === "idle") {
+  if (animState.state === "attack") {
+    imagePath = attackFrames[animState.frameIndex % attackFrames.length];
+  } else if (animState.state === "idle") {
     imagePath = idleFrames[animState.frameIndex % idleFrames.length];
   }
 
