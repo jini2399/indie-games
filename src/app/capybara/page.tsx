@@ -408,7 +408,7 @@ function generateItem(level: number): Item {
 // ─── SVG Pixel Art Components ────────────────────────────────────────
 
 interface CapybaraAnimState {
-  state: "idle" | "attack" | "critical" | "jump" | "hit" | "victory" | "breathing";
+  state: "idle" | "attack" | "jump" | "hit" | "victory" | "breathing";
   frameIndex: number;
 }
 
@@ -423,13 +423,10 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
     "/indie-games/capybara-idle-4.png",
   ];
 
-  // 현재 상태에 따른 이미지 경로 결정 (단순화)
+  // 현재 상태에 따른 이미지 경로 결정
   let imagePath = "/indie-games/capybara-idle-1.png";  // 기본값
   
-  if (animState.state === "critical") {
-    // 크리티컬: 발차기만
-    imagePath = "/indie-games/capybara-critical-3.png";
-  } else if (animState.state === "attack") {
+  if (animState.state === "attack") {
     // 공격: 펀치만
     imagePath = "/indie-games/capybara-attack-2.png";
   } else if (animState.state === "idle") {
@@ -620,7 +617,6 @@ export default function Home() {
   const [skillCooldowns, setSkillCooldowns] = useState<Record<string, number>>({});
   const [animFrameIndex, setAnimFrameIndex] = useState(0);
   const [capybaraAnimState, setCapybaraAnimState] = useState<CapybaraAnimState>({ state: "idle", frameIndex: 0 });
-  const [isCriticalAttack, setIsCriticalAttack] = useState(false);
   const popIdRef = useRef(0);
   const battleAreaRef = useRef<HTMLDivElement>(null);
 
@@ -681,10 +677,7 @@ export default function Home() {
       // 상태에 따라 애니메이션 결정
       let newState: CapybaraAnimState = { state: "idle", frameIndex: 0 };
       
-      if (isCriticalAttack && (state.isBossFight || state.isMonsterFight)) {
-        // 크리티컬 애니메이션 (1프레임: 발차기만)
-        newState = { state: "critical", frameIndex: 0 };
-      } else if (isAttacking && (state.isBossFight || state.isMonsterFight)) {
+      if (isAttacking && (state.isBossFight || state.isMonsterFight)) {
         newState = { state: "attack", frameIndex: 0 };
       } else if (state.isBossFight || state.isMonsterFight) {
         // Idle 호흡 애니메이션
@@ -694,7 +687,7 @@ export default function Home() {
       setCapybaraAnimState(newState);
     }, 100); // 100ms마다 프레임 변경
     return () => clearInterval(interval);
-  }, [state.started, isAttacking, isCriticalAttack, state.isBossFight, state.isMonsterFight, animFrameIndex]);
+  }, [state.started, isAttacking, state.isBossFight, state.isMonsterFight, animFrameIndex]);
 
   // Auto-fever (번개 광풍) - 50ms마다 자동 공격
   useEffect(() => {
@@ -990,13 +983,8 @@ export default function Home() {
         dmg *= 2;
       }
 
-      if (isCrit) {
-        setIsCriticalAttack(true);
-        setTimeout(() => setIsCriticalAttack(false), 300);
-      } else {
-        setIsAttacking(true);
-        setTimeout(() => setIsAttacking(false), 100);
-      }
+      setIsAttacking(true);
+      setTimeout(() => setIsAttacking(false), 100);
 
       if (state.isBossFight) {
         setBossHurt(true);
@@ -1309,7 +1297,7 @@ export default function Home() {
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
   return (
-    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "#1a1a2e", overflow: "hidden" }}>
+    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ backgroundImage: "url('/indie-games/bg-castle.jpg')", backgroundSize: "cover", backgroundPosition: "center", overflow: "hidden" }}>
       {/* Header & Ad */}
       <div className="w-full max-w-md flex-shrink-0">
         <div className="flex items-center justify-between mb-3 px-2">
