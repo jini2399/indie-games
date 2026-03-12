@@ -246,3 +246,32 @@ body {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #1a1a2e; }
 ::-webkit-scrollbar-thumb { background: #4a4a6e; border: 1px solid #2a2a4e; }
+
+/* Dark Fantasy UI */
+@keyframes fire-flicker {
+  0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px #ff4500) drop-shadow(0 0 12px #ff8c00); }
+  25% { opacity: 1; filter: drop-shadow(0 0 12px #ff4500) drop-shadow(0 0 20px #ff8c00); }
+  50% { opacity: 0.7; filter: drop-shadow(0 0 6px #ff4500) drop-shadow(0 0 8px #ff8c00); }
+  75% { opacity: 0.9; filter: drop-shadow(0 0 10px #ff4500) drop-shadow(0 0 16px #ff8c00); }
+}
+
+@keyframes frame-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4), inset 0 0 10px rgba(251, 191, 36, 0.1); }
+  50% { box-shadow: 0 0 30px rgba(251, 191, 36, 0.6), inset 0 0 15px rgba(251, 191, 36, 0.2); }
+}
+
+.fantasy-frame {
+  border: 3px solid #fbbf24;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.4), 
+              inset 0 0 10px rgba(251, 191, 36, 0.1),
+              0 0 40px rgba(255, 69, 0, 0.2);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), transparent);
+}
+
+.fire-glow {
+  animation: fire-flicker 3s ease-in-out infinite;
+}
+
+.frame-glow {
+  animation: frame-glow 2s ease-in-out infinite;
+}

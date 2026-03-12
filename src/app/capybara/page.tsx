@@ -1279,7 +1279,7 @@ export default function Home() {
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
   return (
-    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "linear-gradient(180deg, #0a0015 0%, #1a0f2e 50%, #0f0a1f 100%)", overflow: "hidden" }}>
+    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "linear-gradient(180deg, #0d0208 0%, #2d1b3d 50%, #1a0f28 100%)", overflow: "hidden" }}>
       {/* Header & Ad */}
       <div className="w-full max-w-md flex-shrink-0">
         <div className="flex items-center justify-between mb-3 px-2">
@@ -1343,21 +1343,32 @@ export default function Home() {
 
         {/* Tabs */}
         <div className="flex gap-2 w-full max-w-md flex-shrink-0 mt-2" style={{ order: 1000 }}>
-          {(["battle", "inventory", "info"] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className="pixel-border-sm flex-1 py-2 cursor-pointer"
-              style={{
-                background: activeTab === tab ? "#334155" : "#0f172a",
-                borderColor: activeTab === tab ? "#60a5fa" : "#1e293b",
-                color: activeTab === tab ? "#fff" : "#6b7280",
-                fontSize: 9,
-              }}
-            >
-              {tab === "battle" ? "▲전투" : tab === "inventory" ? "◻인벤" : "◈정보"}
-            </button>
-          ))}
+          {(["battle", "inventory", "info"] as const).map((tab) => {
+            const tabColors = {
+              battle: { bg: "#7f1d1d", border: "#dc2626", glow: "rgba(220, 38, 38, 0.5)" },
+              inventory: { bg: "#1e3a8a", border: "#2563eb", glow: "rgba(37, 99, 235, 0.5)" },
+              info: { bg: "#5b21b6", border: "#a855f7", glow: "rgba(168, 85, 247, 0.5)" },
+            };
+            const colors = tabColors[tab];
+            return (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className="pixel-border-sm flex-1 py-2 cursor-pointer"
+                style={{
+                  background: activeTab === tab ? colors.bg : "#0d0208",
+                  borderColor: activeTab === tab ? colors.border : "#2d1b3d",
+                  borderWidth: "2px",
+                  color: activeTab === tab ? "#fff" : "#6b7280",
+                  fontSize: 9,
+                  boxShadow: activeTab === tab ? `0 0 12px ${colors.glow}, inset 0 1px 0 rgba(255,255,255,0.1)` : "none",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                {tab === "battle" ? "▲전투" : tab === "inventory" ? "◻인벤" : "◈정보"}
+              </button>
+            );
+          })}
         </div>
 
         {/* Tab Content */}
@@ -1369,7 +1380,7 @@ export default function Home() {
             <div
               ref={battleAreaRef}
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
-              className="pixel-border relative overflow-hidden cursor-pointer mb-2 flex-1"
+              className="pixel-border relative overflow-hidden cursor-pointer mb-2 flex-1 frame-glow"
               style={{
                 backgroundImage: bgIndex === 0 ? "url('/indie-games/bg-castle-1.jpg')" : "url('/indie-games/bg-castle-2.jpg')",
                 backgroundSize: "cover",
