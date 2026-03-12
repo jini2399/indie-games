@@ -1178,10 +1178,10 @@ export default function Home() {
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
   return (
-    <div className="flex h-screen flex-col items-center p-2 select-none pixel-grid" style={{ background: "#1a1a2e", overflow: "hidden" }}>
+    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "#1a1a2e", overflow: "hidden" }}>
       {/* Header & Ad */}
       <div className="w-full max-w-md flex-shrink-0">
-        <div className="flex items-center justify-between mb-2 px-1">
+        <div className="flex items-center justify-between mb-3 px-2">
           <span style={{ fontSize: 11, color: "#fbbf24" }}>
             ⚔️ 카피바라 RPG
           </span>
@@ -1191,14 +1191,14 @@ export default function Home() {
         </div>
 
         {/* Ad Banner */}
-        <div className="pixel-border p-2 mb-2 text-center" style={{ background: "linear-gradient(180deg, #4f46e5, #2563eb)", borderColor: "#60a5fa" }}>
-          <div style={{ fontSize: 9, color: "#fef3c7", fontWeight: "bold" }}>🎮 다음 게임 준비중...</div>
-          <div style={{ fontSize: 7, color: "#e0e7ff", marginTop: 2 }}>슬라임 클리커 | 타워 디펜스 | 자동 거래소</div>
+        <div className="pixel-border p-3 mb-3 text-center" style={{ background: "linear-gradient(180deg, #4f46e5, #2563eb)", borderColor: "#60a5fa" }}>
+          <div style={{ fontSize: 10, color: "#fef3c7", fontWeight: "bold" }}>🎮 다음 게임 준비중...</div>
+          <div style={{ fontSize: 8, color: "#e0e7ff", marginTop: 3 }}>슬라임 클리커 | 타워 디펜스 | 자동 거래소</div>
         </div>
 
         {/* Stats Bar */}
         <div
-          className="pixel-border mb-2 p-2 grid grid-cols-5 gap-0 text-center"
+          className="pixel-border mb-3 p-3 grid grid-cols-5 gap-1 text-center"
           style={{ background: "#0f172a", borderColor: "#334155", fontSize: 8 }}
         >
           <div>
@@ -1224,8 +1224,8 @@ export default function Home() {
         </div>
 
         {/* EXP Bar */}
-        <div className="mb-2">
-          <div className="flex justify-between" style={{ fontSize: 6, color: "#9ca3af", marginBottom: 2 }}>
+        <div className="mb-3">
+          <div className="flex justify-between" style={{ fontSize: 6, color: "#9ca3af", marginBottom: 3 }}>
             <span>EXP</span>
             <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
           </div>
@@ -1242,12 +1242,12 @@ export default function Home() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-2 w-full">
+        <div className="flex gap-2 mb-3 w-full">
           {(["battle", "inventory", "info"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className="pixel-border-sm flex-1 py-1 cursor-pointer"
+              className="pixel-border-sm flex-1 py-2 cursor-pointer"
               style={{
                 background: activeTab === tab ? "#334155" : "#0f172a",
                 borderColor: activeTab === tab ? "#60a5fa" : "#1e293b",
@@ -1269,7 +1269,7 @@ export default function Home() {
             <div
               ref={battleAreaRef}
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
-              className="pixel-border relative overflow-hidden cursor-pointer mb-1"
+              className="pixel-border relative overflow-hidden cursor-pointer mb-2"
               style={{
                 background: "linear-gradient(180deg, #0c1222 0%, #1a1a3e 50%, #1a2e1a 100%)",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
@@ -1533,7 +1533,7 @@ export default function Home() {
               <button
                 onPointerDown={!bossEntering ? (e) => handleClick(e as any) : undefined}
                 disabled={bossEntering}
-                className="pixel-border w-full mb-0"
+                className="pixel-border w-full mb-2"
                 style={{
                   background: state.isBossFight
                     ? "linear-gradient(180deg, #dc2626, #991b1b)"
@@ -1555,7 +1555,7 @@ export default function Home() {
 
             {/* Skills (in battle) */}
             {(state.isBossFight || state.isMonsterFight) && (
-              <div className="grid grid-cols-2 gap-1 mb-0">
+              <div className="grid grid-cols-2 gap-2 mb-2">
                 {state.skills.map((skill) => {
                   const unlocked = state.level >= skill.unlockLevel;
                   const cd = skillCooldowns[skill.id] || 0;
@@ -1631,7 +1631,7 @@ export default function Home() {
                 ⚔공격+2<br /><span style={{ color: "#fbbf24" }}>🪙30</span>
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-1 mb-0">
+            <div className="grid grid-cols-2 gap-2 mb-2">
               <button onClick={upgradeDef} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "8px 4px", fontSize: 8, color: "#93c5fd" }}>
