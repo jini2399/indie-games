@@ -1648,9 +1648,9 @@ export default function Home() {
 
         {/* ─── Inventory Tab ────────────────────────────────── */}
         {activeTab === "inventory" && (
-          <div className="h-full overflow-y-auto flex flex-col">
+          <div className="h-full flex flex-col">
             {/* Equipment Slots */}
-            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+            <div className="pixel-border p-2 mb-2 flex-shrink-0" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 4 }}>⚔ 장비</div>
               <div className="grid grid-cols-3 gap-2">
                 {(["weapon", "armor", "accessory"] as const).map((slot) => {
@@ -1683,11 +1683,11 @@ export default function Home() {
             </div>
 
             {/* Inventory */}
-            <div className="pixel-border p-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
-              <div className="flex justify-between mb-2">
+            <div className="pixel-border p-2 flex-1 overflow-y-auto flex flex-col" style={{ background: "#0f172a", borderColor: "#334155" }}>
+              <div className="flex justify-between mb-2 flex-shrink-0">
                 <span style={{ fontSize: 9, color: "#fbbf24" }}>🎒 인벤토리 ({state.inventory.length})</span>
               </div>
-              <div className="flex-1 overflow-y-auto">
+              <div className="w-full">
               {state.inventory.length === 0 ? (
                 <div className="text-center py-4" style={{ fontSize: 7, color: "#4b5563" }}>
                   아이템이 없습니다
