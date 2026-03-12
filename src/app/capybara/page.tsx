@@ -1264,7 +1264,7 @@ export default function Home() {
         <div className="flex-1 overflow-hidden w-full max-w-md flex flex-col">
         {/* ─── Battle Tab ───────────────────────────────────── */}
         {activeTab === "battle" && (
-          <div className="overflow-hidden">
+          <div className="h-full overflow-hidden flex flex-col">
             {/* Battle Area */}
             <div
               ref={battleAreaRef}
@@ -1649,7 +1649,7 @@ export default function Home() {
 
         {/* ─── Inventory Tab ────────────────────────────────── */}
         {activeTab === "inventory" && (
-          <div className="flex-1 overflow-y-auto">
+          <div className="h-full overflow-y-auto flex flex-col">
             {/* Equipment Slots */}
             <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 4 }}>⚔ 장비</div>
@@ -1741,7 +1741,7 @@ export default function Home() {
 
         {/* ─── Info Tab ───────────────────────────────────── */}
         {activeTab === "info" && (
-          <div className="overflow-hidden">
+          <div className="h-full overflow-hidden flex flex-col">
             {/* Level & Rebirth Info */}
             <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div style={{ fontSize: 10, color: "#4ade80", marginBottom: 4 }}>📈 레벨 정보</div>
