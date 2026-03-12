@@ -499,6 +499,7 @@ export default function Home() {
   const [isHoldingAttack, setIsHoldingAttack] = useState(false);
   const holdTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const holdIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [bgIndex, setBgIndex] = useState(0);
   const [bossHurt, setBossHurt] = useState(false);
   const [bossEntering, setBossEntering] = useState(false);
   const [monsterHurt, setMonsterHurt] = useState(false);
@@ -533,6 +534,14 @@ export default function Home() {
         clearInterval(holdIntervalRef.current);
       }
     };
+  }, []);
+
+  // Background animation (2초마다 번갈아)
+  useEffect(() => {
+    const bgInterval = setInterval(() => {
+      setBgIndex(prev => (prev + 1) % 2);
+    }, 2000);
+    return () => clearInterval(bgInterval);
   }, []);
 
   // Double attack effect timer
@@ -1369,12 +1378,13 @@ export default function Home() {
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
               className="pixel-border relative overflow-hidden cursor-pointer mb-2 flex-1"
               style={{
-                backgroundImage: "url('/indie-games/bg-castle.jpg')",
+                backgroundImage: bgIndex === 0 ? "url('/indie-games/bg-castle-1.png')" : "url('/indie-games/bg-castle-2.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
                 minHeight: "200px",
+                transition: "background-image 0.5s ease-in-out",
               }}
             >
               {/* Red flash overlay during boss entrance */}
