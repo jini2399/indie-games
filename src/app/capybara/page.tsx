@@ -1539,8 +1539,8 @@ export default function Home() {
                     ? "linear-gradient(180deg, #dc2626, #991b1b)"
                     : "linear-gradient(180deg, #2563eb, #1d4ed8)",
                   borderColor: state.isBossFight ? "#f87171" : "#3b82f6",
-                  padding: "12px 8px",
-                  fontSize: 12,
+                  padding: "14px 10px",
+                  fontSize: 13,
                   color: "#fff",
                   textShadow: "1px 1px 0 #000",
                   letterSpacing: 2,
@@ -1571,8 +1571,8 @@ export default function Home() {
                       style={{
                         background: ready ? "#1e3a5f" : "#0f172a",
                         borderColor: ready ? "#3b82f6" : "#1e293b",
-                        padding: "10px 4px",
-                        fontSize: 9,
+                        padding: "12px 6px",
+                        fontSize: 10,
                         color: ready ? "#fff" : "#4b5563",
                         opacity: unlocked ? 1 : 0.4,
                       }}
@@ -1592,7 +1592,7 @@ export default function Home() {
                         />
                       )}
                       <div style={{ position: "relative", zIndex: 1 }}>
-                        <div style={{ fontSize: 16 }}>{skill.emoji}</div>
+                        <div style={{ fontSize: 18 }}>{skill.emoji}</div>
                         <div>{skill.name}</div>
                         {!unlocked && <div style={{ fontSize: 6, color: "#6b7280" }}>Lv.{skill.unlockLevel}</div>}
                         {cd > 0 && unlocked && <div style={{ fontSize: 6, color: "#f87171" }}>{(cd / 1000).toFixed(1)}s</div>}
@@ -1610,7 +1610,7 @@ export default function Home() {
                 return (
                   <button onClick={upgradeClick} disabled={state.gold < atkCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                    style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "8px 4px", fontSize: 8, color: "#93c5fd" }}>
+                    style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
                     ⚔클릭+3<br /><span style={{ color: "#fbbf24" }}>🪙{atkCost}</span>
                   </button>
                 );
@@ -1620,26 +1620,26 @@ export default function Home() {
                 return (
                   <button onClick={upgradeAuto} disabled={state.gold < autoCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                    style={{ background: "#1e293b", borderColor: "#8b5cf6", padding: "8px 4px", fontSize: 8, color: "#c4b5fd" }}>
+                    style={{ background: "#1e293b", borderColor: "#8b5cf6", padding: "9px 5px", fontSize: 9, color: "#c4b5fd" }}>
                     ⏱자동+0.3<br /><span style={{ color: "#fbbf24" }}>🪙{autoCost}</span>
                   </button>
                 );
               })()}
               <button onClick={upgradeAtk} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#ef4444", padding: "8px 4px", fontSize: 8, color: "#fca5a5" }}>
+                style={{ background: "#1e293b", borderColor: "#ef4444", padding: "9px 5px", fontSize: 9, color: "#fca5a5" }}>
                 ⚔공격+2<br /><span style={{ color: "#fbbf24" }}>🪙30</span>
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 mb-2">
               <button onClick={upgradeDef} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "8px 4px", fontSize: 8, color: "#93c5fd" }}>
+                style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
                 🛡방어+2 <span style={{ color: "#fbbf24" }}>🪙30</span>
               </button>
               <button onClick={upgradeHpStat} disabled={state.gold < 40}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#ec4899", padding: "8px 4px", fontSize: 8, color: "#f9a8d4" }}>
+                style={{ background: "#1e293b", borderColor: "#ec4899", padding: "9px 5px", fontSize: 9, color: "#f9a8d4" }}>
                 ♥체력+10 <span style={{ color: "#fbbf24" }}>🪙40</span>
               </button>
             </div>
@@ -1700,14 +1700,14 @@ export default function Home() {
                     return (
                     <div
                       key={item.id}
-                      className={`pixel-border p-3 text-center ${RARITY_BG[item.rarity] || "bg-gray-800"}`}
+                      className={`pixel-border p-4 text-center ${RARITY_BG[item.rarity] || "bg-gray-800"}`}
                       style={{
                         animation: item.rarity === "legendary" ? "rarity-glow-legendary 1.5s infinite" : item.rarity === "epic" ? "rarity-glow-epic 1.5s infinite" : "none",
                         boxShadow: item.rarity === "legendary" ? "0 0 10px rgba(255, 215, 0, 0.5)" : item.rarity === "epic" ? "0 0 8px rgba(168, 85, 247, 0.4)" : "none",
                       }}
                     >
-                      <div style={{ fontSize: 32, marginBottom: 4 }}>{item.emoji || "?"}</div>
-                      <div style={{ fontSize: 11, color: RARITY_COLORS[item.rarity] || "#fff", wordBreak: "break-all", marginBottom: 4, fontWeight: "bold" }}>
+                      <div style={{ fontSize: 40, marginBottom: 6 }}>{item.emoji || "?"}</div>
+                      <div style={{ fontSize: 12, color: RARITY_COLORS[item.rarity] || "#fff", wordBreak: "break-all", marginBottom: 4, fontWeight: "bold" }}>
                         {item.name || "Unknown"}
                       </div>
                       <div style={{ fontSize: 10, color: "#9ca3af", marginBottom: 8 }}>
@@ -1717,14 +1717,14 @@ export default function Home() {
                         <button
                           onClick={() => equipItem(item)}
                           className="cursor-pointer flex-1 pixel-border-sm"
-                          style={{ fontSize: 10, color: "#4ade80", background: "rgba(34,197,94,0.3)", padding: "6px 4px", borderColor: "#4ade80", fontWeight: "bold" }}
+                          style={{ fontSize: 11, color: "#4ade80", background: "rgba(34,197,94,0.3)", padding: "8px 6px", borderColor: "#4ade80", fontWeight: "bold" }}
                         >
                           장착
                         </button>
                         <button
                           onClick={() => sellItem(item)}
                           className="cursor-pointer flex-1 pixel-border-sm"
-                          style={{ fontSize: 10, color: "#fbbf24", background: "rgba(251,191,36,0.3)", padding: "6px 4px", borderColor: "#fbbf24", fontWeight: "bold" }}
+                          style={{ fontSize: 11, color: "#fbbf24", background: "rgba(251,191,36,0.3)", padding: "8px 6px", borderColor: "#fbbf24", fontWeight: "bold" }}
                         >
                           판매
                         </button>
