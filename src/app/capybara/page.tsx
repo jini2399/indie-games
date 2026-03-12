@@ -1178,10 +1178,10 @@ export default function Home() {
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
   return (
-    <div className="flex h-screen flex-col items-center p-1 select-none pixel-grid" style={{ background: "#1a1a2e", overflow: "hidden" }}>
+    <div className="flex h-screen flex-col items-center p-2 select-none pixel-grid" style={{ background: "#1a1a2e", overflow: "hidden" }}>
       {/* Header & Ad */}
       <div className="w-full max-w-md flex-shrink-0">
-        <div className="flex items-center justify-between mb-1 px-0">
+        <div className="flex items-center justify-between mb-2 px-1">
           <span style={{ fontSize: 11, color: "#fbbf24" }}>
             ⚔️ 카피바라 RPG
           </span>
@@ -1191,14 +1191,14 @@ export default function Home() {
         </div>
 
         {/* Ad Banner */}
-        <div className="pixel-border p-1 mb-1 text-center" style={{ background: "linear-gradient(180deg, #4f46e5, #2563eb)", borderColor: "#60a5fa" }}>
-          <div style={{ fontSize: 8, color: "#fef3c7", fontWeight: "bold" }}>🎮 다음 게임 준비중...</div>
-          <div style={{ fontSize: 6, color: "#e0e7ff", marginTop: 0 }}>슬라임 클리커 | 타워 디펜스 | 자동 거래소</div>
+        <div className="pixel-border p-2 mb-2 text-center" style={{ background: "linear-gradient(180deg, #4f46e5, #2563eb)", borderColor: "#60a5fa" }}>
+          <div style={{ fontSize: 9, color: "#fef3c7", fontWeight: "bold" }}>🎮 다음 게임 준비중...</div>
+          <div style={{ fontSize: 7, color: "#e0e7ff", marginTop: 2 }}>슬라임 클리커 | 타워 디펜스 | 자동 거래소</div>
         </div>
 
         {/* Stats Bar */}
         <div
-          className="pixel-border mb-1 p-1 grid grid-cols-5 gap-0 text-center"
+          className="pixel-border mb-2 p-2 grid grid-cols-5 gap-0 text-center"
           style={{ background: "#0f172a", borderColor: "#334155", fontSize: 8 }}
         >
           <div>
@@ -1224,8 +1224,8 @@ export default function Home() {
         </div>
 
         {/* EXP Bar */}
-        <div className="mb-1">
-          <div className="flex justify-between" style={{ fontSize: 6, color: "#9ca3af", marginBottom: 1 }}>
+        <div className="mb-2">
+          <div className="flex justify-between" style={{ fontSize: 6, color: "#9ca3af", marginBottom: 2 }}>
             <span>EXP</span>
             <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
           </div>
@@ -1242,17 +1242,17 @@ export default function Home() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-0 mb-1 w-full">
+        <div className="flex gap-1 mb-2 w-full">
           {(["battle", "inventory", "info"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className="pixel-border-sm flex-1 py-0 cursor-pointer"
+              className="pixel-border-sm flex-1 py-1 cursor-pointer"
               style={{
                 background: activeTab === tab ? "#334155" : "#0f172a",
                 borderColor: activeTab === tab ? "#60a5fa" : "#1e293b",
                 color: activeTab === tab ? "#fff" : "#6b7280",
-                fontSize: 8,
+                fontSize: 9,
               }}
             >
               {tab === "battle" ? "⚔전투" : tab === "inventory" ? "🎒인벤" : "ℹ️정보"}
