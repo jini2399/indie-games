@@ -1295,27 +1295,27 @@ export default function Home() {
           {/* Row 1: Level, Attack, Defense */}
           <div className="grid grid-cols-3 gap-2 text-center">
             <div>
-              <div style={{ fontSize: 10, color: "#4ade80", fontWeight: "bold" }}>Lv.{state.level}</div>
-              <div style={{ fontSize: 7, color: "#6b7280" }}>레벨</div>
+              <div style={{ fontSize: 13, color: "#4ade80", fontWeight: "bold" }}>Lv.{state.level}</div>
+              <div style={{ fontSize: 9, color: "#6b7280" }}>레벨</div>
             </div>
             <div>
-              <div style={{ fontSize: 10, color: "#f87171", fontWeight: "bold" }}>▲{totalAtk}</div>
-              <div style={{ fontSize: 7, color: "#6b7280" }}>공격</div>
+              <div style={{ fontSize: 13, color: "#f87171", fontWeight: "bold" }}>▲{totalAtk}</div>
+              <div style={{ fontSize: 9, color: "#6b7280" }}>공격</div>
             </div>
             <div>
-              <div style={{ fontSize: 10, color: "#60a5fa", fontWeight: "bold" }}>■{totalDef}</div>
-              <div style={{ fontSize: 7, color: "#6b7280" }}>방어</div>
+              <div style={{ fontSize: 13, color: "#60a5fa", fontWeight: "bold" }}>■{totalDef}</div>
+              <div style={{ fontSize: 9, color: "#6b7280" }}>방어</div>
             </div>
           </div>
           {/* Row 2: HP, Rebirth */}
           <div className="grid grid-cols-2 gap-2 text-center">
             <div>
-              <div style={{ fontSize: 10, color: "#f472b6", fontWeight: "bold" }}>●{totalHp}</div>
-              <div style={{ fontSize: 7, color: "#6b7280" }}>체력</div>
+              <div style={{ fontSize: 13, color: "#f472b6", fontWeight: "bold" }}>●{totalHp}</div>
+              <div style={{ fontSize: 9, color: "#6b7280" }}>체력</div>
             </div>
             <div>
-              <div style={{ fontSize: 10, color: "#fbbf24", fontWeight: "bold" }}>★{state.rebirths}</div>
-              <div style={{ fontSize: 7, color: "#6b7280" }}>환생</div>
+              <div style={{ fontSize: 13, color: "#fbbf24", fontWeight: "bold" }}>★{state.rebirths}</div>
+              <div style={{ fontSize: 9, color: "#6b7280" }}>환생</div>
             </div>
           </div>
         </div>
