@@ -408,7 +408,7 @@ function generateItem(level: number): Item {
 // ─── SVG Pixel Art Components ────────────────────────────────────────
 
 interface CapybaraAnimState {
-  state: "idle" | "attack" | "jump" | "hit" | "victory" | "breathing";
+  state: "idle" | "attack" | "critical" | "jump" | "hit" | "victory" | "breathing";
   frameIndex: number;
 }
 
@@ -430,10 +430,19 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
     "/indie-games/capybara-attack-3.png",
   ];
 
+  // Critical 프레임 이미지 경로
+  const criticalFrames = [
+    "/indie-games/capybara-critical-1.png",
+    "/indie-games/capybara-critical-2.png",
+    "/indie-games/capybara-critical-3.png",
+  ];
+
   // 현재 상태에 따른 이미지 경로 결정
   let imagePath = idleFrames[0]; // 기본값
   
-  if (animState.state === "attack") {
+  if (animState.state === "critical") {
+    imagePath = criticalFrames[animState.frameIndex % criticalFrames.length];
+  } else if (animState.state === "attack") {
     imagePath = attackFrames[animState.frameIndex % attackFrames.length];
   } else if (animState.state === "idle") {
     imagePath = idleFrames[animState.frameIndex % idleFrames.length];
@@ -622,6 +631,7 @@ export default function Home() {
   const [skillCooldowns, setSkillCooldowns] = useState<Record<string, number>>({});
   const [animFrameIndex, setAnimFrameIndex] = useState(0);
   const [capybaraAnimState, setCapybaraAnimState] = useState<CapybaraAnimState>({ state: "idle", frameIndex: 0 });
+  const [isCriticalAttack, setIsCriticalAttack] = useState(false);
   const popIdRef = useRef(0);
   const battleAreaRef = useRef<HTMLDivElement>(null);
 
@@ -682,7 +692,10 @@ export default function Home() {
       // 상태에 따라 애니메이션 결정
       let newState: CapybaraAnimState = { state: "idle", frameIndex: 0 };
       
-      if (isAttacking && (state.isBossFight || state.isMonsterFight)) {
+      if (isCriticalAttack && (state.isBossFight || state.isMonsterFight)) {
+        // 크리티컬 애니메이션 (3프레임)
+        newState = { state: "critical", frameIndex: (animFrameIndex % 3) };
+      } else if (isAttacking && (state.isBossFight || state.isMonsterFight)) {
         newState = { state: "attack", frameIndex: (animFrameIndex % 3) };
       } else if (state.isBossFight || state.isMonsterFight) {
         // Idle 호흡 애니메이션
@@ -692,7 +705,7 @@ export default function Home() {
       setCapybaraAnimState(newState);
     }, 100); // 100ms마다 프레임 변경
     return () => clearInterval(interval);
-  }, [state.started, isAttacking, state.isBossFight, state.isMonsterFight, animFrameIndex]);
+  }, [state.started, isAttacking, isCriticalAttack, state.isBossFight, state.isMonsterFight, animFrameIndex]);
 
   // Auto-fever (번개 광풍) - 50ms마다 자동 공격
   useEffect(() => {
@@ -988,8 +1001,13 @@ export default function Home() {
         dmg *= 2;
       }
 
-      setIsAttacking(true);
-      setTimeout(() => setIsAttacking(false), 100);
+      if (isCrit) {
+        setIsCriticalAttack(true);
+        setTimeout(() => setIsCriticalAttack(false), 300);
+      } else {
+        setIsAttacking(true);
+        setTimeout(() => setIsAttacking(false), 100);
+      }
 
       if (state.isBossFight) {
         setBossHurt(true);
