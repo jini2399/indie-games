@@ -1310,7 +1310,7 @@ export default function Home() {
                     : undefined,
                 }}
               >
-                <PixelCapybara size={83} isAttacking={isAttacking} animState={capybaraAnimState} />
+                <PixelCapybara size={66} isAttacking={isAttacking} animState={capybaraAnimState} />
               </div>
 
               {/* Boss or Monster */}
@@ -1335,7 +1335,7 @@ export default function Home() {
                     zIndex: 10,
                   }}
                 >
-                  <PixelBoss bossIndex={bossIdx} size={94} />
+                  <PixelBoss bossIndex={bossIdx} size={122} />
                   {/* Dust effect during entrance */}
                   {bossEntering && (
                     <div style={{
@@ -1371,7 +1371,7 @@ export default function Home() {
                     zIndex: 10,
                   }}
                 >
-                  <PixelMonster type={state.monsterType.type} size={73} />
+                  <PixelMonster type={state.monsterType.type} size={95} />
                 </div>
               ) : (
                 <div
