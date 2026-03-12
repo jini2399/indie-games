@@ -1080,7 +1080,7 @@ export default function Home() {
         if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
         holdIntervalRef.current = setInterval(() => {
           fn();
-        }, 100);
+        }, 20);
       },
       onPointerUp: () => {
         setIsHoldingAttack(false);
