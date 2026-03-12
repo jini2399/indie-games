@@ -496,6 +496,8 @@ export default function Home() {
   const [droppedItems, setDroppedItems] = useState<DroppedItem[]>([]);
   const [explosions, setExplosions] = useState<Explosion[]>([]);
   const [isAttacking, setIsAttacking] = useState(false);
+  const [isHoldingAttack, setIsHoldingAttack] = useState(false);
+  const holdIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [bossHurt, setBossHurt] = useState(false);
   const [bossEntering, setBossEntering] = useState(false);
   const [monsterHurt, setMonsterHurt] = useState(false);
@@ -518,6 +520,15 @@ export default function Home() {
       setState({ ...saved, currentHp: Math.min(saved.currentHp, getTotalHp(saved)) });
     }
     setMounted(true);
+  }, []);
+
+  // Cleanup hold attack interval on unmount
+  useEffect(() => {
+    return () => {
+      if (holdIntervalRef.current) {
+        clearInterval(holdIntervalRef.current);
+      }
+    };
   }, []);
 
   // Double attack effect timer
@@ -1532,7 +1543,28 @@ export default function Home() {
             {/* Attack Button */}
             {(state.isBossFight || state.isMonsterFight) && (
               <button
-                onPointerDown={!bossEntering ? (e) => handleClick(e as any) : undefined}
+                onPointerDown={!bossEntering ? (e) => {
+                  handleClick(e as any);
+                  setIsHoldingAttack(true);
+                  if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
+                  holdIntervalRef.current = setInterval(() => {
+                    handleClick(e as any);
+                  }, 100);
+                } : undefined}
+                onPointerUp={() => {
+                  setIsHoldingAttack(false);
+                  if (holdIntervalRef.current) {
+                    clearInterval(holdIntervalRef.current);
+                    holdIntervalRef.current = null;
+                  }
+                }}
+                onPointerLeave={() => {
+                  setIsHoldingAttack(false);
+                  if (holdIntervalRef.current) {
+                    clearInterval(holdIntervalRef.current);
+                    holdIntervalRef.current = null;
+                  }
+                }}
                 disabled={bossEntering}
                 className="pixel-border w-full mb-2 flex-shrink-0"
                 style={{
