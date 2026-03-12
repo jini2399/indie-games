@@ -1269,11 +1269,10 @@ export default function Home() {
             <div
               ref={battleAreaRef}
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
-              className="pixel-border relative overflow-hidden cursor-pointer mb-2"
+              className="pixel-border relative overflow-hidden cursor-pointer mb-2 flex-1"
               style={{
                 background: "linear-gradient(180deg, #0c1222 0%, #1a1a3e 50%, #1a2e1a 100%)",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
-                height: 90,
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
               }}
             >
@@ -1533,7 +1532,7 @@ export default function Home() {
               <button
                 onPointerDown={!bossEntering ? (e) => handleClick(e as any) : undefined}
                 disabled={bossEntering}
-                className="pixel-border w-full mb-2"
+                className="pixel-border w-full mb-2 flex-shrink-0"
                 style={{
                   background: state.isBossFight
                     ? "linear-gradient(180deg, #dc2626, #991b1b)"
@@ -1555,7 +1554,7 @@ export default function Home() {
 
             {/* Skills (in battle) */}
             {(state.isBossFight || state.isMonsterFight) && (
-              <div className="grid grid-cols-2 gap-2 mb-2">
+              <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
                 {state.skills.map((skill) => {
                   const unlocked = state.level >= skill.unlockLevel;
                   const cd = skillCooldowns[skill.id] || 0;
@@ -1604,7 +1603,7 @@ export default function Home() {
             )}
 
             {/* Upgrades */}
-            <div className="grid grid-cols-3 gap-1 mb-2">
+            <div className="grid grid-cols-3 gap-1 mb-2 flex-shrink-0">
               {(() => {
                 const atkCost = getUpgradeCost(state.atkUpgradeCount);
                 return (
@@ -1631,7 +1630,7 @@ export default function Home() {
                 ⚔공격+2<br /><span style={{ color: "#fbbf24" }}>🪙30</span>
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-2 mb-2">
+            <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
               <button onClick={upgradeDef} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
