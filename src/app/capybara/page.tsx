@@ -429,10 +429,11 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
     "/indie-games/capybara-attack-2.png",  // 펀치
   ];
 
-  // Critical 프레임 이미지 경로 (2프레임: 웅크리기 → 점프)
+  // Critical 프레임 이미지 경로 (3프레임: 웅크리기 → 점프 → 발차기)
   const criticalFrames = [
     "/indie-games/capybara-critical-1.png",  // 웅크리기
     "/indie-games/capybara-critical-2.png",  // 점프
+    "/indie-games/capybara-critical-3.png",  // 발차기
   ];
 
   // 현재 상태에 따른 이미지 경로 결정
@@ -691,8 +692,8 @@ export default function Home() {
       let newState: CapybaraAnimState = { state: "idle", frameIndex: 0 };
       
       if (isCriticalAttack && (state.isBossFight || state.isMonsterFight)) {
-        // 크리티컬 애니메이션 (2프레임: 점프 → 발차기)
-        newState = { state: "critical", frameIndex: (animFrameIndex % 2) };
+        // 크리티컬 애니메이션 (3프레임: 웅크리기 → 점프 → 발차기)
+        newState = { state: "critical", frameIndex: (animFrameIndex % 3) };
       } else if (isAttacking && (state.isBossFight || state.isMonsterFight)) {
         newState = { state: "attack", frameIndex: (animFrameIndex % 2) };
       } else if (state.isBossFight || state.isMonsterFight) {
