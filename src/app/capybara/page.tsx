@@ -1279,7 +1279,7 @@ export default function Home() {
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
   return (
-    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "#1a1a2e", overflow: "hidden" }}>
+    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "linear-gradient(180deg, #0a0015 0%, #1a0f2e 50%, #0f0a1f 100%)", overflow: "hidden" }}>
       {/* Header & Ad */}
       <div className="w-full max-w-md flex-shrink-0">
         <div className="flex items-center justify-between mb-3 px-2">
@@ -1630,17 +1630,22 @@ export default function Home() {
                 className="pixel-border w-full mb-2 flex-shrink-0"
                 style={{
                   background: state.isBossFight
-                    ? "linear-gradient(180deg, #dc2626, #991b1b)"
-                    : "linear-gradient(180deg, #2563eb, #1d4ed8)",
-                  borderColor: state.isBossFight ? "#f87171" : "#3b82f6",
+                    ? "linear-gradient(180deg, #7f1d1d, #450a0a)"
+                    : "linear-gradient(180deg, #1e3a8a, #0f172a)",
+                  borderColor: state.isBossFight ? "#fbbf24" : "#fbbf24",
+                  borderWidth: "2px",
                   padding: "14px 10px",
                   fontSize: 13,
                   color: "#fff",
-                  textShadow: "1px 1px 0 #000",
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
                   letterSpacing: 2,
                   cursor: bossEntering ? "not-allowed" : "pointer",
                   opacity: bossEntering ? 0.6 : 1,
-                  transition: "opacity 0.1s ease",
+                  transition: "all 0.2s ease",
+                  boxShadow: state.isBossFight 
+                    ? "0 0 10px rgba(239, 68, 68, 0.5), inset 0 2px 0 rgba(255,255,255,0.1)" 
+                    : "0 0 10px rgba(59, 130, 246, 0.5), inset 0 2px 0 rgba(255,255,255,0.1)",
+                  borderRadius: "2px",
                 }}
               >
                 ▲ 공격 <span style={{ fontSize: 10, color: state.isBossFight ? "#fca5a5" : "#93c5fd" }}>({state.baseAtk} × {state.rebirthBonus.toFixed(2)} = {getTotalAtk(state)} DMG)</span>
@@ -1704,7 +1709,7 @@ export default function Home() {
                 return (
                   <button {...generateHoldHandler(upgradeClick)} disabled={state.gold < atkCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                    style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
+                    style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
                     ▲클릭+3<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />{atkCost}</span>
                   </button>
                 );
@@ -1714,26 +1719,26 @@ export default function Home() {
                 return (
                   <button {...generateHoldHandler(upgradeAuto)} disabled={state.gold < autoCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                    style={{ background: "#1e293b", borderColor: "#8b5cf6", padding: "9px 5px", fontSize: 9, color: "#c4b5fd" }}>
+                    style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
                     ⏱자동+0.3<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />{autoCost}</span>
                   </button>
                 );
               })()}
               <button {...generateHoldHandler(upgradeAtk)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#ef4444", padding: "9px 5px", fontSize: 9, color: "#fca5a5" }}>
+                style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
                 ▲공격+2<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />30</span>
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
               <button {...generateHoldHandler(upgradeDef)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
+                style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
                 ■방어+2 <span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />30</span>
               </button>
               <button {...generateHoldHandler(upgradeHpStat)} disabled={state.gold < 40}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1e293b", borderColor: "#ec4899", padding: "9px 5px", fontSize: 9, color: "#f9a8d4" }}>
+                style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
                 ●체력+10 <span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />40</span>
               </button>
             </div>
