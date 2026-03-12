@@ -1289,11 +1289,10 @@ export default function Home() {
 
         {/* Stats Bar */}
         <div
-          className="pixel-border mb-3 p-3 flex flex-col gap-2 flex-shrink-0 w-full max-w-md"
+          className="pixel-border mb-3 p-3 flex-shrink-0 w-full max-w-md"
           style={{ background: "#0f172a", borderColor: "#334155" }}
         >
-          {/* Row 1: Level, Attack, Defense */}
-          <div className="grid grid-cols-3 gap-2 text-center">
+          <div className="grid grid-cols-4 gap-2 text-center">
             <div>
               <div style={{ fontSize: 13, color: "#4ade80", fontWeight: "bold" }}>Lv.{state.level}</div>
               <div style={{ fontSize: 9, color: "#6b7280" }}>레벨</div>
@@ -1306,16 +1305,9 @@ export default function Home() {
               <div style={{ fontSize: 13, color: "#60a5fa", fontWeight: "bold" }}>■{totalDef}</div>
               <div style={{ fontSize: 9, color: "#6b7280" }}>방어</div>
             </div>
-          </div>
-          {/* Row 2: HP, Rebirth */}
-          <div className="grid grid-cols-2 gap-2 text-center">
             <div>
               <div style={{ fontSize: 13, color: "#f472b6", fontWeight: "bold" }}>●{totalHp}</div>
               <div style={{ fontSize: 9, color: "#6b7280" }}>체력</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 13, color: "#fbbf24", fontWeight: "bold" }}>★{state.rebirths}</div>
-              <div style={{ fontSize: 9, color: "#6b7280" }}>환생</div>
             </div>
           </div>
         </div>
