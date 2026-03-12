@@ -1263,8 +1263,9 @@ export default function Home() {
           <span style={{ fontSize: 11, color: "#fbbf24" }}>
             ▲ 카피바라 RPG
           </span>
-          <span style={{ fontSize: 10, color: "#fbbf24" }}>
-            ◯ {state.gold}
+          <span style={{ fontSize: 10, color: "#fbbf24", display: "flex", alignItems: "center", gap: 4 }}>
+            <img src="/indie-games/icon-gem.png" style={{ width: 12, height: 12, imageRendering: "pixelated" }} alt="gem" />
+            {state.gold}
           </span>
         </div>
 
@@ -1680,7 +1681,7 @@ export default function Home() {
                   <button {...generateHoldHandler(upgradeClick)} disabled={state.gold < atkCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
                     style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
-                    ▲클릭+3<br /><span style={{ color: "#fbbf24" }}>◯{atkCost}</span>
+                    ▲클릭+3<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />{atkCost}</span>
                   </button>
                 );
               })()}
@@ -1690,26 +1691,26 @@ export default function Home() {
                   <button {...generateHoldHandler(upgradeAuto)} disabled={state.gold < autoCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
                     style={{ background: "#1e293b", borderColor: "#8b5cf6", padding: "9px 5px", fontSize: 9, color: "#c4b5fd" }}>
-                    ⏱자동+0.3<br /><span style={{ color: "#fbbf24" }}>◯{autoCost}</span>
+                    ⏱자동+0.3<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />{autoCost}</span>
                   </button>
                 );
               })()}
               <button {...generateHoldHandler(upgradeAtk)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#ef4444", padding: "9px 5px", fontSize: 9, color: "#fca5a5" }}>
-                ▲공격+2<br /><span style={{ color: "#fbbf24" }}>◯30</span>
+                ▲공격+2<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />30</span>
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
               <button {...generateHoldHandler(upgradeDef)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#3b82f6", padding: "9px 5px", fontSize: 9, color: "#93c5fd" }}>
-                ■방어+2 <span style={{ color: "#fbbf24" }}>◯30</span>
+                ■방어+2 <span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />30</span>
               </button>
               <button {...generateHoldHandler(upgradeHpStat)} disabled={state.gold < 40}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1e293b", borderColor: "#ec4899", padding: "9px 5px", fontSize: 9, color: "#f9a8d4" }}>
-                ●체력+10 <span style={{ color: "#fbbf24" }}>◯40</span>
+                ●체력+10 <span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />40</span>
               </button>
             </div>
 
