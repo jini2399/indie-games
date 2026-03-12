@@ -1297,7 +1297,7 @@ export default function Home() {
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
   return (
-    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ backgroundImage: "url('/indie-games/bg-castle.jpg')", backgroundSize: "cover", backgroundPosition: "center", overflow: "hidden" }}>
+    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "#1a1a2e", overflow: "hidden" }}>
       {/* Header & Ad */}
       <div className="w-full max-w-md flex-shrink-0">
         <div className="flex items-center justify-between mb-3 px-2">
@@ -1388,7 +1388,9 @@ export default function Home() {
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
               className="pixel-border relative overflow-hidden cursor-pointer mb-2 flex-1"
               style={{
-                background: "linear-gradient(180deg, #0c1222 0%, #1a1a3e 50%, #1a2e1a 100%)",
+                backgroundImage: "url('/indie-games/bg-castle.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
                 minHeight: "200px",
@@ -1405,14 +1407,6 @@ export default function Home() {
                   pointerEvents: "none",
                 }} />
               )}
-              {/* Grid floor */}
-              <div
-                style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0, height: 30,
-                  background: "repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(255,255,255,0.05) 15px, rgba(255,255,255,0.05) 16px), repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(255,255,255,0.05) 15px, rgba(255,255,255,0.05) 16px)",
-                  backgroundColor: "rgba(34,197,94,0.1)",
-                }}
-              />
 
               {/* Capybara */}
               <div
