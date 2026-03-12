@@ -425,14 +425,14 @@ function PixelCapybara({ size = 80, isAttacking = false, animState = { state: "i
 
   // Attack 프레임 이미지 경로 (2프레임: 준비 → 펀치)
   const attackFrames = [
-    "/indie-games/capybara-attack-1.png",
-    "/indie-games/capybara-attack-3.png",
+    "/indie-games/capybara-attack-1.png",  // 준비
+    "/indie-games/capybara-attack-2.png",  // 펀치
   ];
 
-  // Critical 프레임 이미지 경로 (2프레임: 점프 → 발차기)
+  // Critical 프레임 이미지 경로 (2프레임: 웅크리기 → 점프)
   const criticalFrames = [
-    "/indie-games/capybara-critical-1.png",
-    "/indie-games/capybara-critical-2.png",
+    "/indie-games/capybara-critical-1.png",  // 웅크리기
+    "/indie-games/capybara-critical-2.png",  // 점프
   ];
 
   // 현재 상태에 따른 이미지 경로 결정
