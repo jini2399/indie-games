@@ -1256,7 +1256,7 @@ export default function Home() {
         </div>
 
         {/* Tab Content */}
-        <div className="flex-1 overflow-y-auto w-full max-w-md">
+        <div className="flex-1 overflow-hidden w-full max-w-md">
         {/* ─── Battle Tab ───────────────────────────────────── */}
         {activeTab === "battle" && (
           <div>
@@ -1264,11 +1264,11 @@ export default function Home() {
             <div
               ref={battleAreaRef}
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
-              className="pixel-border relative overflow-hidden cursor-pointer mb-2"
+              className="pixel-border relative overflow-hidden cursor-pointer mb-1"
               style={{
                 background: "linear-gradient(180deg, #0c1222 0%, #1a1a3e 50%, #1a2e1a 100%)",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
-                height: 160,
+                height: 120,
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
               }}
             >
