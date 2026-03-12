@@ -1102,38 +1102,51 @@ export default function Home() {
   const upgradeClick = () => {
     const cost = getUpgradeCost(state.atkUpgradeCount);
     if (state.gold < cost) return;
-    setState((prev) => ({
-      ...prev,
-      gold: prev.gold - cost,
-      clickExp: prev.clickExp + 3,
-      atkUpgradeCount: prev.atkUpgradeCount + 1,
-    }));
+    setState((prev) => {
+      if (prev.gold < cost) return prev;
+      return {
+        ...prev,
+        gold: prev.gold - cost,
+        clickExp: prev.clickExp + 3,
+        atkUpgradeCount: prev.atkUpgradeCount + 1,
+      };
+    });
   };
 
   const upgradeAuto = () => {
     const cost = getUpgradeCost(state.autoUpgradeCount);
     if (state.gold < cost) return;
-    setState((prev) => ({
-      ...prev,
-      gold: prev.gold - cost,
-      autoExp: prev.autoExp + 0.3,
-      autoUpgradeCount: prev.autoUpgradeCount + 1,
-    }));
+    setState((prev) => {
+      if (prev.gold < cost) return prev;
+      return {
+        ...prev,
+        gold: prev.gold - cost,
+        autoExp: prev.autoExp + 0.3,
+        autoUpgradeCount: prev.autoUpgradeCount + 1,
+      };
+    });
   };
 
   const upgradeAtk = () => {
     if (state.gold < 30) return;
-    setState((prev) => ({ ...prev, gold: prev.gold - 30, baseAtk: prev.baseAtk + 2 }));
+    setState((prev) => {
+      if (prev.gold < 30) return prev;
+      return { ...prev, gold: prev.gold - 30, baseAtk: prev.baseAtk + 2 };
+    });
   };
 
   const upgradeDef = () => {
     if (state.gold < 30) return;
-    setState((prev) => ({ ...prev, gold: prev.gold - 30, baseDef: prev.baseDef + 2 }));
+    setState((prev) => {
+      if (prev.gold < 30) return prev;
+      return { ...prev, gold: prev.gold - 30, baseDef: prev.baseDef + 2 };
+    });
   };
 
   const upgradeHpStat = () => {
     if (state.gold < 40) return;
     setState((prev) => {
+      if (prev.gold < 40) return prev;
       const newBaseHp = prev.baseHp + 10;
       const ns = { ...prev, gold: prev.gold - 40, baseHp: newBaseHp };
       ns.maxHp = getTotalHp(ns);
