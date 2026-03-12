@@ -1077,22 +1077,31 @@ export default function Home() {
   };
 
   const generateHoldHandler = (fn: () => void) => {
+    let pressStartTime = 0;
+    let hasTriggeredAutoMode = false;
+    
     return {
       onPointerDown: () => {
         setIsHoldingAttack(true);
+        pressStartTime = Date.now();
+        hasTriggeredAutoMode = false;
+        
         if (holdTimeoutRef.current) clearTimeout(holdTimeoutRef.current);
         if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
         
-        // 2초 후 동작 시작
+        // 1.5초 후 자동 업그레이드 시작
         holdTimeoutRef.current = setTimeout(() => {
+          hasTriggeredAutoMode = true;
           fn();
           holdIntervalRef.current = setInterval(() => {
             fn();
           }, 20);
-        }, 2000);
+        }, 1500);
       },
       onPointerUp: () => {
         setIsHoldingAttack(false);
+        const pressDuration = Date.now() - pressStartTime;
+        
         if (holdTimeoutRef.current) {
           clearTimeout(holdTimeoutRef.current);
           holdTimeoutRef.current = null;
@@ -1100,10 +1109,17 @@ export default function Home() {
         if (holdIntervalRef.current) {
           clearInterval(holdIntervalRef.current);
           holdIntervalRef.current = null;
+        }
+        
+        // 1.5초 미만이면 한 번만 실행
+        if (pressDuration < 1500 && !hasTriggeredAutoMode) {
+          fn();
         }
       },
       onPointerLeave: () => {
         setIsHoldingAttack(false);
+        const pressDuration = Date.now() - pressStartTime;
+        
         if (holdTimeoutRef.current) {
           clearTimeout(holdTimeoutRef.current);
           holdTimeoutRef.current = null;
@@ -1111,6 +1127,11 @@ export default function Home() {
         if (holdIntervalRef.current) {
           clearInterval(holdIntervalRef.current);
           holdIntervalRef.current = null;
+        }
+        
+        // 1.5초 미만이면 한 번만 실행
+        if (pressDuration < 1500 && !hasTriggeredAutoMode) {
+          fn();
         }
       },
     };
