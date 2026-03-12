@@ -705,7 +705,7 @@ export default function Home() {
         // Auto attack monster
         if (prev.isMonsterFight && prev.monsterType && prev.autoAttackEnabled) {
           const atk = getTotalAtk(prev);
-          let dmg = Math.max(1, Math.floor(atk * 0.5));
+          let dmg = Math.max(1, atk);
           if (isDoubleAttackActive(prev)) {
             dmg *= 2;
           }
