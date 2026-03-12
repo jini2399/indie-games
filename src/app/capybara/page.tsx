@@ -1274,6 +1274,7 @@ export default function Home() {
                 background: "linear-gradient(180deg, #0c1222 0%, #1a1a3e 50%, #1a2e1a 100%)",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
+                minHeight: "200px",
               }}
             >
               {/* Red flash overlay during boss entrance */}
