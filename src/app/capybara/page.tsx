@@ -1372,7 +1372,7 @@ export default function Home() {
               style={{
                 position: "relative",
                 backgroundImage: bgIndex === 0 ? "url('/indie-games/bg-castle-1.jpg')" : "url('/indie-games/bg-castle-2.jpg')",
-                backgroundSize: "cover",
+                backgroundSize: "80%",
                 backgroundPosition: "center",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
