@@ -1705,8 +1705,10 @@ export default function Home() {
               </div>
             )}
 
-            {/* Upgrades */}
-            <div className="grid grid-cols-3 gap-1 mb-0 flex-shrink-0">
+            {/* Upgrades Container */}
+            <div style={{ backgroundImage: "url('/indie-games/upgrade-frame.png')", backgroundSize: "100% 100%", backgroundRepeat: "no-repeat", backgroundPosition: "center", padding: "20px 15px 15px 15px", marginTop: "0px" }}>
+              {/* Upgrades */}
+              <div className="grid grid-cols-3 gap-1 mb-0 flex-shrink-0">
               {(() => {
                 const atkCost = getUpgradeCost(state.atkUpgradeCount);
                 return (
@@ -1744,6 +1746,7 @@ export default function Home() {
                 style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
                 ●체력+10 <span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />40</span>
               </button>
+            </div>
             </div>
 
           </div>
