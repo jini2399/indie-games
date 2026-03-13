@@ -1368,15 +1368,16 @@ export default function Home() {
             <div
               ref={battleAreaRef}
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
-              className="pixel-border relative overflow-hidden cursor-pointer mb-2 flex-1 frame-glow"
+              className="pixel-border relative overflow-hidden cursor-pointer flex-1 frame-glow"
               style={{
                 backgroundImage: bgIndex === 0 ? "url('/indie-games/bg-castle-1.jpg')" : "url('/indie-games/bg-castle-2.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
-                minHeight: "200px",
+                minHeight: "280px",
                 transition: "background-image 0.5s ease-in-out",
+                marginBottom: "0px",
               }}
             >
               {/* Red flash overlay during boss entrance */}
@@ -1579,7 +1580,7 @@ export default function Home() {
 
             {/* Boss HP Bar */}
             {state.isBossFight && (
-              <div className="mb-2">
+              <div className="mb-0">
                 <div className="flex justify-between" style={{ fontSize: 6, color: "#f87171", marginBottom: 2 }}>
                   <span>{BOSS_EMOJIS[bossIdx]} {BOSS_NAMES[bossIdx]}</span>
                   <span>{Math.max(0, state.bossHp)}/{state.bossMaxHp}</span>
@@ -1599,7 +1600,7 @@ export default function Home() {
 
             {/* Monster HP Bar */}
             {!state.isBossFight && state.isMonsterFight && state.monsterType && (
-              <div className="mb-2">
+              <div className="mb-0">
                 <div className="flex justify-between" style={{ fontSize: 6, color: "#4ade80", marginBottom: 2 }}>
                   <span>{state.monsterType.emoji} {state.monsterType.name}</span>
                   <span>{Math.max(0, state.monsterHp)}/{state.monsterMaxHp}</span>
@@ -1626,7 +1627,7 @@ export default function Home() {
               <button
                 onPointerDown={!bossEntering ? (e) => handleClick(e as any) : undefined}
                 disabled={bossEntering}
-                className="pixel-border w-full mb-2 flex-shrink-0"
+                className="pixel-border w-full mb-0 flex-shrink-0"
                 style={{
                   background: state.isBossFight
                     ? "linear-gradient(180deg, #7f1d1d, #450a0a)"
@@ -1653,7 +1654,7 @@ export default function Home() {
 
             {/* Skills (in battle) */}
             {(state.isBossFight || state.isMonsterFight) && (
-              <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
+              <div className="grid grid-cols-2 gap-2 mb-0 flex-shrink-0">
                 {state.skills.map((skill) => {
                   const unlocked = state.level >= skill.unlockLevel;
                   const cd = skillCooldowns[skill.id] || 0;
@@ -1702,7 +1703,7 @@ export default function Home() {
             )}
 
             {/* Upgrades */}
-            <div className="grid grid-cols-3 gap-1 mb-2 flex-shrink-0">
+            <div className="grid grid-cols-3 gap-1 mb-0 flex-shrink-0">
               {(() => {
                 const atkCost = getUpgradeCost(state.atkUpgradeCount);
                 return (
@@ -1729,7 +1730,7 @@ export default function Home() {
                 ▲공격+2<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />30</span>
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
+            <div className="grid grid-cols-2 gap-2 mb-0 flex-shrink-0">
               <button {...generateHoldHandler(upgradeDef)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
@@ -1749,7 +1750,7 @@ export default function Home() {
         {activeTab === "inventory" && (
           <div className="h-full flex flex-col">
             {/* Equipment Slots */}
-            <div className="pixel-border p-2 mb-2 flex-shrink-0" style={{ background: "#0f172a", borderColor: "#334155" }}>
+            <div className="pixel-border p-2 mb-0 flex-shrink-0" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div style={{ fontSize: 8, color: "#fbbf24", marginBottom: 4 }}>▲ 장비</div>
               <div className="grid grid-cols-3 gap-2">
                 {(["weapon", "armor", "accessory"] as const).map((slot) => {
@@ -1841,7 +1842,7 @@ export default function Home() {
         {activeTab === "info" && (
           <div className="h-full overflow-hidden flex flex-col">
             {/* Level & Rebirth Info */}
-            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+            <div className="pixel-border p-2 mb-0" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div style={{ fontSize: 10, color: "#4ade80", marginBottom: 4 }}>⬆ 레벨 정보</div>
               <div style={{ fontSize: 10, color: "#fff", marginBottom: 2 }}>
                 현재: <span style={{ color: "#4ade80" }}>{state.level}</span> 
@@ -1855,7 +1856,7 @@ export default function Home() {
             {state.level >= REBIRTH_LEVEL && (
               <button
                 onClick={rebirth}
-                className="pixel-border w-full cursor-pointer mb-2"
+                className="pixel-border w-full cursor-pointer mb-0"
                 style={{
                   background: "linear-gradient(180deg, #f59e0b, #dc2626)",
                   borderColor: "#fbbf24",
@@ -1870,7 +1871,7 @@ export default function Home() {
             )}
 
             {/* Stat info */}
-            <div className="pixel-border p-2 mb-2" style={{ background: "#0f172a", borderColor: "#334155" }}>
+            <div className="pixel-border p-2 mb-0" style={{ background: "#0f172a", borderColor: "#334155" }}>
               <div style={{ fontSize: 10, color: "#fbbf24", marginBottom: 2 }}>📊 정보</div>
               <div className="grid grid-cols-2 gap-2" style={{ fontSize: 8 }}>
                 <div style={{ color: "#f87171" }}>기본 공격력: {state.baseAtk}</div>
