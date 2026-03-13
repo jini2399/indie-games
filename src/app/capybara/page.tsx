@@ -1281,8 +1281,8 @@ export default function Home() {
   return (
     <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "transparent", overflow: "hidden" }}>
       {/* Header with Image Background */}
-      <div className="w-full max-w-md flex-shrink-0" style={{ backgroundImage: "url('/indie-games/header-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "20px 15px", borderRadius: "8px", marginBottom: "8px", height: "100px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <div className="flex items-center justify-between mb-3">
+      <div className="w-full max-w-md flex-shrink-0" style={{ backgroundImage: "url('/indie-games/header-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "0px 0px", borderRadius: "8px", marginBottom: "8px", minHeight: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", gap: "8px" }}>
+        <div className="flex items-center justify-between mb-3" style={{ backgroundImage: "url('/indie-games/title-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "8px 15px", borderRadius: "4px", minHeight: "35px", display: "flex", alignItems: "center" }}>
           <span style={{ fontSize: 11, color: "#fbbf24", fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             ✨ 카피바라 RPG
           </span>
@@ -1293,7 +1293,7 @@ export default function Home() {
         </div>
 
         {/* Stats Bar - Horizontal */}
-        <div className="flex justify-around gap-4 text-center">
+        <div className="flex justify-around gap-4 text-center" style={{ marginTop: "8px" }}>
           <div>
             <div style={{ fontSize: 12, color: "#4ade80", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>Lv {state.level}</div>
           </div>
@@ -1309,7 +1309,7 @@ export default function Home() {
         </div>
 
         {/* EXP Bar */}
-        <div className="mt-3 flex-shrink-0 w-full">
+        <div className="flex-shrink-0 w-full" style={{ marginTop: "8px" }}>
           <div className="flex justify-between" style={{ fontSize: 8, color: "#c0c0c0", marginBottom: 3 }}>
             <span>EXP</span>
             <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
