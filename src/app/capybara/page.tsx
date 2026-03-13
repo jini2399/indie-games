@@ -1330,7 +1330,7 @@ export default function Home() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 w-full max-w-md flex-shrink-0 mt-2" style={{ order: 1000 }}>
+        <div className="flex gap-2 w-full max-w-md flex-shrink-0 mt-0" style={{ order: 0 }}>
           {(["battle", "inventory", "info"] as const).map((tab) => {
             const tabColors = {
               battle: { bg: "#7f1d1d", border: "#dc2626", glow: "rgba(220, 38, 38, 0.5)" },
