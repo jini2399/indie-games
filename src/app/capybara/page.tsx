@@ -1364,14 +1364,13 @@ export default function Home() {
         {/* ─── Battle Tab ───────────────────────────────────── */}
         {activeTab === "battle" && (
           <div className="h-full overflow-hidden flex flex-col">
-            {/* Battle Frame Container */}
-            <div style={{ backgroundImage: "url('/indie-games/battle-frame.png')", backgroundSize: "100% 100%", backgroundRepeat: "no-repeat", backgroundPosition: "center", flex: 1, display: "flex", flexDirection: "column", padding: "30px 20px 20px 20px" }}>
-              {/* Battle Area */}
-              <div
-                ref={battleAreaRef}
+            {/* Battle Area */}
+            <div
+              ref={battleAreaRef}
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
               className="pixel-border relative overflow-hidden cursor-pointer flex-1 frame-glow"
               style={{
+                position: "relative",
                 backgroundImage: bgIndex === 0 ? "url('/indie-games/bg-castle-1.jpg')" : "url('/indie-games/bg-castle-2.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -1578,7 +1577,9 @@ export default function Home() {
                   <span style={{ color: "#6b7280", marginLeft: 8 }}>처치: {state.monstersDefeated}</span>
                 </div>
               )}
-            </div>
+
+              {/* Battle Frame Overlay */}
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('/indie-games/battle-frame.png')", backgroundSize: "100% 100%", backgroundRepeat: "no-repeat", backgroundPosition: "center", pointerEvents: "none", zIndex: 50 }} />
             </div>
 
             {/* Boss HP Bar */}
