@@ -1292,37 +1292,40 @@ export default function Home() {
           </span>
         </div>
 
-        {/* Stats Bar - Horizontal */}
-        <div className="flex justify-around gap-4 text-center" style={{ marginTop: "8px" }}>
-          <div>
-            <div style={{ fontSize: 12, color: "#4ade80", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>Lv {state.level}</div>
+        {/* Stats Container with Background */}
+        <div style={{ backgroundImage: "url('/indie-games/stats-bg.jpg')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "12px 15px", borderRadius: "4px", marginTop: "8px" }}>
+          {/* Stats Bar - Horizontal */}
+          <div className="flex justify-around gap-4 text-center mb-3">
+            <div>
+              <div style={{ fontSize: 12, color: "#4ade80", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>Lv {state.level}</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 12, color: "#f87171", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>▲{totalAtk}</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 12, color: "#60a5fa", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>■{totalDef}</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 12, color: "#f472b6", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>●{totalHp}</div>
+            </div>
           </div>
-          <div>
-            <div style={{ fontSize: 12, color: "#f87171", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>▲{totalAtk}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: 12, color: "#60a5fa", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>■{totalDef}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: 12, color: "#f472b6", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>●{totalHp}</div>
-          </div>
-        </div>
 
-        {/* EXP Bar */}
-        <div className="flex-shrink-0 w-full" style={{ marginTop: "8px" }}>
-          <div className="flex justify-between" style={{ fontSize: 8, color: "#c0c0c0", marginBottom: 3 }}>
-            <span>EXP</span>
-            <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
-          </div>
-          <div className="pixel-bar" style={{ height: 8, background: "rgba(0,0,0,0.5)", borderColor: "#fbbf24" }}>
-            <div
-              style={{
-                height: "100%",
-                width: `${(state.exp / EXP_PER_LEVEL) * 100}%`,
-                background: "linear-gradient(90deg, #22c55e, #3b82f6)",
-                transition: "width 0.3s",
-              }}
-            />
+          {/* EXP Bar */}
+          <div className="flex-shrink-0 w-full">
+            <div className="flex justify-between" style={{ fontSize: 8, color: "#c0c0c0", marginBottom: 3 }}>
+              <span>EXP</span>
+              <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
+            </div>
+            <div className="pixel-bar" style={{ height: 8, background: "rgba(0,0,0,0.5)", borderColor: "#fbbf24" }}>
+              <div
+                style={{
+                  height: "100%",
+                  width: `${(state.exp / EXP_PER_LEVEL) * 100}%`,
+                  background: "linear-gradient(90deg, #22c55e, #3b82f6)",
+                  transition: "width 0.3s",
+                }}
+              />
+            </div>
           </div>
         </div>
 
