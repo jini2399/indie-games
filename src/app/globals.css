@@ -19,7 +19,7 @@
 }
 
 body {
-  background: var(--background);
+  background: url('/indie-games/bg-app.png') no-repeat center/cover fixed;
   color: var(--foreground);
   font-family: 'Press Start 2P', monospace;
   font-size: 10px;

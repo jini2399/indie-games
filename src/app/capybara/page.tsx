@@ -1279,7 +1279,7 @@ export default function Home() {
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
   return (
-    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "linear-gradient(180deg, #0d0208 0%, #2d1b3d 50%, #1a0f28 100%)", overflow: "hidden" }}>
+    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "transparent", overflow: "hidden" }}>
       {/* Header & Ad */}
       <div className="w-full max-w-md flex-shrink-0">
         <div className="flex items-center justify-between mb-3 px-2">
