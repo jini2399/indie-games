@@ -1,5 +1,18 @@
 import type { Metadata } from "next";
+import { Cinzel, IM_Fell_English } from "next/font/google";
 import "./globals.css";
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  variable: "--font-cinzel",
+});
+
+const imFellEnglish = IM_Fell_English({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-im-fell",
+});
 
 export const metadata: Metadata = {
   title: "카피바라 방치형 RPG 🦫",
@@ -12,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body>{children}</body>
+    <html lang="ko" className={`${cinzel.variable} ${imFellEnglish.variable}`} style={{ fontFamily: "var(--font-cinzel)" }}>
+      <body style={{ fontFamily: "var(--font-cinzel)" }}>{children}</body>
     </html>
   );
 }
