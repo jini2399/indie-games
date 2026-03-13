@@ -1293,7 +1293,7 @@ export default function Home() {
         </div>
 
         {/* Stats Container with Background */}
-        <div style={{ backgroundImage: "url('/indie-games/stats-bg.jpg')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "12px 15px", borderRadius: "4px", marginTop: "8px" }}>
+        <div style={{ backgroundImage: "url('/indie-games/stats-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "12px 15px", borderRadius: "4px", marginTop: "8px" }}>
           {/* Stats Bar - Horizontal */}
           <div className="flex justify-around gap-4 text-center mb-3">
             <div>
