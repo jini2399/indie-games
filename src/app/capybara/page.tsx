@@ -1281,7 +1281,7 @@ export default function Home() {
   return (
     <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "transparent", overflow: "hidden" }}>
       {/* Header */}
-      <div className="w-full max-w-md flex-shrink-0" style={{ padding: "0px 0px", marginBottom: "8px", display: "flex", flexDirection: "column", justifyContent: "flex-start", gap: "8px" }}>
+      <div className="w-full max-w-md flex-shrink-0" style={{ padding: "0px 0px", marginBottom: "4px", display: "flex", flexDirection: "column", justifyContent: "flex-start", gap: "2px" }}>
         <div className="flex items-center justify-between mb-3" style={{ backgroundImage: "url('/indie-games/title-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "18px 15px", borderRadius: "4px", minHeight: "70px", display: "flex", alignItems: "center" }}>
           <span style={{ fontSize: 11, color: "#fbbf24", fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             ✨ 카피바라 RPG
@@ -1293,9 +1293,9 @@ export default function Home() {
         </div>
 
         {/* Stats Container with Background */}
-        <div style={{ backgroundImage: "url('/indie-games/stats-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "12px 15px", borderRadius: "4px", marginTop: "8px" }}>
+        <div style={{ backgroundImage: "url('/indie-games/stats-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "12px 15px", borderRadius: "4px", marginTop: "2px" }}>
           {/* Stats Bar - Horizontal */}
-          <div className="flex justify-around gap-4 text-center mb-3">
+          <div className="flex justify-around gap-4 text-center mb-2">
             <div>
               <div style={{ fontSize: 12, color: "#4ade80", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>Lv {state.level}</div>
             </div>
@@ -1330,7 +1330,7 @@ export default function Home() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 w-full max-w-md flex-shrink-0 mt-0" style={{ order: 0 }}>
+        <div className="flex gap-2 w-full max-w-md flex-shrink-0 mt-1" style={{ order: 0 }}>
           {(["battle", "inventory", "info"] as const).map((tab) => {
             const tabColors = {
               battle: { bg: "#7f1d1d", border: "#dc2626", glow: "rgba(220, 38, 38, 0.5)" },
@@ -1376,7 +1376,7 @@ export default function Home() {
                 backgroundPosition: "center",
                 borderColor: state.isBossFight ? "#dc2626" : state.isMonsterFight ? "#22c55e" : "#334155",
                 animation: bossEntering ? "boss-entrance-shake 0.4s ease-in-out 1s 3" : undefined,
-                minHeight: "280px",
+                minHeight: "240px",
                 transition: "background-image 0.5s ease-in-out",
                 marginBottom: "0px",
               }}
@@ -1658,7 +1658,7 @@ export default function Home() {
 
             {/* Skills (in battle) */}
             {(state.isBossFight || state.isMonsterFight) && (
-              <div className="grid grid-cols-2 gap-2 mb-0 flex-shrink-0">
+              <div className="grid grid-cols-2 gap-1 mb-0 flex-shrink-0" style={{ marginTop: "4px" }}>
                 {state.skills.map((skill) => {
                   const unlocked = state.level >= skill.unlockLevel;
                   const cd = skillCooldowns[skill.id] || 0;
@@ -1707,9 +1707,9 @@ export default function Home() {
             )}
 
             {/* Upgrades Container */}
-            <div style={{ backgroundImage: "url('/indie-games/upgrade-frame.png')", backgroundSize: "100% 100%", backgroundRepeat: "no-repeat", backgroundPosition: "center", padding: "20px 15px 15px 15px", marginTop: "0px" }}>
+            <div style={{ backgroundImage: "url('/indie-games/upgrade-frame.png')", backgroundSize: "100% 100%", backgroundRepeat: "no-repeat", backgroundPosition: "center", padding: "15px 12px 12px 12px", marginTop: "4px" }}>
               {/* Upgrades */}
-              <div className="grid grid-cols-3 gap-1 mb-0 flex-shrink-0">
+              <div className="grid grid-cols-3 gap-1 mb-1 flex-shrink-0">
               {(() => {
                 const atkCost = getUpgradeCost(state.atkUpgradeCount);
                 return (
@@ -1736,7 +1736,7 @@ export default function Home() {
                 ▲공격+2<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />30</span>
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-2 mb-0 flex-shrink-0">
+            <div className="grid grid-cols-2 gap-1 mb-0 flex-shrink-0">
               <button {...generateHoldHandler(upgradeDef)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
                 style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
