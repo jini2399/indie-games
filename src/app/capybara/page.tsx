@@ -1364,9 +1364,11 @@ export default function Home() {
         {/* ─── Battle Tab ───────────────────────────────────── */}
         {activeTab === "battle" && (
           <div className="h-full overflow-hidden flex flex-col">
-            {/* Battle Area */}
-            <div
-              ref={battleAreaRef}
+            {/* Battle Frame Container */}
+            <div style={{ backgroundImage: "url('/indie-games/battle-frame.png')", backgroundSize: "100% 100%", backgroundRepeat: "no-repeat", backgroundPosition: "center", flex: 1, display: "flex", flexDirection: "column", padding: "30px 20px 20px 20px" }}>
+              {/* Battle Area */}
+              <div
+                ref={battleAreaRef}
               onPointerDown={bossEntering ? undefined : (e) => handleClick(e as any)}
               className="pixel-border relative overflow-hidden cursor-pointer flex-1 frame-glow"
               style={{
@@ -1576,6 +1578,7 @@ export default function Home() {
                   <span style={{ color: "#6b7280", marginLeft: 8 }}>처치: {state.monstersDefeated}</span>
                 </div>
               )}
+            </div>
             </div>
 
             {/* Boss HP Bar */}
