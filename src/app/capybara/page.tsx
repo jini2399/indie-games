@@ -189,6 +189,10 @@ interface GameState {
   // Upgrade counts
   atkUpgradeCount: number;
   autoUpgradeCount: number;
+  // Combo System
+  comboCount: number;
+  comboDamageMultiplier: number;
+  lastClickTime: number;
 }
 
 // ─── Constants ───────────────────────────────────────────────────────
@@ -326,6 +330,9 @@ function getDefaultState(): GameState {
     autoFeverEndTime: 0,
     atkUpgradeCount: 0,
     autoUpgradeCount: 0,
+    comboCount: 0,
+    comboDamageMultiplier: 1.0,
+    lastClickTime: 0,
   };
 }
 
@@ -893,8 +900,25 @@ export default function Home() {
       event.preventDefault();
 
       const atk = getTotalAtk(state);
+      const now = Date.now();
+      
+      // 콤보 계산 (5초 내 클릭 = 콤보 유지, 아니면 초기화)
+      let newCombo = state.comboCount;
+      if (now - state.lastClickTime < 5000) {
+        newCombo = state.comboCount + 1;
+      } else {
+        newCombo = 1;
+      }
+      
+      // 콤보 배수 계산
+      let comboDamageMultiplier = 1.0;
+      if (newCombo >= 5 && newCombo < 10) comboDamageMultiplier = 1.5;
+      else if (newCombo >= 10 && newCombo < 15) comboDamageMultiplier = 2.0;
+      else if (newCombo >= 15) comboDamageMultiplier = 2.5;
+      
       const isCrit = Math.random() < 0.15;
       let dmg = isCrit ? atk * 2 : atk;
+      dmg = Math.floor(dmg * comboDamageMultiplier);
       
       // 공격력 2배 스킬 적용 (10초 동안 모든 공격이 2배)
       if (isDoubleAttackActive(state)) {
@@ -927,9 +951,12 @@ export default function Home() {
               isBossFight: false,
               gold: prev.gold + reward,
               pendingChest: item,
+              comboCount: newCombo,
+              comboDamageMultiplier: comboDamageMultiplier,
+              lastClickTime: now,
             };
           }
-          return { ...prev, bossHp: newBossHp };
+          return { ...prev, bossHp: newBossHp, comboCount: newCombo, comboDamageMultiplier: comboDamageMultiplier, lastClickTime: now };
         });
       } else if (state.isMonsterFight && state.monsterType) {
         // Attack monster
@@ -973,6 +1000,7 @@ export default function Home() {
                 ...prev, exp: newExp, level: newLevel, gold,
                 isBossFight: true, bossHp: bossMaxHp, bossMaxHp, bossLevel: bossLv,
                 isMonsterFight: false, monsterType: null, monstersDefeated: prev.monstersDefeated + 1,
+                comboCount: newCombo, comboDamageMultiplier: comboDamageMultiplier, lastClickTime: now,
               };
             }
 
@@ -980,10 +1008,11 @@ export default function Home() {
               ...prev, exp: newExp, level: newLevel, gold,
               isMonsterFight: true, monsterHp: next.hp, monsterMaxHp: next.hp,
               monsterType: next.monster, monstersDefeated: prev.monstersDefeated + 1,
+              comboCount: newCombo, comboDamageMultiplier: comboDamageMultiplier, lastClickTime: now,
             };
           }
 
-          return { ...prev, monsterHp: newMonsterHp };
+          return { ...prev, monsterHp: newMonsterHp, comboCount: newCombo, comboDamageMultiplier: comboDamageMultiplier, lastClickTime: now };
         });
       } else {
         const clickValue = Math.floor(state.clickExp * state.rebirthBonus);
@@ -1393,6 +1422,38 @@ export default function Home() {
                   zIndex: 30,
                   pointerEvents: "none",
                 }} />
+              )}
+
+              {/* Combo Display */}
+              {state.comboCount >= 5 && (
+                <div style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 25,
+                  pointerEvents: "none",
+                  textAlign: "center",
+                }}>
+                  <div style={{
+                    fontSize: state.comboCount >= 15 ? 48 : 36,
+                    color: state.comboCount >= 15 ? "#ff4500" : state.comboCount >= 10 ? "#fbbf24" : "#fca5a5",
+                    fontWeight: "900",
+                    textShadow: "0 0 20px rgba(255, 255, 255, 0.5), 2px 2px 8px rgba(0, 0, 0, 0.8)",
+                    letterSpacing: "2px",
+                  }}>
+                    COMBO: {state.comboCount}
+                  </div>
+                  <div style={{
+                    fontSize: 16,
+                    color: "#fbbf24",
+                    fontWeight: "bold",
+                    textShadow: "1px 1px 4px rgba(0, 0, 0, 0.8)",
+                    marginTop: 8,
+                  }}>
+                    × {state.comboDamageMultiplier.toFixed(1)}
+                  </div>
+                </div>
               )}
 
               {/* Capybara */}
