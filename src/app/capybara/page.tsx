@@ -1342,7 +1342,7 @@ export default function Home() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className="pixel-border-sm flex-1 py-2 cursor-pointer"
+                className="pixel-border-sm flex-1 py-4 cursor-pointer"
                 style={{
                   background: activeTab === tab && tab === "battle" ? "url('/indie-games/tab-battle-bg.png')" : activeTab === tab && tab === "inventory" ? "url('/indie-games/tab-inventory-bg.png')" : activeTab === tab && tab === "info" ? "url('/indie-games/tab-info-bg.png')" : activeTab !== tab ? "url('/indie-games/tab-inactive-bg.png')" : colors.bg,
                   backgroundSize: "contain",
