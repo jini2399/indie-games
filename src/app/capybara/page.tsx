@@ -1344,7 +1344,10 @@ export default function Home() {
                 onClick={() => setActiveTab(tab)}
                 className="pixel-border-sm flex-1 py-2 cursor-pointer"
                 style={{
-                  background: activeTab === tab ? colors.bg : "#0d0208",
+                  background: activeTab === tab && tab === "battle" ? "url('/indie-games/tab-battle-bg.png')" : activeTab === tab ? colors.bg : "#0d0208",
+                  backgroundSize: activeTab === tab && tab === "battle" ? "100% 100%" : "auto",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                   borderColor: activeTab === tab ? colors.border : "#2d1b3d",
                   borderWidth: "2px",
                   color: activeTab === tab ? "#fff" : "#6b7280",
