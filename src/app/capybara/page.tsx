@@ -1281,7 +1281,7 @@ export default function Home() {
   return (
     <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "transparent", overflow: "hidden" }}>
       {/* Header with Image Background */}
-      <div className="w-full max-w-md flex-shrink-0" style={{ backgroundImage: "url('/indie-games/header-bg.png')", backgroundSize: "cover", backgroundPosition: "center", padding: "20px 15px", borderRadius: "8px", marginBottom: "8px" }}>
+      <div className="w-full max-w-md flex-shrink-0" style={{ backgroundImage: "url('/indie-games/header-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "20px 15px", borderRadius: "8px", marginBottom: "8px", height: "100px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <div className="flex items-center justify-between mb-3">
           <span style={{ fontSize: 11, color: "#fbbf24", fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             ✨ 카피바라 RPG
