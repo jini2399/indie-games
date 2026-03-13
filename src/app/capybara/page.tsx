@@ -1710,43 +1710,34 @@ export default function Home() {
 
             {/* Upgrades Container */}
             <div style={{ backgroundImage: "url('/indie-games/upgrade-frame.png')", backgroundSize: "100% 100%", backgroundRepeat: "no-repeat", backgroundPosition: "center", padding: "15px 12px 12px 12px", marginTop: "4px" }}>
-              {/* Upgrades */}
-              <div className="grid grid-cols-3 gap-1 mb-1 flex-shrink-0">
-              {(() => {
-                const atkCost = getUpgradeCost(state.atkUpgradeCount);
-                return (
-                  <button {...generateHoldHandler(upgradeClick)} disabled={state.gold < atkCost}
-                    className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                    style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
-                    ▲클릭+3<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />{atkCost}</span>
-                  </button>
-                );
-              })()}
+              {/* Upgrades Row 1: Auto + Attack (2 columns) */}
+              <div className="grid grid-cols-2 gap-2 mb-2 flex-shrink-0">
               {(() => {
                 const autoCost = getUpgradeCost(state.autoUpgradeCount);
                 return (
                   <button {...generateHoldHandler(upgradeAuto)} disabled={state.gold < autoCost}
                     className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                    style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
+                    style={{ backgroundImage: "url('/indie-games/upgrade-btn-bg.png')", backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "9px 5px", fontSize: 9, color: "#fbbf24", minHeight: "32px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                     ⏱자동+0.3<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />{autoCost}</span>
                   </button>
                 );
               })()}
               <button {...generateHoldHandler(upgradeAtk)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
+                style={{ backgroundImage: "url('/indie-games/upgrade-btn-bg.png')", backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "9px 5px", fontSize: 9, color: "#fbbf24", minHeight: "32px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                 ▲공격+2<br /><span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />30</span>
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-1 mb-0 flex-shrink-0">
+            {/* Upgrades Row 2: Defense + HP (2 columns) */}
+            <div className="grid grid-cols-2 gap-2 mb-0 flex-shrink-0">
               <button {...generateHoldHandler(upgradeDef)} disabled={state.gold < 30}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
+                style={{ backgroundImage: "url('/indie-games/upgrade-btn-bg.png')", backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "9px 5px", fontSize: 9, color: "#fbbf24", minHeight: "32px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                 ■방어+2 <span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />30</span>
               </button>
               <button {...generateHoldHandler(upgradeHpStat)} disabled={state.gold < 40}
                 className="pixel-border-sm cursor-pointer disabled:opacity-40"
-                style={{ background: "#1a0f2e", borderColor: "#fbbf24", borderWidth: "1.5px", padding: "9px 5px", fontSize: 9, color: "#fbbf24", boxShadow: "0 0 8px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)" }}>
+                style={{ backgroundImage: "url('/indie-games/upgrade-btn-bg.png')", backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "9px 5px", fontSize: 9, color: "#fbbf24", minHeight: "32px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                 ●체력+10 <span style={{ color: "#fbbf24", fontSize: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}><img src="/indie-games/icon-gem.png" style={{ width: 8, height: 8, imageRendering: "pixelated" }} alt="gem" />40</span>
               </button>
             </div>
