@@ -1280,56 +1280,41 @@ export default function Home() {
 
   return (
     <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "transparent", overflow: "hidden" }}>
-      {/* Header & Ad */}
-      <div className="w-full max-w-md flex-shrink-0">
-        <div className="flex items-center justify-between mb-3 px-2">
-          <span style={{ fontSize: 11, color: "#fbbf24" }}>
-            ▲ 카피바라 RPG
+      {/* Header with Image Background */}
+      <div className="w-full max-w-md flex-shrink-0" style={{ backgroundImage: "url('/indie-games/header-bg.png')", backgroundSize: "cover", backgroundPosition: "center", padding: "20px 15px", borderRadius: "8px", marginBottom: "8px" }}>
+        <div className="flex items-center justify-between mb-3">
+          <span style={{ fontSize: 11, color: "#fbbf24", fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
+            ✨ 카피바라 RPG
           </span>
-          <span style={{ fontSize: 10, color: "#fbbf24", display: "flex", alignItems: "center", gap: 4 }}>
+          <span style={{ fontSize: 10, color: "#fbbf24", display: "flex", alignItems: "center", gap: 4, textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             <img src="/indie-games/icon-gem.png" style={{ width: 12, height: 12, imageRendering: "pixelated" }} alt="gem" />
-            {state.gold}
+            {state.gold.toLocaleString()}
           </span>
         </div>
 
-        {/* Ad Banner */}
-        <div className="pixel-border p-3 mb-3 text-center" style={{ background: "linear-gradient(180deg, #4f46e5, #2563eb)", borderColor: "#60a5fa" }}>
-          <div style={{ fontSize: 10, color: "#fef3c7", fontWeight: "bold" }}>🎮 다음 게임 준비중...</div>
-          <div style={{ fontSize: 8, color: "#e0e7ff", marginTop: 3 }}>슬라임 클리커 | 타워 디펜스 | 자동 거래소</div>
-        </div>
-
-        {/* Stats Bar */}
-        <div
-          className="pixel-border mb-3 p-3 flex-shrink-0 w-full max-w-md"
-          style={{ background: "#0f172a", borderColor: "#334155" }}
-        >
-          <div className="grid grid-cols-4 gap-2 text-center">
-            <div>
-              <div style={{ fontSize: 13, color: "#4ade80", fontWeight: "bold" }}>Lv.{state.level}</div>
-              <div style={{ fontSize: 9, color: "#6b7280" }}>레벨</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 13, color: "#f87171", fontWeight: "bold" }}>▲{totalAtk}</div>
-              <div style={{ fontSize: 9, color: "#6b7280" }}>공격</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 13, color: "#60a5fa", fontWeight: "bold" }}>■{totalDef}</div>
-              <div style={{ fontSize: 9, color: "#6b7280" }}>방어</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 13, color: "#f472b6", fontWeight: "bold" }}>●{totalHp}</div>
-              <div style={{ fontSize: 9, color: "#6b7280" }}>체력</div>
-            </div>
+        {/* Stats Bar - Horizontal */}
+        <div className="flex justify-around gap-4 text-center">
+          <div>
+            <div style={{ fontSize: 12, color: "#4ade80", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>Lv {state.level}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 12, color: "#f87171", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>▲{totalAtk}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 12, color: "#60a5fa", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>■{totalDef}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 12, color: "#f472b6", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>●{totalHp}</div>
           </div>
         </div>
 
         {/* EXP Bar */}
-        <div className="mb-3 flex-shrink-0 w-full max-w-md">
-          <div className="flex justify-between" style={{ fontSize: 8, color: "#9ca3af", marginBottom: 3 }}>
+        <div className="mt-3 flex-shrink-0 w-full">
+          <div className="flex justify-between" style={{ fontSize: 8, color: "#c0c0c0", marginBottom: 3 }}>
             <span>EXP</span>
             <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
           </div>
-          <div className="pixel-bar" style={{ height: 10, background: "#1e293b" }}>
+          <div className="pixel-bar" style={{ height: 8, background: "rgba(0,0,0,0.5)", borderColor: "#fbbf24" }}>
             <div
               style={{
                 height: "100%",
