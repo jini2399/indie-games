@@ -1,0 +1,4 @@
+:HL["/indie-games/_next/static/chunks/f7944ef089a9c286.css","style"]
+:HL["/indie-games/_next/static/media/3cabd365f8c28a7b-s.p.bb3268b7.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/indie-games/_next/static/media/cc014fcb166cf364-s.p.e32417d2.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"buildId":"hSU6ROPOLr9TTiH2sSHg2","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"capybara","paramType":null,"paramKey":"capybara","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
