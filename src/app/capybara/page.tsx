@@ -498,9 +498,6 @@ function PixelMonster({ type, size = 64 }: { type: string; size?: number }) {
   );
 }
 
-// ─── 3D Component ──────────────────────────────────────────────────
-const Game3D = dynamic(() => import('@/components/Game3D'), { ssr: false });
-
 // ─── Main Component ──────────────────────────────────────────────────
 
 export default function Home() {
@@ -1312,110 +1309,51 @@ export default function Home() {
   const totalHp = getTotalHp(state);
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
-  // 3D 모드 활성화
-  if (is3DMode && mounted) {
-    return (
-      <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-        <Game3D
-          gameState={{
-            level: state.level,
-            gold: state.gold,
-            exp: state.exp,
-            atk: getTotalAtk(state),
-            def: getTotalDef(state),
-            hp: state.currentHp,
-          }}
-          onAttack={() => handleClick({ preventDefault: () => {} } as any)}
-        />
-        {/* 3D 모드 토글 버튼 */}
-        <button
-          onClick={() => setIs3DMode(false)}
-          style={{
-            position: 'absolute',
-            top: 20,
-            right: 20,
-            padding: '10px 20px',
-            background: '#dc2626',
-            color: '#ffffff',
-            border: 'none',
-            cursor: 'pointer',
-            fontFamily: 'Cinzel, serif',
-            fontSize: 14,
-            fontWeight: 'bold',
-            zIndex: 100,
-          }}
-        >
-          ← 2D 모드
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "transparent", overflow: "hidden" }}>
-      {/* 3D 모드 토글 버튼 */}
-      <button
-        onClick={() => setIs3DMode(true)}
-        style={{
-          position: 'absolute',
-          top: 20,
-          right: 20,
-          padding: '10px 20px',
-          background: '#7c3aed',
-          color: '#ffffff',
-          border: 'none',
-          cursor: 'pointer',
-          fontFamily: 'Cinzel, serif',
-          fontSize: 14,
-          fontWeight: 'bold',
-          zIndex: 100,
-        }}
-      >
-        3D 모드 →
-      </button>
+    <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%)", overflow: "hidden" }}>
       {/* Header */}
       <div className="w-full max-w-md flex-shrink-0" style={{ padding: "0px 0px", marginBottom: "4px", display: "flex", flexDirection: "column", justifyContent: "flex-start", gap: "2px" }}>
-        <div className="flex items-center justify-between mb-3" style={{ backgroundImage: "url('/indie-games/title-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "18px 15px", borderRadius: "4px", minHeight: "80px", display: "flex", alignItems: "center" }}>
-          <span style={{ fontSize: 11, color: "#fbbf24", fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            ✨ 카피바라 RPG
+        <div className="flex items-center justify-between mb-3" style={{ background: "linear-gradient(135deg, #FFD700 0%, #FFA500 100%)", padding: "18px 15px", borderRadius: "12px", minHeight: "80px", display: "flex", alignItems: "center", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)" }}>
+          <span style={{ fontSize: 11, color: "#fff", fontWeight: "bold", textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>
+            🦫 카피바라 RPG
           </span>
-          <span style={{ fontSize: 10, color: "#fbbf24", display: "flex", alignItems: "center", gap: 4, textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            <img src="/indie-games/icon-gem.png" style={{ width: 12, height: 12, imageRendering: "pixelated" }} alt="gem" />
-            {state.gold.toLocaleString()}
+          <span style={{ fontSize: 10, color: "#fff", display: "flex", alignItems: "center", gap: 4, fontWeight: "bold", textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>
+            💎 {state.gold.toLocaleString()}
           </span>
         </div>
 
         {/* Stats Container with Background */}
-        <div style={{ backgroundImage: "url('/indie-games/stats-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "12px 15px", borderRadius: "4px", marginTop: "2px" }}>
+        <div style={{ background: "linear-gradient(135deg, #4DD0E1 0%, #00BCD4 100%)", padding: "12px 15px", borderRadius: "12px", marginTop: "2px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
           {/* Stats Bar - Horizontal */}
           <div className="flex justify-around gap-4 text-center mb-2">
             <div>
-              <div style={{ fontSize: 12, color: "#4ade80", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>Lv {state.level}</div>
+              <div style={{ fontSize: 12, color: "#fff", fontWeight: "bold", textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>Lv {state.level}</div>
             </div>
             <div>
-              <div style={{ fontSize: 12, color: "#f87171", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>▲{totalAtk}</div>
+              <div style={{ fontSize: 12, color: "#fff", fontWeight: "bold", textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>▲{totalAtk}</div>
             </div>
             <div>
-              <div style={{ fontSize: 12, color: "#60a5fa", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>■{totalDef}</div>
+              <div style={{ fontSize: 12, color: "#fff", fontWeight: "bold", textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>■{totalDef}</div>
             </div>
             <div>
-              <div style={{ fontSize: 12, color: "#f472b6", fontWeight: "bold", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>●{totalHp}</div>
+              <div style={{ fontSize: 12, color: "#fff", fontWeight: "bold", textShadow: "1px 1px 2px rgba(0,0,0,0.2)" }}>●{totalHp}</div>
             </div>
           </div>
 
           {/* EXP Bar */}
           <div className="flex-shrink-0 w-full">
-            <div className="flex justify-between" style={{ fontSize: 8, color: "#c0c0c0", marginBottom: 3 }}>
+            <div className="flex justify-between" style={{ fontSize: 8, color: "#fff", marginBottom: 3, fontWeight: "bold" }}>
               <span>EXP</span>
               <span>{Math.floor(state.exp)}/{EXP_PER_LEVEL}</span>
             </div>
-            <div className="pixel-bar" style={{ height: 8, background: "rgba(0,0,0,0.5)", borderColor: "#fbbf24" }}>
+            <div className="pixel-bar" style={{ height: 8, background: "rgba(255,255,255,0.4)", borderColor: "#fff", borderRadius: "4px" }}>
               <div
                 style={{
                   height: "100%",
                   width: `${(state.exp / EXP_PER_LEVEL) * 100}%`,
-                  background: "linear-gradient(90deg, #22c55e, #3b82f6)",
+                  background: "linear-gradient(90deg, #66BB6A, #42A5F5)",
                   transition: "width 0.3s",
+                  borderRadius: "4px",
                 }}
               />
             </div>
@@ -1426,9 +1364,9 @@ export default function Home() {
         <div className="flex gap-2 w-full max-w-md flex-shrink-0 mt-1" style={{ order: 0 }}>
           {(["battle", "inventory", "info"] as const).map((tab) => {
             const tabColors = {
-              battle: { bg: "#7f1d1d", border: "#dc2626", glow: "rgba(220, 38, 38, 0.5)" },
-              inventory: { bg: "#1e3a8a", border: "#2563eb", glow: "rgba(37, 99, 235, 0.5)" },
-              info: { bg: "#5b21b6", border: "#a855f7", glow: "rgba(168, 85, 247, 0.5)" },
+              battle: { bg: "#FF6B6B", border: "#FF5252", glow: "rgba(255, 82, 82, 0.3)" },
+              inventory: { bg: "#4ECDC4", border: "#2AADA4", glow: "rgba(78, 205, 196, 0.3)" },
+              info: { bg: "#95E1D3", border: "#6BC4A2", glow: "rgba(149, 225, 211, 0.3)" },
             };
             const colors = tabColors[tab];
             return (
@@ -1437,14 +1375,13 @@ export default function Home() {
                 onClick={() => setActiveTab(tab)}
                 className="pixel-border-sm flex-1 py-4 cursor-pointer"
                 style={{
-                  background: activeTab === tab && tab === "battle" ? "url('/indie-games/tab-battle-bg.png')" : activeTab === tab && tab === "inventory" ? "url('/indie-games/tab-inventory-bg.png')" : activeTab === tab && tab === "info" ? "url('/indie-games/tab-info-bg.png')" : activeTab !== tab ? "url('/indie-games/tab-inactive-bg.png')" : colors.bg,
-                  backgroundSize: "contain",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
+                  background: activeTab === tab ? colors.bg : "#E0E0E0",
                   borderWidth: "0px",
-                  color: activeTab === tab ? "#fff" : "#6b7280",
-                  fontSize: 9,
-                  boxShadow: activeTab === tab ? `0 0 12px ${colors.glow}, inset 0 1px 0 rgba(255,255,255,0.1)` : "none",
+                  borderRadius: "8px",
+                  color: activeTab === tab ? "#fff" : "#666",
+                  fontSize: 10,
+                  fontWeight: activeTab === tab ? "bold" : "normal",
+                  boxShadow: activeTab === tab ? `0 4px 8px ${colors.glow}` : "0 2px 4px rgba(0, 0, 0, 0.1)",
                   transition: "all 0.2s ease",
                 }}
               >
