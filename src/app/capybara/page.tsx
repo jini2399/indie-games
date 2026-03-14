@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
+import dynamic from 'next/dynamic';
 
 // ─── SVG Icons (Pixel Art Style) ───────────────────────────────────────
 
@@ -497,11 +498,15 @@ function PixelMonster({ type, size = 64 }: { type: string; size?: number }) {
   );
 }
 
+// ─── 3D Component ──────────────────────────────────────────────────
+const Game3D = dynamic(() => import('@/components/Game3D'), { ssr: false });
+
 // ─── Main Component ──────────────────────────────────────────────────
 
 export default function Home() {
   const [state, setState] = useState<GameState>(getDefaultState);
   const [mounted, setMounted] = useState(false);
+  const [is3DMode, setIs3DMode] = useState(false);
   const [damageTexts, setDamageTexts] = useState<DamageText[]>([]);
   const [droppedItems, setDroppedItems] = useState<DroppedItem[]>([]);
   const [explosions, setExplosions] = useState<Explosion[]>([]);
@@ -1307,8 +1312,67 @@ export default function Home() {
   const totalHp = getTotalHp(state);
   const bossIdx = (state.bossLevel - 1) % BOSS_EMOJIS.length;
 
+  // 3D 모드 활성화
+  if (is3DMode && mounted) {
+    return (
+      <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+        <Game3D
+          gameState={{
+            level: state.level,
+            gold: state.gold,
+            exp: state.exp,
+            atk: getTotalAtk(state),
+            def: getTotalDef(state),
+            hp: state.currentHp,
+          }}
+          onAttack={() => handleClick({ preventDefault: () => {} } as any)}
+        />
+        {/* 3D 모드 토글 버튼 */}
+        <button
+          onClick={() => setIs3DMode(false)}
+          style={{
+            position: 'absolute',
+            top: 20,
+            right: 20,
+            padding: '10px 20px',
+            background: '#dc2626',
+            color: '#ffffff',
+            border: 'none',
+            cursor: 'pointer',
+            fontFamily: 'Cinzel, serif',
+            fontSize: 14,
+            fontWeight: 'bold',
+            zIndex: 100,
+          }}
+        >
+          ← 2D 모드
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen flex-col items-center p-4 select-none pixel-grid" style={{ background: "transparent", overflow: "hidden" }}>
+      {/* 3D 모드 토글 버튼 */}
+      <button
+        onClick={() => setIs3DMode(true)}
+        style={{
+          position: 'absolute',
+          top: 20,
+          right: 20,
+          padding: '10px 20px',
+          background: '#7c3aed',
+          color: '#ffffff',
+          border: 'none',
+          cursor: 'pointer',
+          fontFamily: 'Cinzel, serif',
+          fontSize: 14,
+          fontWeight: 'bold',
+          zIndex: 100,
+        }}
+      >
+        3D 모드 →
+      </button>
       {/* Header */}
       <div className="w-full max-w-md flex-shrink-0" style={{ padding: "0px 0px", marginBottom: "4px", display: "flex", flexDirection: "column", justifyContent: "flex-start", gap: "2px" }}>
         <div className="flex items-center justify-between mb-3" style={{ backgroundImage: "url('/indie-games/title-bg.png')", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat", padding: "18px 15px", borderRadius: "4px", minHeight: "80px", display: "flex", alignItems: "center" }}>
